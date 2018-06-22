@@ -20,6 +20,7 @@ public class Main {
         
         Functions f = new Functions();
         ArrayList<Patient> listPatient= new ArrayList();
+        Patient p0 = new Patient("P0", "PR1");
         Patient p1 = new Patient("P1", "PR1");
         Patient p2 = new Patient("P2", "PR1");
         Patient p3 = new Patient("P3", "PR1");
@@ -29,7 +30,7 @@ public class Main {
         Patient p7 = new Patient("P7", "PR1");
         Patient p8 = new Patient("P8", "PR1");
         Patient p9 = new Patient("P9", "PR1");
-        Patient p10 = new Patient("P10", "PR1");
+        listPatient.add(p0);
         listPatient.add(p1);
         listPatient.add(p2);
         listPatient.add(p3);
@@ -39,7 +40,6 @@ public class Main {
         listPatient.add(p7);
         listPatient.add(p8);
         listPatient.add(p9);
-        listPatient.add(p10);
         
         System.out.println(f.fO(listPatient));
 //        Test m = new Test();

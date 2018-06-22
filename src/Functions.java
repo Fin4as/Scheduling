@@ -28,7 +28,7 @@ public class Functions {
     public double fO(ArrayList<Patient> scur) {
         double result;
         
-        //adding the scheduling part of Hayat
+        
         Test t = new Test(scur);
         t.addTask();
         

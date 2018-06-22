@@ -138,15 +138,15 @@ public class Test {
     public void addTask() {
 
         //************************************** PATIENTS
-        System.out.print("Patient ID");
-        System.out.print("\t");
-        System.out.print("Task ID");
-        System.out.print("\t");
-        System.out.print("Starting Time");
-        System.out.print("\t");
-        System.out.print("Ending Time");
-        System.out.print("\t");
-        System.out.print("Waiting Time");
+//        System.out.print("Patient ID");
+//        System.out.print("\t");
+//        System.out.print("Task ID");
+//        System.out.print("\t");
+//        System.out.print("Starting Time");
+//        System.out.print("\t");
+//        System.out.print("Ending Time");
+//        System.out.print("\t");
+//        System.out.print("Waiting Time");
 
         //************************************** RESOURCES
 //        System.out.print("\t");
@@ -175,17 +175,17 @@ public class Test {
                             res.setTime(start, t.getAvTime(), t.getTaskID());
                             p.setSchedule(start, t.getAvTime(), t.getTaskID());
 
-                            System.out.print(p.getPatientID());
-                            System.out.print("\t\t");
-                            System.out.print(t.getTaskID());
-                            System.out.print("\t\t");
-                            System.out.print(start + "");
-                            System.out.print("\t\t");
-                            System.out.print(t.getAvTime() + start + "");
-                            System.out.print("\t\t");
-                            System.out.print(start - endLastTask + "");
+//                            System.out.print(p.getPatientID());
+//                            System.out.print("\t\t");
+//                            System.out.print(t.getTaskID());
+//                            System.out.print("\t\t");
+//                            System.out.print(start + "");
+//                            System.out.print("\t\t");
+//                            System.out.print(t.getAvTime() + start + "");
+//                            System.out.print("\t\t");
+//                            System.out.print(start - endLastTask + "");
                             totalWaitingTime += start - endLastTask;
-                            System.out.println("");
+//                            System.out.println("");
                             endLastTask = start + t.getAvTime();
                         }
 
