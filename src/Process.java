@@ -67,7 +67,7 @@ public class Process {
         try {
             String query = "SELECT * FROM Task WHERE ProcessID ='" + processID + "'";
             rs = st.executeQuery(query);
-            System.out.println("Records from DataBase");
+            
             while (rs.next()) {
                 String process_id = rs.getString("ProcessID");
                 String task_id = rs.getString("TaskID");
