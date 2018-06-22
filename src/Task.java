@@ -23,7 +23,7 @@ public class Task {
 
     private ArrayList<String> prevTaskID;
     private ArrayList<String> nextTaskID;
-    private Skill skill; // à modifier
+    private Skill skill; 
 
     public Task(String processID, String taskID, int opMode, int avTime, int stdDev, int maxWait) {
         this.processID = processID;
