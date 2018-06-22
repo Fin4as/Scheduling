@@ -1,0 +1,67 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+
+import java.util.ArrayList;
+
+/**
+ *
+ * @author Hayat
+ */
+public class Skill {
+
+    private String skillID;
+    private String description;
+    private String prevTaskID;
+    private ArrayList<Resource> listResource;
+
+    public Skill(String s, String d, String p) {
+        skillID = s;
+        description = d;
+        prevTaskID = p;
+        listResource = new ArrayList<Resource>();
+    }
+
+    public String getSkillID() {
+        return this.skillID;
+    }
+
+    public ArrayList<Resource> getListResource() {
+        return this.listResource;
+    }
+
+    public void addResource(Resource r) {
+        listResource.add(r);
+    }
+
+    public int getFastestAvailable(int startTime, int avTime) {
+        int resource = -1;
+        for (int j = 0; j < listResource.size(); j++) {
+            int min = listResource.get(j).getNextAvailableTime(startTime, avTime);
+            if (listResource.size() == 1 && min != -1) {
+                resource = 0;
+            } else if (listResource.size() > 1) {
+                for (int i = j++; i < listResource.size(); i++) { // befors, it was i =1
+                    int currentTime = listResource.get(i).getNextAvailableTime(startTime, avTime);
+                    if (min != -1 && currentTime <= min) {
+                        resource = i;
+
+                    } else if (min == -1) {
+                        if (currentTime == -1 && i == listResource.size() - 1) {
+                            resource = -1;
+                        } else if (currentTime != -1) {
+                            min = currentTime;
+                            resource = i;
+                        }
+                    }
+
+                }
+
+            }
+            
+        }return resource;
+    }
+}
