@@ -13,13 +13,13 @@ import java.util.ArrayList;
  */
 public class Functions {
     
-    public double late(double l) {
+    public double late(int l) {
         double result = 0.0;
         result = 0.125 * l;
         return result;
     }
 
-    public double wait(double w) {
+    public double wait(int w) {
         double result = 0.0;
         result = (1 / 6) * w;
         return result;
@@ -29,8 +29,10 @@ public class Functions {
         double result;
         
         //adding the scheduling part of Hayat
+        Test t = new Test(scur);
+        t.addTask();
         
-        result = scur.getMakespan() + wait() + late();
+        result = t.getMakespan()+wait(t.getTotalWaitingTime())+late(t.getLateness());
        
         
         return result;
