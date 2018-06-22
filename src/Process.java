@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,8 +26,8 @@ public class Process {
     String processID;
     String processType;
     String ProcessName;
-    private ArrayList<Task> listTask;
-    private ArrayList<Resource> allResources;
+    private List<Task> listTask;
+    private List<Resource> allResources;
 
     public Process(String processID, Statement s) {
         this.processID = processID;
@@ -49,7 +50,7 @@ public class Process {
     /**
      * @return the listTask
      */
-    public ArrayList<Task> getListTask() {
+    public List<Task> getListTask() {
         return listTask;
     }
 

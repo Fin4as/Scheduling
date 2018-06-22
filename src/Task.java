@@ -7,6 +7,7 @@
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -21,8 +22,8 @@ public class Task {
     private int stdDev;
     private int maxWait;
 
-    private ArrayList<String> prevTaskID;
-    private ArrayList<String> nextTaskID;
+    private List<String> prevTaskID;
+    private List<String> nextTaskID;
     private Skill skill; 
 
     public Task(String processID, String taskID, int opMode, int avTime, int stdDev, int maxWait) {
@@ -56,28 +57,28 @@ public class Task {
     /**
      * @return the prevTaskID
      */
-    public ArrayList<String> getPrevTaskIDList() {
+    public List<String> getPrevTaskIDList() {
         return prevTaskID;
     }
 
     /**
      * @return the nextTaskID
      */
-    public ArrayList<String> getNextTaskIDList() {
+    public List<String> getNextTaskIDList() {
         return nextTaskID;
     }
 
     /**
      * @param prevTaskID the prevTaskID to set
      */
-    public void setPrevTaskID(ArrayList<String> prevTaskID) {
+    public void setPrevTaskID(List<String> prevTaskID) {
         this.prevTaskID = prevTaskID;
     }
 
     /**
      * @param nextTaskID the nextTaskID to set
      */
-    public void setNextTaskID(ArrayList<String> nextTaskID) {
+    public void setNextTaskID(List<String> nextTaskID) {
         this.nextTaskID = nextTaskID;
     }
 

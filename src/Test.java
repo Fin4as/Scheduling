@@ -5,6 +5,7 @@
  */
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 /**
@@ -16,14 +17,14 @@ public class Test {
     /**
      * @param args the command line arguments
      */
-    ArrayList<Patient> listPatient;
-    ArrayList<Process> listProcess;
-    ArrayList<Resource> listResource;
+    List<Patient> listPatient;
+    List<Process> listProcess;
+    List<Resource> listResource;
     int totalWaitingTime;
     int makespan;
     int lateness;
 
-    public Test(ArrayList<Patient> scur) {
+    public Test(List<Patient> scur) {
         listPatient = scur;
         listResource = new ArrayList();
         totalWaitingTime = 0;
@@ -51,7 +52,7 @@ public class Test {
 
    
 
-    public ArrayList<Process> getListProcess() {
+    public List<Process> getListProcess() {
         return listProcess;
     }
 

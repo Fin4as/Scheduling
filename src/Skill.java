@@ -6,6 +6,7 @@
 
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,7 +17,7 @@ public class Skill {
     private String skillID;
     private String description;
     private String prevTaskID;
-    private ArrayList<Resource> listResource;
+    private List<Resource> listResource;
 
     public Skill(String s, String d, String p) {
         skillID = s;
@@ -29,7 +30,7 @@ public class Skill {
         return this.skillID;
     }
 
-    public ArrayList<Resource> getListResource() {
+    public List<Resource> getListResource() {
         return this.listResource;
     }
 

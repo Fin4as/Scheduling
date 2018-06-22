@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Arrays;
 
 /*
@@ -19,7 +20,7 @@ public class Main {
     public static void main(String[] args) {
         
         Functions f = new Functions();
-        ArrayList<Patient> listPatient= new ArrayList();
+        List<Patient> listPatient= new ArrayList();
         Patient p0 = new Patient("P0", "PR1");
         Patient p1 = new Patient("P1", "PR1");
         Patient p2 = new Patient("P2", "PR1");
@@ -41,7 +42,10 @@ public class Main {
         listPatient.add(p8);
         listPatient.add(p9);
         
-        System.out.println(f.fO(listPatient));
+        List<Patient> best = f.annealingMin(3, 10, listPatient);
+        System.out.println( best +" "+ f.fO(best) );
+        
+        
 //        Test m = new Test();
 //        m.addTask();
 //

@@ -15,20 +15,20 @@ import java.util.Random;
  */
 public abstract class SwappableSequence {
 
-    public static List<Integer> deterministicSwap(List<Integer> sequence, int i, int j) {
+    public static List<Patient> deterministicSwap(List<Patient> sequence, int i, int j) {
 
         if (i == j) {
             throw new IllegalArgumentException("Error: i should be different from j.");
         }
 
-        Integer tmp = sequence.get(j);
+        Patient tmp = sequence.get(j);
         sequence.set(j, sequence.get(i));
         sequence.set(i, tmp);
 
         return sequence;
     }
 
-    public static List<Integer> reverseSubsequence(List<Integer> sequence, int i, int j) {
+    public static List<Patient> reverseSubsequence(List<Patient> sequence, int i, int j) {
 
         if (i == j) {
             throw new IllegalArgumentException("Error: i should be different from j.");
@@ -42,7 +42,7 @@ public abstract class SwappableSequence {
         int reversedLength = j - i + 1;
         int numSwaps = reversedLength / 2;
         for (int k = 0; k < numSwaps; k++) {
-            Integer tmp = sequence.get(j);
+            Patient tmp = sequence.get(j);
             sequence.set(j, sequence.get(i));
             sequence.set(i, tmp);
             i = i + 1;
@@ -52,7 +52,7 @@ public abstract class SwappableSequence {
         return sequence;
     }
 
-    public static List<Integer> makeACrossingOver(List<Integer> mother, List<Integer> father, int position) {
+    public static List<Patient> makeACrossingOver(List<Patient> mother, List<Patient> father, int position) {
 
         if (mother == null || father == null) {
             throw new NullPointerException("Error: At least one of the parent has not been set");
@@ -62,8 +62,8 @@ public abstract class SwappableSequence {
             throw new IllegalArgumentException("Error: Sequences of the parents differ in length");
         }
 
-        List<Integer> child = new ArrayList();
-        List<Integer> missing = new ArrayList();
+        List<Patient> child = new ArrayList();
+        List<Patient> missing = new ArrayList();
         List<Integer> replica = new ArrayList();
         Random rd = new Random();
 
@@ -73,7 +73,7 @@ public abstract class SwappableSequence {
         for (int i = position; i < father.size(); i++) {
             child.add(father.get(i));
         }
-        for (Integer gene : mother) {
+        for (Patient gene : mother) {
             if (child.contains(gene)) {
                 int occur = 0;
                 for (int index = 0; index < child.size(); index++) {
@@ -89,23 +89,23 @@ public abstract class SwappableSequence {
             }
         }
         for (int index : replica) {
-            Integer mutation = missing.get(rd.nextInt(missing.size()));
+            Patient mutation = missing.get(rd.nextInt(missing.size()));
             child.set(index, mutation);
             missing.remove(missing.indexOf(mutation));
         }
         return child;
     }
 
-    public static List<Integer> weightedInitialSolution(List<Integer> arrivalSequence, List<Integer> data) {
+    public static List<Patient> weightedInitialSolution(List<Patient> arrivalSequence, List<Integer> data) {
 
         List<Double> cancellationLikelihoods = new ArrayList();
         double cancellationLikelihood;
         List<Double> sortedCancellationLikelihoods = new ArrayList();
         int n = arrivalSequence.size();
         Double median;
-        List<Integer> lowCancellationLikelihoods = new ArrayList();
-        List<Integer> highCancellationLikelihoods = new ArrayList();
-        List<Integer> weightedInitialSolution = new ArrayList();
+        List<Patient> lowCancellationLikelihoods = new ArrayList();
+        List<Patient> highCancellationLikelihoods = new ArrayList();
+        List<Patient> weightedInitialSolution = new ArrayList();
 
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i) <= 84) {
@@ -137,9 +137,9 @@ public abstract class SwappableSequence {
         }
 
         for (int i = 0; i < n; i++) {
-            if (cancellationLikelihoods.get(arrivalSequence.get(i)) < median) {
+            if (cancellationLikelihoods.get(Integer.getInteger(arrivalSequence.get(i).getPatientID().substring(1))) < median) {
                 lowCancellationLikelihoods.add(arrivalSequence.get(i));
-            } else if (cancellationLikelihoods.get(arrivalSequence.get(i)).equals(median)) {
+            } else if (cancellationLikelihoods.get(Integer.getInteger(arrivalSequence.get(i).getPatientID().substring(1))).equals(median)) {
                 if (lowCancellationLikelihoods.size() <= highCancellationLikelihoods.size()) {
                     lowCancellationLikelihoods.add(arrivalSequence.get(i));
                 } else {

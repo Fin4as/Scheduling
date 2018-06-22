@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -24,7 +25,7 @@ public class Schedule {
     Connection conn;
     
 
-    ArrayList<Process> listProcess;
+    List<Process> listProcess;
 
     public Schedule() {
         listProcess = new ArrayList();
@@ -32,7 +33,7 @@ public class Schedule {
         getProcessData(); // get list of process from DB
     }
 
-    public ArrayList<Process> getListProcess() {
+    public List<Process> getListProcess() {
         return listProcess;
     }
 
@@ -43,7 +44,7 @@ public class Schedule {
             conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
-            System.out.println("You are connected ! ");
+//            System.out.println("You are connected ! ");
            
         } catch (Exception ex) {
             System.out.println("Error : " + ex);
@@ -57,7 +58,7 @@ public class Schedule {
             
             String query = "SELECT * FROM Process";
             rs = st.executeQuery(query);
-            System.out.println("Records from DataBase");
+//            System.out.println("Records from DataBase");
             while (rs.next()) {
                 String processID = rs.getString("ProcessID");
                 Process process = new Process(processID, st);
