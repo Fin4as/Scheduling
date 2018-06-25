@@ -19,28 +19,26 @@ public class Test {
      */
     List<Patient> listPatient;
     List<Process> listProcess;
-    List<Resource> listResource;
+    //List<Resource> listResource;
     int totalWaitingTime;
-    int makespan;
+//    int makespan;
     int lateness;
 
-    public Test(List<Patient> scur) {
-        listPatient = scur;
-        listResource = new ArrayList();
+    public Test(List<Patient> sequence) {
+        listPatient = sequence;
+  //     listResource = new ArrayList();
         totalWaitingTime = 0;
         lateness = 0;
-        makespan = 0;
+//        makespan = 0;
         Schedule s = new Schedule(); //goal : get process list
         listProcess = s.getListProcess();
 
-     
     }
 
-    public int getMakespan() {
-        makespan = this.calculateMaskespan();
-        return makespan;
-    }
-
+//    public int getMakespan() {
+//        makespan = this.calculateMakespan();
+//        return makespan;
+//    }
     public int getLateness() {
         lateness = this.lateness();
         return lateness;
@@ -49,8 +47,6 @@ public class Test {
     public int getTotalWaitingTime() {
         return totalWaitingTime;
     }
-
-   
 
     public List<Process> getListProcess() {
         return listProcess;
@@ -87,24 +83,24 @@ public class Test {
                 }
             }
         }
-        for (int j = 0; j < listResource.size(); j++) {
-            int end = 799;
-            while (end >= 0) {
-                if (listResource.get(j).getTime()[end] == null) {
-                    end--;
-                } else {
-                    if (maxLateness < end) {
-                        maxLateness = end;
-                    }
-                    break;
-                }
-            }
-        }
+//        for (int j = 0; j < listResource.size(); j++) {
+//            int end = 799;
+//            while (end >= 0) {
+//                if (listResource.get(j).getTime()[end] == null) {
+//                    end--;
+//                } else {
+//                    if (maxLateness < end) {
+//                        maxLateness = end;
+//                    }
+//                    break;
+//                }
+//            }
+//        }
 
-        return maxLateness;
+        return maxLateness - 480;
     }
 
-    public int calculateMaskespan() {
+    public int calculateMakespan() {
         int max = 0;
         int min = 0;
         int mksp;
@@ -121,7 +117,7 @@ public class Test {
         }
         for (int j = 0; j < listPatient.size(); j++) {
             end = 799;
-            while (end >= 0) {
+            while (end > min) {
                 if (listPatient.get(j).getSchedule()[end] == null) {
                     end--;
                 } else {
@@ -137,27 +133,10 @@ public class Test {
     }
 
     public void addTask() {
-
-        //************************************** PATIENTS
-//        System.out.print("Patient ID");
-//        System.out.print("\t");
-//        System.out.print("Task ID");
-//        System.out.print("\t");
-//        System.out.print("Starting Time");
-//        System.out.print("\t");
-//        System.out.print("Ending Time");
-//        System.out.print("\t");
-//        System.out.print("Waiting Time");
-
-        //************************************** RESOURCES
-//        System.out.print("\t");
-//        System.out.print("Resource ID");
-//        System.out.print("\t");
-//        System.out.print("Task ID");
-//        System.out.print("\t");
-//        System.out.print("Starting Time");
-//        System.out.print("\t");
-//        System.out.println("Ending Time");
+        for(int p=0 ; p<listPatient.size();p++){
+            listPatient.get(p).setSchedule();
+        }
+        totalWaitingTime =0;
         for (int j = 0; j < listPatient.size(); j++) {
             Patient p = listPatient.get(j);
             int endLastTask = 0;
@@ -170,24 +149,15 @@ public class Test {
                     int r = s.getFastestAvailable(time, t.getAvTime());
                     if (r != -1) {
                         Resource res = t.getSkill().getListResource().get(r);
-                        listResource.add(res);
+//                        listResource.add(res);
                         int start = res.getNextAvailableTime(time, t.getAvTime());
                         if (start != -1 && start + t.getAvTime() < p.getSchedule().length) {
                             res.setTime(start, t.getAvTime(), t.getTaskID());
                             p.setSchedule(start, t.getAvTime(), t.getTaskID());
-
-//                            System.out.print(p.getPatientID());
-//                            System.out.print("\t\t");
-//                            System.out.print(t.getTaskID());
-//                            System.out.print("\t\t");
-//                            System.out.print(start + "");
-//                            System.out.print("\t\t");
-//                            System.out.print(t.getAvTime() + start + "");
-//                            System.out.print("\t\t");
-//                            System.out.print(start - endLastTask + "");
-                            totalWaitingTime += start - endLastTask;
-//                            System.out.println("");
+                            
+                            totalWaitingTime += (start - endLastTask);
                             endLastTask = start + t.getAvTime();
+
                         }
 
                     }

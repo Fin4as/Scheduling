@@ -42,13 +42,29 @@ public class Main {
         listPatient.add(p8);
         listPatient.add(p9);
         
-        List<Patient> best = f.annealingMin(3, 10, listPatient);
+//        
+       List<Patient> best = f.annealingMin(3, 5, listPatient);
         System.out.println( best +" "+ f.fO(best) );
         
         
-//        Test m = new Test();
+//        
+//        Test m = new Test(listPatient);
 //        m.addTask();
-//
+//        for(int i =0; i<listPatient.size(); i++){
+//           
+////            
+//            System.out.print(listPatient.get(i).getPatientID());
+//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
+//        }
+        
+//        Test m = new Test(listPatient);
+////        
+//        m.addTask();
+//        System.out.println(m.calculateMakespan());
+//         Test v = new Test(listPatient);
+//        v.addTask();
+//        System.out.println(v.calculateMakespan());
+//        System.out.println("lol");
 //        System.out.println("\t");
 //        for (int i = 0; i < m.getListPatient().size(); i++) {
 //            System.out.print(m.getListPatient().get(i).getPatientID() + "\t");

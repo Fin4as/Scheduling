@@ -1,6 +1,7 @@
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
+import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -8,64 +9,71 @@ import java.util.List;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author robin
  */
 public class Functions {
     
+    public double wait(int w) {
+        double result = 0.0;
+        result = ((double)1 / 6) * w;
+        return result;
+    }
     public double late(int l) {
         double result = 0.0;
         result = 0.125 * l;
         return result;
     }
 
-    public double wait(int w) {
-        double result = 0.0;
-        result = (1 / 6) * w;
+    public double fO(List<Patient> sequence) {
+        double result=0;
+
+        Test t = new Test(sequence);
+        t.addTask();
+
+        result = t.calculateMakespan();
+        
+        result += wait(t.getTotalWaitingTime());
+        result += late(t.getLateness());
+        System.out.println(wait(t.totalWaitingTime));
+
         return result;
     }
 
-    public double fO(List<Patient> scur) {
-        double result;
-        
-        
-        Test t = new Test(scur);
-        t.addTask();
-        
-        result = t.getMakespan()+wait(t.getTotalWaitingTime())+late(t.getLateness());
-       
-        
-        return result;
-    }
-    
-     public List<Patient> annealingMin(double temperature,int itermax ,  List<Patient> scur) {
-         List<Patient> snew;
+    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> scur) {
+        List<Patient> sold;
         double tempmin = 0.1;
         int numiter = 0;
         double coolingRate = 0.01;
         double dif;
         double rd;
         List<Patient> minb = scur;
+//        System.out.println("scur init : " + fO(scur));
+//        System.out.println("minb init : " + fO(minb));
         while (temperature >= tempmin) {
             //System.out.println("hey");
             if (numiter < itermax) {
-                snew = SwappableSequence.deterministicSwap(scur,numiter%(scur.size()),(numiter+1)%(scur.size()));
+                sold = scur;
+                scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
                 //System.out.println(snew.toString());
-                dif = fO(snew) - fO(scur);
+//                System.out.println("scur - sold" + fO(scur) + "    " + fO(sold) + " = dif : " + (fO(scur) - fO(sold)));
+                dif = fO(scur) - fO(sold);
                 //System.out.println(f(snew)+ "-" + f(scur)+" = "+dif);
 
-                if (dif >= 0) {
+                if (dif <= 0) {
+                    sold = scur;
+                    double dif2 = fO(sold) - fO(minb);
+                    if (dif2 <= 0) {
+                        minb = sold;
+//                        System.out.println(fO(minb));
+
+                    }
+
+                } else {
                     rd = Math.random();
                     if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                        scur = snew;
-                    }
-                } else {
-                    scur = snew;
-                    if (fO(scur) < fO(minb)) {
-                        minb = scur;
-
+                        sold = scur;
                     }
                 }
                 numiter++;

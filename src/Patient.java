@@ -71,4 +71,9 @@ public class Patient {
     public String getProcessID() {
         return processID;
     }
+
+    public void setSchedule() {
+        this.schedule = new String[800];
+    }
+    
 }

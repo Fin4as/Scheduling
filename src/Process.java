@@ -6,7 +6,6 @@
 
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -83,7 +82,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex + "1");
         }
 
     }
@@ -100,7 +99,7 @@ public class Process {
                 allResources.add(res);
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex + "2");
         }
     }
 
@@ -120,7 +119,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex+"3");
         }
     }
 
@@ -139,7 +138,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex+"4");
         }
     }
 
@@ -160,7 +159,7 @@ public class Process {
                 }
 
             } catch (Exception ex) {
-                System.out.println(ex);
+                System.out.println(ex+"5");
             }
         }
     }
@@ -188,7 +187,7 @@ public class Process {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex);
+            System.out.println(ex+"6");
 
         }
     }
