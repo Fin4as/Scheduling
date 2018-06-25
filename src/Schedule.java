@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,19 +17,17 @@ import java.util.List;
  */
 public class Schedule {
 
-    
     ResultSet rs;
     String driver = "com.mysql.jdbc.Driver";
     Statement st;
     Connection conn;
-    
 
     List<Process> listProcess;
 
-    public Schedule() {
+    public Schedule(List<Patient> listPatient) {
         listProcess = new ArrayList();
         getConnectDB(); // connect to DataBAase
-        getProcessData(); // get list of process from DB
+        getProcessData(listPatient); // get list of process from DB
     }
 
     public List<Process> getListProcess() {
@@ -39,37 +36,48 @@ public class Schedule {
 
     public void getConnectDB() {
         try {
-            
+
             Class.forName(driver);
             conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
 //            System.out.println("You are connected ! ");
-           
+
         } catch (Exception ex) {
             System.out.println("Error : " + ex);
-           
+
         }
     }
 
-    public void getProcessData() {
-
-        try {
-            
-            String query = "SELECT * FROM Process";
-            rs = st.executeQuery(query);
-//            System.out.println("Records from DataBase");
-            while (rs.next()) {
-                String processID = rs.getString("ProcessID");
-                Process process = new Process(processID, st);
-                listProcess.add(process);
+    public void getProcessData(List<Patient> listPatient) {
+        List<String> idProcess = new ArrayList();
+        String ty = "";
+        for (int k = 0; k < listPatient.size(); k++) {
+            if (!idProcess.contains(listPatient.get(k).getProcessID())) {
+                idProcess.add(listPatient.get(k).getProcessID());
+                ty+="ProcessID ='"+""
+                System.out.println(listPatient.get(k).getProcessID());
             }
-        st.close();
-        rs.close();
-        conn.close();
+        }
+        try {
+            for (int i = 0; i < idProcess.size(); i++) {
+                String query = "SELECT * FROM Process WHERE ProcessID ='" + idProcess.get(i) + "'";
+                System.out.println(query);
+                rs = st.executeQuery(query);
+//            System.out.println("Records from DataBase");
+                while (rs.next()) {
+                    String processID = rs.getString("ProcessID");
+                    Process process = new Process(processID, st);
+                    listProcess.add(process);
+                }
+            }
+
+            st.close();
+            rs.close();
+            conn.close();
         } catch (Exception ex) {
             System.out.println(ex);
-            
+
         }
 
     }

@@ -82,7 +82,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex + "1");
+            System.out.println(ex);
         }
 
     }
@@ -99,7 +99,7 @@ public class Process {
                 allResources.add(res);
             }
         } catch (Exception ex) {
-            System.out.println(ex + "2");
+            System.out.println(ex);
         }
     }
 
@@ -119,7 +119,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex+"3");
+            System.out.println(ex);
         }
     }
 
@@ -138,7 +138,7 @@ public class Process {
             }
 
         } catch (Exception ex) {
-            System.out.println(ex+"4");
+            System.out.println(ex);
         }
     }
 
@@ -159,7 +159,7 @@ public class Process {
                 }
 
             } catch (Exception ex) {
-                System.out.println(ex+"5");
+                System.out.println(ex);
             }
         }
     }
@@ -187,7 +187,7 @@ public class Process {
                 }
             }
         } catch (Exception ex) {
-            System.out.println(ex+"6");
+            System.out.println(ex);
 
         }
     }

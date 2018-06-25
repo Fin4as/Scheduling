@@ -4,9 +4,7 @@
  * and open the template in the editor.
  */
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 /**
  *
@@ -24,14 +22,15 @@ public class Test {
 //    int makespan;
     int lateness;
 
-    public Test(List<Patient> sequence) {
+    public Test(List<Patient> sequence, Schedule s) {
         listPatient = sequence;
-  //     listResource = new ArrayList();
+        //     listResource = new ArrayList();
         totalWaitingTime = 0;
         lateness = 0;
 //        makespan = 0;
-        Schedule s = new Schedule(); //goal : get process list
+
         listProcess = s.getListProcess();
+        System.out.println(s.getListProcess().toString());
 
     }
 
@@ -55,15 +54,14 @@ public class Test {
     public Process getProcess(String processID) {
 
         Process p = null;
-        boolean found = false;
-        int i = 0;
-        while (!found && i < listProcess.size()) {
-            if (processID.equals(listProcess.get(i).getID())) {
-                found = true;
+        for (int i = 0; i < listProcess.size(); i++) {
+            if (!listProcess.get(i).getID().equals(processID)) {
+                i++;
+            } else {
                 p = listProcess.get(i);
             }
-            i++;
         }
+
         return p;
     }
 
@@ -133,10 +131,10 @@ public class Test {
     }
 
     public void addTask() {
-        for(int p=0 ; p<listPatient.size();p++){
+        for (int p = 0; p < listPatient.size(); p++) {
             listPatient.get(p).setSchedule();
         }
-        totalWaitingTime =0;
+        totalWaitingTime = 0;
         for (int j = 0; j < listPatient.size(); j++) {
             Patient p = listPatient.get(j);
             int endLastTask = 0;
@@ -154,7 +152,7 @@ public class Test {
                         if (start != -1 && start + t.getAvTime() < p.getSchedule().length) {
                             res.setTime(start, t.getAvTime(), t.getTaskID());
                             p.setSchedule(start, t.getAvTime(), t.getTaskID());
-                            
+
                             totalWaitingTime += (start - endLastTask);
                             endLastTask = start + t.getAvTime();
 

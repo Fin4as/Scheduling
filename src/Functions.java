@@ -1,7 +1,6 @@
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
-import java.util.ArrayList;
 import java.util.List;
 
 /*
@@ -14,6 +13,10 @@ import java.util.List;
  * @author robin
  */
 public class Functions {
+    Schedule s;
+      public Functions(Schedule s)  {
+          this.s=s;
+      }   
     
     public double wait(int w) {
         double result = 0.0;
@@ -29,7 +32,7 @@ public class Functions {
     public double fO(List<Patient> sequence) {
         double result=0;
 
-        Test t = new Test(sequence);
+        Test t =new Test(sequence,s);
         t.addTask();
 
         result = t.calculateMakespan();
