@@ -53,15 +53,23 @@ public class Schedule {
         List<String> idProcess = new ArrayList();
         String ty = "";
         for (int k = 0; k < listPatient.size(); k++) {
-            if (!idProcess.contains(listPatient.get(k).getProcessID())) {
+
+            if (!idProcess.contains(listPatient.get(k).getProcessID()) && idProcess.size() > 0) {
                 idProcess.add(listPatient.get(k).getProcessID());
-                ty+="ProcessID ='"+""
+                ty += " OR ProcessID ='" + listPatient.get(k).getProcessID() + "'";
                 System.out.println(listPatient.get(k).getProcessID());
-            }
+                
+            } else if (!idProcess.contains(listPatient.get(k).getProcessID()) && idProcess.size() == 0) {
+                idProcess.add(listPatient.get(k).getProcessID());
+                ty += " ProcessID ='" + listPatient.get(k).getProcessID() + "'";
+                System.out.println(listPatient.get(k).getProcessID());
+
+            }     
         }
+         System.out.println(ty);
         try {
             for (int i = 0; i < idProcess.size(); i++) {
-                String query = "SELECT * FROM Process WHERE ProcessID ='" + idProcess.get(i) + "'";
+                String query = "SELECT * FROM Process WHERE"+ty;
                 System.out.println(query);
                 rs = st.executeQuery(query);
 //            System.out.println("Records from DataBase");

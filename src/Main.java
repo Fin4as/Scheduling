@@ -21,7 +21,7 @@ public class Main {
         
         List<Patient> listPatient= new ArrayList();
         Patient p0 = new Patient("P0", "PR1");
-        Patient p1 = new Patient("P1", "PR1");
+        Patient p1 = new Patient("P1", "PR2");
         Patient p2 = new Patient("P2", "PR1");
         Patient p3 = new Patient("P3", "PR1");
         Patient p4 = new Patient("P4", "PR1");
