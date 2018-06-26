@@ -43,10 +43,10 @@ public class Main {
 
         Schedule s = new Schedule(listPatient);
         Functions f = new Functions(s);
-
+//
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
-//
+////
         List<Patient> best = f.annealingMin(3, 5, listPatient);
         System.out.println(best + " " + f.fO(best));
 

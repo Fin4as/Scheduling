@@ -166,44 +166,79 @@ public class Test {
         for (int p = 0; p < listPatient.size(); p++) {
             listPatient.get(p).setSchedule();
         }
-         for (int p = 0; p < listResource.size(); p++) {
+        for (int p = 0; p < listResource.size(); p++) {
             listResource.get(p).setZero();
         }
-            totalWaitingTime = 0;
+        totalWaitingTime = 0;
 
-            //
-            for (int j = 0; j < listPatient.size(); j++) {
-                Patient pat = listPatient.get(j);
-                int endLastTask = 0;
-                Process process = this.getProcess(pat.getProcessID());
-                for (int k = 0; k < process.getListTask().size(); k++) {
-                    Task t = process.getListTask().get(k);
-                    int time = pat.getNextAvailableTime();
-                    if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                        Skill s = t.getSkill();
-                        int r = s.getFastestAvailable(time, t.getAvTime());
-                        if (r != -1) {
-                            Resource res = t.getSkill().getListResource().get(r);
-                            if (addResourceInList(res) == false) {
-                                listResource.add(res);
-                            }
+        //
+        for (int j = 0; j < listPatient.size(); j++) {
+            Patient pat = listPatient.get(j);
+            int endLastTask = 0;
+            Process process = this.getProcess(pat.getProcessID());
+            for (int k = 0; k < process.getListTask().size(); k++) {
+                Task t = process.getListTask().get(k);
+                int time = pat.getNextAvailableTime();
+                int opMode = t.getOpMode();
 
-                            int start = res.getNextAvailableTime(time, t.getAvTime());
-                            if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                res.setTime(start, t.getAvTime(), t.getTaskID());
-                                pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+                switch (opMode) {
+                    case 0:
 
-                                totalWaitingTime += (start - endLastTask);
-                                endLastTask = start + t.getAvTime();
+                        if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
+                            Skill s = t.getSkill();
+                            int r = s.getFastestAvailable(time, t.getAvTime());
+                            if (r != -1) {
+                                Resource res = t.getSkill().getListResource().get(r);
+                                int start = res.getNextAvailableTime(time, t.getAvTime());
+                                if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                                    res.setTime(start, t.getAvTime(), t.getTaskID());
+                                    if (addResourceInList(res) == false) {
+                                        listResource.add(res);
+                                    }
+                                    pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+
+                                    totalWaitingTime += (start - endLastTask);
+                                    endLastTask = start + t.getAvTime();
+
+                                }
 
                             }
 
                         }
-                    }
-                }
+                        break;
 
+                    case 1:
+
+                        if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
+                            Skill s = t.getSkill();
+                            int i = 0;
+                            boolean found = false;
+                            List<Resource> lr = s.getListResource();
+                            int start = lr.get(i).getNextAvailableTime(time, t.getAvTime());
+                            while (!found && i < lr.size()) {
+                                if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                                    found = true;
+                                    lr.get(i).setTime(start, t.getAvTime(), t.getTaskID());
+                                    if (addResourceInList(lr.get(i)) == false) {
+                                        listResource.add(lr.get(i));
+                                    }
+                                    pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+
+                                    totalWaitingTime += (start - endLastTask);
+                                    endLastTask = start + t.getAvTime();
+                                } else {
+                                    i++;
+                                }
+                            }
+
+                        }
+                        break;
+
+                }
             }
 
         }
 
     }
+
+}
