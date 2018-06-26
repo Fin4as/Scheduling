@@ -95,6 +95,8 @@ public class Test {
         }
         return isPresent;
     }
+    
+    // .contains pour savoir si un objet est dans la liste
 
     public int lateness() {
 
@@ -171,7 +173,7 @@ public class Test {
         }
         totalWaitingTime = 0;
 
-        //
+        
         for (int j = 0; j < listPatient.size(); j++) {
             Patient pat = listPatient.get(j);
             int endLastTask = 0;
@@ -180,7 +182,8 @@ public class Test {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
                 int opMode = t.getOpMode();
-
+//remove switch case, call getfastestvailable for every tasks, getOP mode for the next task. Get the next task in NextTaskList 
+//write a method similar with get Process , to get the next Task
                 switch (opMode) {
                     case 0:
 
