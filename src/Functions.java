@@ -1,6 +1,7 @@
 
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -40,6 +41,16 @@ public class Functions {
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
         System.out.println(wait(t.totalWaitingTime));
+        for(int i =0; i<sequence.size(); i++){
+            System.out.print(sequence.get(i).getPatientID());
+            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+        }
+        System.out.println("");
+        
+        for(int j =0; j<t.getListResource().size(); j++){
+            System.out.print(t.getListResource().get(j).getResourceID());
+            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+        }
 
         return result;
     }

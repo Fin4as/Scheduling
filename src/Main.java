@@ -18,10 +18,10 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        List<Patient> listPatient= new ArrayList();
+
+        List<Patient> listPatient = new ArrayList();
         Patient p0 = new Patient("P0", "PR1");
-        Patient p1 = new Patient("P1", "PR2");
+        Patient p1 = new Patient("P1", "PR1");
         Patient p2 = new Patient("P2", "PR1");
         Patient p3 = new Patient("P3", "PR1");
         Patient p4 = new Patient("P4", "PR1");
@@ -29,7 +29,7 @@ public class Main {
         Patient p6 = new Patient("P6", "PR1");
         Patient p7 = new Patient("P7", "PR1");
         Patient p8 = new Patient("P8", "PR1");
-        Patient p9 = new Patient("P9", "PR2");
+        Patient p9 = new Patient("P9", "PR1");
         listPatient.add(p0);
         listPatient.add(p1);
         listPatient.add(p2);
@@ -40,16 +40,20 @@ public class Main {
         listPatient.add(p7);
         listPatient.add(p8);
         listPatient.add(p9);
-        
+
         Schedule s = new Schedule(listPatient);
         Functions f = new Functions(s);
 
-       List<Patient> best = f.annealingMin(3, 5, listPatient);
-        System.out.println( best +" "+ f.fO(best) );
-        for(int i =0; i<listPatient.size(); i++){
-            System.out.print(listPatient.get(i).getPatientID());
-            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
-        }
+//       Test t = new Test(listPatient,s);
+//       t.addTask();
+//
+        List<Patient> best = f.annealingMin(3, 5, listPatient);
+        System.out.println(best + " " + f.fO(best));
+
+//        for(int i =0; i<listPatient.size(); i++){
+//            System.out.print(listPatient.get(i).getPatientID());
+//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
+//        }
         
 //        
 //        Test m = new Test(listPatient);
@@ -60,7 +64,6 @@ public class Main {
 //            System.out.print(listPatient.get(i).getPatientID());
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
-        
 //        Test m = new Test(listPatient);
 ////        
 //        m.addTask();
