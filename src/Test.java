@@ -6,7 +6,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 /**
  *
@@ -19,19 +18,22 @@ public class Test {
      */
     List<Patient> listPatient;
     List<Process> listProcess;
-    //List<Resource> listResource;
+    List<Resource> listResource;
     int totalWaitingTime;
 //    int makespan;
     int lateness;
 
-    public Test(List<Patient> sequence) {
+    public Test(List<Patient> sequence, Schedule s) {
         listPatient = sequence;
-        //     listResource = new ArrayList();
+        listResource = new ArrayList();
+
+        List<Resource> listResource = new ArrayList<>();
         totalWaitingTime = 0;
         lateness = 0;
 //        makespan = 0;
-        Schedule s = new Schedule(); //goal : get process list
+
         listProcess = s.getListProcess();
+        //  System.out.println(s.getListProcess().toString());
 
     }
 
@@ -48,6 +50,10 @@ public class Test {
         return totalWaitingTime;
     }
 
+    public List<Resource> getListResource() {
+        return listResource;
+    }
+
     public List<Process> getListProcess() {
         return listProcess;
     }
@@ -57,14 +63,37 @@ public class Test {
         Process p = null;
         boolean found = false;
         int i = 0;
-        while (!found && i < listProcess.size()) {
-            if (processID.equals(listProcess.get(i).getID())) {
-                found = true;
+        while ((i < listProcess.size()) && (!found)) {
+            if (listProcess.get(i).getID().equals(processID)) {
                 p = listProcess.get(i);
+                found = true;
+            } else {
+                i++;
+
             }
-            i++;
         }
+//        for (int i = 0; i < listProcess.size(); i++) {
+//            if (!listProcess.get(i).getID().equals(processID)) {
+//                i++;
+//            } else {
+//                p = listProcess.get(i);
+//            }
+//        }
+
         return p;
+    }
+
+    public boolean addResourceInList(Resource r) {
+        int i = 0;
+        boolean isPresent = false;
+        while (!isPresent && i < listResource.size()) {
+            if (!r.getResourceID().equals(listResource.get(i).getResourceID())) {
+                i++;
+            } else {
+                isPresent = true;
+            }
+        }
+        return isPresent;
     }
 
     public int lateness() {
@@ -133,23 +162,48 @@ public class Test {
     }
 
     public void addTask() {
+        //Empty the schedule of each patient to make sure tasks don't add the end of their schedule
         for (int p = 0; p < listPatient.size(); p++) {
             listPatient.get(p).setSchedule();
         }
-        totalWaitingTime = 0;
-        for (int j = 0; j < listPatient.size(); j++) {
-            Patient p = listPatient.get(j);
-            int endLastTask = 0;
-            Process process = this.getProcess(p.getProcessID());
-            for (int k = 0; k < process.getListTask().size(); k++) {
-                Task t = process.getListTask().get(k);
-                int time = p.getNextAvailableTime();
-             
+         for (int p = 0; p < listResource.size(); p++) {
+            listResource.get(p).setZero();
+        }
+            totalWaitingTime = 0;
+
+            //
+            for (int j = 0; j < listPatient.size(); j++) {
+                Patient pat = listPatient.get(j);
+                int endLastTask = 0;
+                Process process = this.getProcess(pat.getProcessID());
+                for (int k = 0; k < process.getListTask().size(); k++) {
+                    Task t = process.getListTask().get(k);
+                    int time = pat.getNextAvailableTime();
+                    if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
+                        Skill s = t.getSkill();
+                        int r = s.getFastestAvailable(time, t.getAvTime());
+                        if (r != -1) {
+                            Resource res = t.getSkill().getListResource().get(r);
+                            if (addResourceInList(res) == false) {
+                                listResource.add(res);
+                            }
+
+                            int start = res.getNextAvailableTime(time, t.getAvTime());
+                            if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                                res.setTime(start, t.getAvTime(), t.getTaskID());
+                                pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+
+                                totalWaitingTime += (start - endLastTask);
+                                endLastTask = start + t.getAvTime();
+
+                            }
+
+                        }
+                    }
+                }
 
             }
 
         }
 
     }
-
-}

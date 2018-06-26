@@ -92,5 +92,9 @@ public class Resource {
             time[i] = taskID;
         }
     }
+    public void setZero(){
+        this.time=new String[800];
+    }
+    
 
 }
