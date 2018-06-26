@@ -14,12 +14,13 @@ import java.util.List;
  * @author robin
  */
 public class Functions {
-    
+
     public double wait(int w) {
         double result = 0.0;
-        result = ((double)1 / 6) * w;
+        result = ((double) 1 / 6) * w;
         return result;
     }
+
     public double late(int l) {
         double result = 0.0;
         result = 0.125 * l;
@@ -27,13 +28,13 @@ public class Functions {
     }
 
     public double fO(List<Patient> sequence) {
-        double result=0;
+        double result = 0;
 
         Test t = new Test(sequence);
         t.addTask();
 
         result = t.calculateMakespan();
-        
+
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
         System.out.println(wait(t.totalWaitingTime));
@@ -95,6 +96,82 @@ public class Functions {
         }
         System.out.print("The minimum is located  ");
         return minb;
+    }
+
+    /**
+     * Genetic Algorithm
+     *
+     * @param sizePopulation size of the population studied
+     * @param nbrGeneration number of generation done before finding the best
+     * sequence
+     * @return the sequence with the best fitness
+     */
+    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur) {
+        // List of Sequences considered as a population
+        List<List<Patient>> population = new ArrayList<>();
+        // Declaration of the initial sequence 
+        List<Patient> bestPosition = scur;
+
+        //Initialization of the two Lists used for the parents
+        List<Patient> bestPopulation1;
+        List<Patient> bestPopulation2;
+
+        //Filling of the population by random sequences( replace by Quentin)
+//        int i = 1;
+//        while (i < sizePopulation) {
+//            // add a line about adding new sequences
+//            population.add(i);
+//        }
+        //end of the part of Quentin
+        //Comparison of fitness of the two first sequences of the population to set the first two parents
+        if (fO(population.get(0)) < fO(population.get(1))) {
+            bestPopulation1 = population.get(0);
+            bestPopulation2 = population.get(1);
+        } else {
+            bestPopulation1 = population.get(1);
+            bestPopulation2 = population.get(0);
+        }
+
+        /*Evolution of the population to find the sequence with the best fitness
+        after a fixed number of iterations*/
+        int n = 0;
+        while (n < nbrGeneration) {
+
+            //Examination of the population to find the two fittest sequences
+            for (int j = 0; j <= sizePopulation; j++) {
+                List<Patient> read = population.get(j);
+                if (fO(read) < fO(bestPopulation2)) {
+                    if (fO(read) < fO(bestPopulation1)) {
+                        bestPopulation2 = bestPopulation1;
+                        bestPopulation1 = read;
+                    }
+                    bestPopulation2 = read;
+                }
+            }
+
+            //Realisation of the crossingOver to create an Offspring supposedly better than its two parents
+            CrossingOver crossingOver = new CrossingOver(4);
+            crossingOver.setMother(bestPopulation1);
+            crossingOver.setFather(bestPopulation2);
+            List<Integer> child = crossingOver.makeACrossingOver();
+            //This offspring is added in the population 
+            population.add(child);
+            //The list fit parent in taken out of the population 
+            population.remove(population.indexOf(bestPopulation2));
+
+            //A Generation pass
+            n++;
+        }
+
+        //Find the best sequence at the end of the evolution
+        bestPosition = population.get(0);
+        for (int m = 1; m <= sizePopulation; m++) {
+            if (fO(population.get(m)) < fO(bestPosition)) {
+                bestPosition = population.get(m);
+            }
+        }
+        return bestPosition;
+
     }
 
 }
