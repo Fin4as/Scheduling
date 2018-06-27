@@ -83,21 +83,6 @@ public class Test {
         return p;
     }
 
-    public boolean addResourceInList(Resource r) {
-        int i = 0;
-        boolean isPresent = false;
-        while (!isPresent && i < listResource.size()) {
-            if (!r.getResourceID().equals(listResource.get(i).getResourceID())) {
-                i++;
-            } else {
-                isPresent = true;
-            }
-        }
-        return isPresent;
-    }
-    
-    // .contains pour savoir si un objet est dans la liste
-
     public int lateness() {
 
         int maxLateness = 0;
@@ -166,14 +151,15 @@ public class Test {
     public void addTask() {
         //Empty the schedule of each patient to make sure tasks don't add the end of their schedule
         for (int p = 0; p < listPatient.size(); p++) {
-            listPatient.get(p).setSchedule();
+            listPatient.get(p).setSchedule(); // chnage this method's name
         }
+
+        //Empty the table time of each resource to make sure tasks don't add the end of their schedule
         for (int p = 0; p < listResource.size(); p++) {
             listResource.get(p).setZero();
         }
         totalWaitingTime = 0;
 
-        
         for (int j = 0; j < listPatient.size(); j++) {
             Patient pat = listPatient.get(j);
             int endLastTask = 0;
@@ -181,63 +167,35 @@ public class Test {
             for (int k = 0; k < process.getListTask().size(); k++) {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
+             //   if(t.getNextTaskIDList().get(0)
                 int opMode = t.getOpMode();
+                
 //remove switch case, call getfastestvailable for every tasks, getOP mode for the next task. Get the next task in NextTaskList 
 //write a method similar with get Process , to get the next Task
-                switch (opMode) {
-                    case 0:
 
-                        if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                            Skill s = t.getSkill();
-                            int r = s.getFastestAvailable(time, t.getAvTime());
-                            if (r != -1) {
-                                Resource res = t.getSkill().getListResource().get(r);
-                                int start = res.getNextAvailableTime(time, t.getAvTime());
-                                if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                    res.setTime(start, t.getAvTime(), t.getTaskID());
-                                    if (addResourceInList(res) == false) {
-                                        listResource.add(res);
-                                    }
-                                    pat.setSchedule(start, t.getAvTime(), t.getTaskID());
-
-                                    totalWaitingTime += (start - endLastTask);
-                                    endLastTask = start + t.getAvTime();
-
-                                }
-
+// ecrire un if non waiting k++ pour aller à la tache suivante
+//esle rien
+                if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
+                    Skill s = t.getSkill();
+                    int r = s.getFastestAvailable(time, t.getAvTime());
+                    if (r != -1) {
+                        Resource res = t.getSkill().getListResource().get(r);
+                        int start = res.getNextAvailableTime(time, t.getAvTime());
+                        if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                            res.setTime(start, t.getAvTime(), t.getTaskID());
+                            if (!listResource.contains(res)) {
+                                listResource.add(res);
                             }
+                            pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+                            totalWaitingTime += (start - endLastTask);
+                            endLastTask = start + t.getAvTime();
 
                         }
-                        break;
 
-                    case 1:
-
-                        if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                            Skill s = t.getSkill();
-                            int i = 0;
-                            boolean found = false;
-                            List<Resource> lr = s.getListResource();
-                            int start = lr.get(i).getNextAvailableTime(time, t.getAvTime());
-                            while (!found && i < lr.size()) {
-                                if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                    found = true;
-                                    lr.get(i).setTime(start, t.getAvTime(), t.getTaskID());
-                                    if (addResourceInList(lr.get(i)) == false) {
-                                        listResource.add(lr.get(i));
-                                    }
-                                    pat.setSchedule(start, t.getAvTime(), t.getTaskID());
-
-                                    totalWaitingTime += (start - endLastTask);
-                                    endLastTask = start + t.getAvTime();
-                                } else {
-                                    i++;
-                                }
-                            }
-
-                        }
-                        break;
+                    }
 
                 }
+                
             }
 
         }
