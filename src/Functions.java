@@ -131,7 +131,7 @@ public class Functions {
 
         //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
-        List<Patient> bestPopulation2;
+        List<Patient> bestPopulation2 ;
 
         //Filling of the population by random sequences(replace by Quentin)
         Random rd = new Random();
@@ -181,7 +181,8 @@ public class Functions {
         while (n < nbrGeneration) {
 
             //Examination of the population to find the two fittest sequences
-            for (int j = 0; j <= sizePopulation; j++) {
+            bestPopulation2=population.get(0);
+            for (int j = 0; j < sizePopulation; j++) {
                 List<Patient> read = population.get(j);
                 if (fO(read) < fO(bestPopulation2)) {
                     if (fO(read) < fO(bestPopulation1)) {
@@ -197,6 +198,7 @@ public class Functions {
 //                //This offspring is added in the population 
             population.add(child);
             //The list fit parent in taken out of the population 
+            System.out.println(population.indexOf(bestPopulation2));
             population.remove(population.indexOf(bestPopulation2));
 
             //A Generation pass
@@ -205,7 +207,7 @@ public class Functions {
 
         //Find the best sequence at the end of the evolution
         bestPosition = population.get(0);
-        for (int m = 1; m <= sizePopulation; m++) {
+        for (int m = 1; m < sizePopulation; m++) {
             if (fO(population.get(m)) < fO(bestPosition)) {
                 bestPosition = population.get(m);
             }
