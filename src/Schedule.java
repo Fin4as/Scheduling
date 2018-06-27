@@ -29,11 +29,11 @@ public class Schedule {
         getConnectDB(); // connect to DataBAase
         for (int i = 0; i < listP.size(); i++) {
             String namePro = listP.get(i);
-            List<Task> listTask = new ArrayList();
             List<Resource> allResources = new ArrayList<Resource>();
+            List<Task> listTask = new ArrayList();
             listTask = this.getTaskData(namePro);
             this.getSkillData(listTask);
-            allResources = this.getAllResources(namePro);
+            allResources = this.dataAllResources(namePro);
             this.getResourceData(listTask, allResources);
 
             Process pro = new Process(namePro, listTask, allResources);
@@ -151,7 +151,7 @@ public class Schedule {
         }
     }
 
-    public List<Resource> getAllResources(String processID) {
+    public List<Resource> dataAllResources(String processID) {
         List<Resource> allResources = new ArrayList<Resource>();
         try {
             String query = "SELECT DISTINCT ResourceID, Name, Capacity FROM Resource NATURAL JOIN ResourceSkill JOIN Task ON Task.ID = ResourceSkill.IDcouple WHERE Task.ProcessID ='" + processID + "'";

@@ -47,6 +47,10 @@ public class Process {
     public List<Task> getListTask() {
         return listTask;
     }
+    
+    public List<Resource> getListResource() {
+        return allResources;
+    }
 
 //    public void getConnectDB() {
 //        try {
