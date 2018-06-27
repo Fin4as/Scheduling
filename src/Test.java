@@ -32,7 +32,17 @@ public class Test {
         lateness = 0;
 //        makespan = 0;
 
-        listProcess = s.getListProcess();
+        listProcess = s.getListProcess(); 
+        for(int l=0; l<listProcess.size();l++){
+            Process pl = s.getListProcess().get(l);
+            for (int length= 0 ; length<pl.getListResource().size();length++){
+                if (!this.listResource.contains(pl.getListResource().get(length))){
+                this.listResource.add(pl.getListResource().get(length));
+                }
+            }
+            
+        }
+        
         //  System.out.println(s.getListProcess().toString());
 
     }
