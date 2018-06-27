@@ -21,7 +21,8 @@ public class Schedule {
     String driver = "com.mysql.jdbc.Driver";
     Statement st;
     Connection conn;
-    List<Process> listProcess;
+
+    private List<Process> listProcess;
 
     public Schedule(List<Patient> listPatient) {
         List<String> listP = this.getProcess(listPatient);
@@ -168,6 +169,7 @@ public class Schedule {
         }
         return allResources;
     }
+}
 
 //    public void getPrevTask() {
 //        try {
@@ -215,4 +217,4 @@ public class Schedule {
 //    public ResultSet getResultSet() {
 //        return rs;
 //    }
-}
+

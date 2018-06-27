@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -55,6 +54,10 @@ public class Main {
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
 //        
+       List<Patient> gene = f.genetic(50, 4, listPatient);
+        System.out.println(gene + " " + f.fO(gene));
+        
+        
 //        
 //        Test m = new Test(listPatient);
 //        m.addTask();
