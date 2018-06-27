@@ -14,7 +14,6 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
-    private int arrivalTime;
 
     public Patient(String id, String processID) {
         this.patientID = id;
