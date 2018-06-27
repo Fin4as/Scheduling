@@ -151,12 +151,12 @@ public class Test {
     public void addTask() {
         //Empty the schedule of each patient to make sure tasks don't add the end of their schedule
         for (int p = 0; p < listPatient.size(); p++) {
-            listPatient.get(p).setSchedule(); // chnage this method's name
+            listPatient.get(p).setSchedule(); // change this method's name
         }
 
         //Empty the table time of each resource to make sure tasks don't add the end of their schedule
-        for (int p = 0; p < listResource.size(); p++) {
-            listResource.get(p).setZero();
+        for (int r = 0; r < listResource.size(); r++) {
+            listResource.get(r).setZero();
         }
         totalWaitingTime = 0;
 

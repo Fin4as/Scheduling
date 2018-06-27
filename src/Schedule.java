@@ -24,45 +24,39 @@ public class Schedule {
     List<Process> listProcess;
 
     public Schedule(List<Patient> listPatient) {
-        List<String> listP = this.getProcess( listPatient);
+        List<String> listP = this.getProcess(listPatient);
         List<Process> listPro = new ArrayList();
         getConnectDB(); // connect to DataBAase
-        for (int i = 0; i<listP.size();i++){
+        for (int i = 0; i < listP.size(); i++) {
             String namePro = listP.get(i);
-            List<Task> listTask = new ArrayList<Task>(); 
-            List<Resource> allResources = new ArrayList<Resource>(); 
-            listTask= this.getTaskData(namePro);
+            List<Task> listTask = new ArrayList();
+            List<Resource> allResources = new ArrayList<Resource>();
+            listTask = this.getTaskData(namePro);
             this.getSkillData(listTask);
-             allResources=this.getAllResources(namePro);
+            allResources = this.getAllResources(namePro);
             this.getResourceData(listTask, allResources);
-            
+
             Process pro = new Process(namePro, listTask, allResources);
             listPro.add(pro);
         }
-        this.listProcess=listPro;
-        
+        this.listProcess = listPro;
+
     }
+
     public List<String> getProcess(List<Patient> listPatient) {
-    List<String> idProcess = new ArrayList();
-        String ty = "";
+        List<String> idProcess = new ArrayList();
+
         for (int k = 0; k < listPatient.size(); k++) {
 
-            if (!idProcess.contains(listPatient.get(k).getProcessID()) && idProcess.size() > 0) {
+            if (!idProcess.contains(listPatient.get(k).getProcessID())) {
                 idProcess.add(listPatient.get(k).getProcessID());
-                ty += " OR ProcessID ='" + listPatient.get(k).getProcessID() + "'";
-                System.out.println(listPatient.get(k).getProcessID());
-                
-            } else if (!idProcess.contains(listPatient.get(k).getProcessID()) && idProcess.size() == 0) {
-                idProcess.add(listPatient.get(k).getProcessID());
-                ty += " ProcessID ='" + listPatient.get(k).getProcessID() + "'";
-                System.out.println(listPatient.get(k).getProcessID());
 
-            }   
+            }
+
         }
         return idProcess;
     }
-    
-    
+
     public List<Process> getListProcess() {
         return listProcess;
     }
@@ -82,14 +76,12 @@ public class Schedule {
         }
     }
 
-   
-    
-      public List<Task> getTaskData(String processID) {
-          List<Task> listTask = new ArrayList<Task>();
+    public List<Task> getTaskData(String processID) {
+        List<Task> listTask = new ArrayList<Task>();
         try {
             String query = "SELECT * FROM Task WHERE ProcessID ='" + processID + "'";
             rs = st.executeQuery(query);
-            
+
             while (rs.next()) {
                 String process_id = rs.getString("ProcessID");
                 String task_id = rs.getString("TaskID");
@@ -106,10 +98,10 @@ public class Schedule {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-return listTask;
+        return listTask;
     }
-      
-      public void getSkillData(List<Task> listTask) {
+
+    public void getSkillData(List<Task> listTask) {
 
         for (int i = 0; i < listTask.size(); i++) {
             try {
@@ -131,7 +123,7 @@ return listTask;
         }
     }
 
-    public void getResourceData(List<Task> listTask,List<Resource> allResources) {
+    public void getResourceData(List<Task> listTask, List<Resource> allResources) {
 
         try {
             for (int i = 0; i < listTask.size(); i++) {
@@ -215,9 +207,6 @@ return listTask;
 //            System.out.println(ex);
 //        }
 //    }
-
-    
-
 //
 //    public Statement getStatement() {
 //        return st;
