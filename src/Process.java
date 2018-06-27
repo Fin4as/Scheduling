@@ -5,10 +5,7 @@
  */
 
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
+
 import java.util.List;
 
 /**
@@ -52,16 +49,6 @@ public class Process {
         return allResources;
     }
 
-//    public void getConnectDB() {
-//        try {
-//            Class.forName(driver);
-//            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
-//            st = conn.createStatement();
-//            System.out.println("You are connected ! ");
-//        } catch (Exception ex) {
-//            System.out.println("Error : " + ex);
-//        }
-//    }
 
     public List<Resource> getAllResources() {
         return allResources;
