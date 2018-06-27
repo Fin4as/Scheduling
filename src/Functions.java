@@ -3,6 +3,7 @@ import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -108,70 +109,70 @@ public class Functions {
      */
     public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur) {
         // List of Sequences considered as a population
-        List<List<Patient>> population = new ArrayList<>();
+        List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
         List<Patient> bestPosition = scur;
 
-        //Initialization of the two Lists used for the parents
+        //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
         List<Patient> bestPopulation2;
 
-        //Filling of the population by random sequences( replace by Quentin)
-//        int i = 1;
-//        while (i < sizePopulation) {
-//            // add a line about adding new sequences
-//            population.add(i);
-//        }
-        //end of the part of Quentin
-        //Comparison of fitness of the two first sequences of the population to set the first two parents
-        if (fO(population.get(0)) < fO(population.get(1))) {
-            bestPopulation1 = population.get(0);
-            bestPopulation2 = population.get(1);
-        } else {
-            bestPopulation1 = population.get(1);
-            bestPopulation2 = population.get(0);
-        }
+        //Filling of the population by random sequences(replace by Quentin)
+        Random rd = new Random();
+        List<Patient> randomPatients = new ArrayList();
+        Integer randomIDPatient;
+        while (randomPatients.size() < scur.size()) {
+            randomIDPatient = rd.nextInt(10);
+        randomIDProcess = rd.nextInt();
+//        randomPatients.add(new Patient(randomIDPatient.toString(),"PR"+));
+            //End of the part of Quentin
 
-        /*Evolution of the population to find the sequence with the best fitness
+            //Comparison of fitness of the two first sequences of the population to set the first two parents
+            if (fO(population.get(0)) < fO(population.get(1))) {
+                bestPopulation1 = population.get(0);
+                bestPopulation2 = population.get(1);
+            } else {
+                bestPopulation1 = population.get(1);
+                bestPopulation2 = population.get(0);
+            }
+
+            /*Evolution of the population to find the sequence with the best fitness
         after a fixed number of iterations*/
-        int n = 0;
-        while (n < nbrGeneration) {
+            int n = 0;
+            while (n < nbrGeneration) {
 
-            //Examination of the population to find the two fittest sequences
-            for (int j = 0; j <= sizePopulation; j++) {
-                List<Patient> read = population.get(j);
-                if (fO(read) < fO(bestPopulation2)) {
-                    if (fO(read) < fO(bestPopulation1)) {
-                        bestPopulation2 = bestPopulation1;
-                        bestPopulation1 = read;
+                //Examination of the population to find the two fittest sequences
+                for (int j = 0; j <= sizePopulation; j++) {
+                    List<Patient> read = population.get(j);
+                    if (fO(read) < fO(bestPopulation2)) {
+                        if (fO(read) < fO(bestPopulation1)) {
+                            bestPopulation2 = bestPopulation1;
+                            bestPopulation1 = read;
+                        }
+                        bestPopulation2 = read;
                     }
-                    bestPopulation2 = read;
+                }
+
+                //Realisation of the crossing over to create an offspring supposedly better than its two parents
+                List<Patient> child = SwappableSequence.makeACrossingOver(bestPopulation1,bestPopulation2,4);
+//                //This offspring is added in the population 
+                population.add(child);
+                //The list fit parent in taken out of the population 
+                population.remove(population.indexOf(bestPopulation2));
+
+                //A Generation pass
+                n++;
+            }
+
+            //Find the best sequence at the end of the evolution
+            bestPosition = population.get(0);
+            for (int m = 1; m <= sizePopulation; m++) {
+                if (fO(population.get(m)) < fO(bestPosition)) {
+                    bestPosition = population.get(m);
                 }
             }
 
-            //Realisation of the crossingOver to create an Offspring supposedly better than its two parents
-            CrossingOver crossingOver = new CrossingOver(4);
-            crossingOver.setMother(bestPopulation1);
-            crossingOver.setFather(bestPopulation2);
-            List<Integer> child = crossingOver.makeACrossingOver();
-            //This offspring is added in the population 
-            population.add(child);
-            //The list fit parent in taken out of the population 
-            population.remove(population.indexOf(bestPopulation2));
-
-            //A Generation pass
-            n++;
-        }
-
-        //Find the best sequence at the end of the evolution
-        bestPosition = population.get(0);
-        for (int m = 1; m <= sizePopulation; m++) {
-            if (fO(population.get(m)) < fO(bestPosition)) {
-                bestPosition = population.get(m);
-            }
         }
         return bestPosition;
-
     }
-
 }

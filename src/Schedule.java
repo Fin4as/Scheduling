@@ -25,7 +25,7 @@ public class Schedule {
     Connection conn;
     
 
-    List<Process> listProcess;
+    private List<Process> listProcess;
 
     public Schedule() {
         listProcess = new ArrayList();
