@@ -169,6 +169,7 @@ public class Schedule {
         }
         return allResources;
     }
+}
 
 //    public void getPrevTask() {
 //        try {
