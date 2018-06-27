@@ -43,8 +43,7 @@ public class Main {
         listPatient.add(p9);
         
 //        
-       List<Patient> best = f.annealingMin(3, 5, listPatient);
-        System.out.println( best +" "+ f.fO(best) );
+       List<Patient> best = f.genetic(50, 4, listPatient);
         
         
 //        

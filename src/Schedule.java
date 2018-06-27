@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -18,12 +17,10 @@ import java.util.List;
  */
 public class Schedule {
 
-    
     ResultSet rs;
     String driver = "com.mysql.jdbc.Driver";
     Statement st;
     Connection conn;
-    
 
     private List<Process> listProcess;
 
@@ -39,23 +36,23 @@ public class Schedule {
 
     public void getConnectDB() {
         try {
-            
+
             Class.forName(driver);
             conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
 //            System.out.println("You are connected ! ");
-           
+
         } catch (Exception ex) {
             System.out.println("Error : " + ex);
-           
+
         }
     }
 
     public void getProcessData() {
 
         try {
-            
+
             String query = "SELECT * FROM Process";
             rs = st.executeQuery(query);
 //            System.out.println("Records from DataBase");
@@ -64,15 +61,29 @@ public class Schedule {
                 Process process = new Process(processID, st);
                 listProcess.add(process);
             }
-        st.close();
-        rs.close();
-        conn.close();
+            st.close();
+            rs.close();
+            conn.close();
         } catch (Exception ex) {
             System.out.println(ex);
-            
-        }
 
+        }
     }
+
+    public static List<String> getIDProcesses(List<Patient> listPatient) {
+        List<String> idProcess = new ArrayList();
+
+        for (int k = 0; k < listPatient.size(); k++) {
+
+            if (!idProcess.contains(listPatient.get(k).getProcessID()) && idProcess.size() > 0) {
+                idProcess.add(listPatient.get(k).getProcessID());
+
+            }
+
+        }
+        return idProcess;
+    }
+}
 //
 //    public Statement getStatement() {
 //        return st;
@@ -81,4 +92,4 @@ public class Schedule {
 //    public ResultSet getResultSet() {
 //        return rs;
 //    }
-}
+
