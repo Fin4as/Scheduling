@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -96,7 +95,7 @@ public abstract class SwappableSequence {
         return child;
     }
 
-    public static List<Patient> weightedInitialSolution(List<Patient> arrivalSequence, List<Integer> data) {
+    public static List<List> weightedSequence(List<Patient> arrivalSequence, List<Integer> data) {
 
         List<Double> cancellationLikelihoods = new ArrayList();
         double cancellationLikelihood;
@@ -106,12 +105,13 @@ public abstract class SwappableSequence {
         List<Patient> lowCancellationLikelihoods = new ArrayList();
         List<Patient> highCancellationLikelihoods = new ArrayList();
         List<Patient> weightedInitialSolution = new ArrayList();
+        List<List> output = new ArrayList();
 
         for (int i = 0; i < data.size(); i++) {
             if (data.get(i) <= 84) {
-                cancellationLikelihood = 0.5 * (- 1 / (0.05 * (data.get(i) + 20)) + ((double) 31 / 26));
+                cancellationLikelihood = 0.4 * (- 1 / (0.05 * (data.get(i) + 20)) + ((double) 31 / 26));
             } else {
-                cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (data.get(i) - 84)));
+                cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (data.get(i) - (5 * Math.log((double) 3 / 2) + 84))));
             }
             cancellationLikelihoods.add(cancellationLikelihood);
         }
@@ -135,6 +135,7 @@ public abstract class SwappableSequence {
         } else {
             median = sortedCancellationLikelihoods.get(n / 2);
         }
+        System.out.println(median);
 
         for (int i = 0; i < n; i++) {
             if (cancellationLikelihoods.get(Integer.getInteger(arrivalSequence.get(i).getPatientID().substring(1))) < median) {
@@ -159,7 +160,12 @@ public abstract class SwappableSequence {
             weightedInitialSolution.add(lowCancellationLikelihoods.get(n / 2));
         }
         
-        return weightedInitialSolution;
+        output.add(cancellationLikelihoods);
+        output.add(weightedInitialSolution);
+        output.add(lowCancellationLikelihoods);
+        output.add(highCancellationLikelihoods);
+        
+        return output;
     }
 
 }
