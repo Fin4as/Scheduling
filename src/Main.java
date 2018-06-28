@@ -1,4 +1,5 @@
 
+import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,18 +47,22 @@ public class Main {
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 //
+        long t_0A = System.nanoTime();
         List<Patient> best = f.annealingMin(3, 5, listPatient);
         System.out.println(best + " " + f.fO(best));
+         long t_1A = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1A - t_0A) / pow(10, 9) + " s.");
 
 //        for(int i =0; i<listPatient.size(); i++){
 //            System.out.print(listPatient.get(i).getPatientID());
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
 //        
-       List<Patient> gene = f.genetic(50, 4, listPatient);
+ long t_0G = System.nanoTime();
+        List<Patient> gene = f.genetic(50, 4, listPatient);
         System.out.println(gene + " " + f.fO(gene));
-        
-        
+ long t_1G = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1G - t_0G) / pow(10, 9) + " s.");
 //        
 //        Test m = new Test(listPatient);
 //        m.addTask();
