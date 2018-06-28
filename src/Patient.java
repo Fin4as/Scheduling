@@ -14,6 +14,8 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
+    //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
+    //Quentin I trust you on this one ;)
 
     public Patient(String id, String processID) {
         this.patientID = id;

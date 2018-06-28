@@ -54,8 +54,7 @@ public class Main {
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
 //        
-       List<Patient> gene = f.genetic(50, 4, listPatient);
-        System.out.println(gene + " " + f.fO(gene));
+
         
         
 //        
