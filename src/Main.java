@@ -1,7 +1,6 @@
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -18,9 +17,8 @@ public class Main {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-        Functions f = new Functions();
-        List<Patient> listPatient= new ArrayList();
+
+        List<Patient> listPatient = new ArrayList();
         Patient p0 = new Patient("P0", "PR1");
         Patient p1 = new Patient("P1", "PR1");
         Patient p2 = new Patient("P2", "PR1");
@@ -41,22 +39,34 @@ public class Main {
         listPatient.add(p7);
         listPatient.add(p8);
         listPatient.add(p9);
-        
+
+        Schedule s = new Schedule(listPatient);
+        Functions f = new Functions(s);
+//
+//       Test t = new Test(listPatient,s);
+//       t.addTask();
+//
+        List<Patient> best = f.annealingMin(3, 5, listPatient);
+        System.out.println(best + " " + f.fO(best));
+
+//        for(int i =0; i<listPatient.size(); i++){
+//            System.out.print(listPatient.get(i).getPatientID());
+//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
+//        }
 //        
-       List<Patient> best = f.annealingMin(3, 5, listPatient);
-        System.out.println( best +" "+ f.fO(best) );
+       List<Patient> gene = f.genetic(50, 4, listPatient);
+        System.out.println(gene + " " + f.fO(gene));
         
         
 //        
 //        Test m = new Test(listPatient);
 //        m.addTask();
-//        for(int i =0; i<listPatient.size(); i++){
+//        
 //           
 ////            
 //            System.out.print(listPatient.get(i).getPatientID());
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
-        
 //        Test m = new Test(listPatient);
 ////        
 //        m.addTask();
