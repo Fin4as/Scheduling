@@ -131,7 +131,7 @@ public class Functions {
 
         //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
-        List<Patient> bestPopulation2 ;
+        List<Patient> bestPopulation2;
 
         //Filling of the population by random sequences(replace by Quentin)
         Random rd = new Random();
@@ -181,7 +181,7 @@ public class Functions {
         while (n < nbrGeneration) {
 
             //Examination of the population to find the two fittest sequences
-            bestPopulation2=population.get(0);
+            bestPopulation2 = population.get(0);
             for (int j = 0; j < sizePopulation; j++) {
                 List<Patient> read = population.get(j);
                 if (fO(read) < fO(bestPopulation2)) {
@@ -214,4 +214,55 @@ public class Functions {
         }
         return bestPosition;
     }
+
+    public List<Patient> tabuSearch(int itermax, int sizeTabuList, List<Patient> scur) {
+        List<Patient> bestPosition = scur;
+        List<Comparison> tabuList = new ArrayList<>();
+        int i = 0;
+        List<Patient> curSpot = bestPosition;
+
+        while (i < itermax) {
+
+            List<Patient> test = SwappableSequence.deterministicSwap(curSpot, i % (scur.size()), (i + 1) % (scur.size()));
+            List<Patient> pairTest = new ArrayList<>();
+            Patient e1 = null;
+            Patient e2 = null;
+
+            for (int k = 0; k < test.size(); k++) {
+                if (!test.get(k).equals(curSpot.get(i))) {
+                    e1 = test.get(k);
+                    e2 = curSpot.get(i);
+                }
+            }
+            pairTest.add(e1);
+            pairTest.add(e2);
+
+            Comparison pair = new Comparison(pairTest);
+
+            boolean tabu = false;
+            int m = 0;
+            while (m < tabuList.size() && !tabu) {
+                if ((pairTest.get(0).equals(tabuList.get(m).paire.get(0))) || (pairTest.get(0).equals(tabuList.get(m).paire.get(1)))) {
+                    if ((pairTest.get(1).equals(tabuList.get(m).paire.get(0))) || (pairTest.get(1).equals(tabuList.get(m).paire.get(1)))) {
+                        tabu = true;
+                    }
+                }
+                m++;
+            }
+            if (!tabu && m < tabuList.size()) {
+                curSpot = test;
+                if (fO(curSpot) < fO(bestPosition)) {
+                    bestPosition = curSpot;
+                }
+                tabuList.add(sizeTabuList, pair);
+                if (tabuList.size() > sizeTabuList) {
+                    tabuList.remove(0);
+                }
+            }
+            i++;
+        }
+
+        return bestPosition;
+    }
+
 }

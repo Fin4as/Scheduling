@@ -57,6 +57,9 @@ public class Main {
        List<Patient> gene = f.genetic(50, 4, listPatient);
         System.out.println(gene + " " + f.fO(gene));
         
+        List<Patient> tabu = f.tabuSearch(20, 10, listPatient);
+        System.out.println(tabu + " " + f.fO(tabu));
+        
         
 //        
 //        Test m = new Test(listPatient);
