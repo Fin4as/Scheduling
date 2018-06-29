@@ -37,6 +37,10 @@ public class Task {
         prevTaskID = new ArrayList();
 
     }
+    
+    public String getProcessID(){
+        return processID;
+    }
 
     public Skill getSkill() {
         return skill;

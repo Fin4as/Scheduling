@@ -45,7 +45,7 @@ public class Skill {
             if (listResource.size() == 1 && min != -1) {
                 resource = 0;
             } else if (listResource.size() > 1) {
-                for (int i = j++; i < listResource.size(); i++) { // before, it was i = 1
+                for (int i = j++; i < listResource.size(); i++) { 
                     int currentTime = listResource.get(i).getNextAvailableTime(startTime, avTime);
                     if (min != -1 && currentTime <= min) {
                         resource = i;

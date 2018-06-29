@@ -20,37 +20,30 @@ public class Test {
     List<Process> listProcess;
     List<Resource> listResource;
     int totalWaitingTime;
-//    int makespan;
     int lateness;
 
     public Test(List<Patient> sequence, Schedule s) {
         listPatient = sequence;
-        listResource = new ArrayList();
-
-        List<Resource> listResource = new ArrayList<>();
+        listResource = s.getAllResources();
+//        List<Resource> listResource = new ArrayList();
         totalWaitingTime = 0;
         lateness = 0;
-//        makespan = 0;
 
         listProcess = s.getListProcess(); 
-        for(int l=0; l<listProcess.size();l++){
-            Process pl = s.getListProcess().get(l);
-            for (int length= 0 ; length<pl.getListResource().size();length++){
-                if (!this.listResource.contains(pl.getListResource().get(length))){
-                this.listResource.add(pl.getListResource().get(length));
-                }
-            }
-            
-        }
+//        for(int l=0; l<listProcess.size();l++){
+//            Process pl = s.getListProcess().get(l);
+//            for (int length= 0 ; length<pl.getListResource().size();length++){
+//                if (!this.listResource.contains(pl.getListResource().get(length))){
+//                this.listResource.add(pl.getListResource().get(length));
+//                }
+//            }
+//            
+//        }
         
-        //  System.out.println(s.getListProcess().toString());
+
 
     }
 
-//    public int getMakespan() {
-//        makespan = this.calculateMakespan();
-//        return makespan;
-//    }
     public int getLateness() {
         lateness = this.lateness();
         return lateness;
@@ -159,12 +152,12 @@ public class Test {
     }
 
     public void addTask() {
-        //Empty the schedule of each patient to make sure tasks don't add the end of their schedule
+        //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
-            listPatient.get(p).setSchedule(); // change this method's name
+            listPatient.get(p).resetSchedule(); // change this method's name
         }
 
-        //Empty the table time of each resource to make sure tasks don't add the end of their schedule
+        //Empty the table of time of each resource 
         for (int r = 0; r < listResource.size(); r++) {
             listResource.get(r).setZero();
         }
@@ -177,9 +170,8 @@ public class Test {
             for (int k = 0; k < process.getListTask().size(); k++) {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
-             //   if(t.getNextTaskIDList().get(0)
-                int opMode = t.getOpMode();
-                
+//                int opMode = t.getOpMode();
+//                
 //remove switch case, call getfastestvailable for every tasks, getOP mode for the next task. Get the next task in NextTaskList 
 //write a method similar with get Process , to get the next Task
 
