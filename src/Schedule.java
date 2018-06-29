@@ -217,4 +217,3 @@ public class Schedule {
 //    public ResultSet getResultSet() {
 //        return rs;
 //    }
-
