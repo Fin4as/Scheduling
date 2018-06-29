@@ -116,6 +116,7 @@ public abstract class SwappableSequence {
             }
             cancellationLikelihoods.add(cancellationLikelihood);
         }
+     
 
         for (int i = 0; i < n; i++) {
             int indexInsertion = 0;
@@ -158,7 +159,6 @@ public abstract class SwappableSequence {
             weightedInitialSolution.add(lowCancellationLikelihoods.get(n / 2));
         }
         
-        output.add(cancellationLikelihoods);
         output.add(weightedInitialSolution);
         output.add(lowCancellationLikelihoods);
         output.add(highCancellationLikelihoods);

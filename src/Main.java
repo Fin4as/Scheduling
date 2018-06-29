@@ -1,6 +1,5 @@
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -53,9 +52,9 @@ public class Main {
 //            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
 //        }
 //        
+        List<Patient> grasp = f.grasp(0.4, 20, arrivalSequence);
+        System.out.println(grasp + " " + f.fO(grasp));
 
-        
-        
 //        
 //        Test m = new Test(listPatient);
 //        m.addTask();

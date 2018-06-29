@@ -4,7 +4,6 @@
  * and open the template in the editor.
  */
 
-
 /**
  *
  * @author Hayat
@@ -15,6 +14,7 @@ public class Patient {
     private String schedule[];
     private String processID;
     private int ageInformation;
+    private double cancellationLikelihood;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
@@ -23,6 +23,15 @@ public class Patient {
         schedule = new String[800];
         this.processID = processID;
         this.ageInformation = ageInformation;
+        if (ageInformation <= 84) {
+            this.cancellationLikelihood = 0.4 * (- 1 / (0.05 * (ageInformation + 20)) + ((double) 31 / 26));
+        } else {
+            this.cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
+        }
+    }
+
+    public int getAgeInformation() {
+        return ageInformation;
     }
 
     /**
@@ -50,7 +59,7 @@ public class Patient {
         if (!isEmptyStringArray(schedule)) {
             int i = schedule.length - 1;
             boolean found = false;
-            time=-1;
+            time = -1;
             while (!found && i >= 0) {
                 if (schedule[i] != null) {
                     time = i + 1;
@@ -74,13 +83,13 @@ public class Patient {
     public String getProcessID() {
         return processID;
     }
-    
-    public int getAgeInformation(){
-        return ageInformation;
-    }
 
     public void setSchedule() {
         this.schedule = new String[800];
     }
-    
+
+    public double getCancellationLikelihood() {
+        return cancellationLikelihood;
+    }
+
 }

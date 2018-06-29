@@ -129,8 +129,8 @@ public class Functions {
         bestPosition = scur;
         int i = 0;
         while (i < nbIteration) {
-            scur = greedyRandomizedConstruction(greedyness,scur);
-            scur = localSearch(scur,100);
+            scur = greedyRandomizedConstruction(greedyness, scur);
+            scur = localSearch(scur, 100);
 
             if (fO(scur) < fO(bestPosition)) {
                 bestPosition = scur;
@@ -148,44 +148,72 @@ public class Functions {
      */
     public List<Patient> greedyRandomizedConstruction(double greedyness, List<Patient> list) {
         List<Patient> sequence = new ArrayList();
-        List<Patient> possibilities = new ArrayList();
-        possibilities = list;
-        List<Patient> rcl = new ArrayList();
+        List<Patient> possibilitiesL = SwappableSequence.weightedSequence(list).get(1);
+        List<Patient> possibilitiesLbackup = SwappableSequence.weightedSequence(list).get(1);
+        List<Patient> possibilitiesH = SwappableSequence.weightedSequence(list).get(2);
+        List<Patient> possibilitiesHbackup = SwappableSequence.weightedSequence(list).get(2);
+        Patient randomElement;
+
+        Random rand = new Random();
+        int firstpo = rand.nextInt(possibilitiesL.size());
+        sequence.add(possibilitiesL.get(firstpo));
+        possibilitiesL.remove(firstpo);
 
         while (sequence.size() < list.size()) {
+            List<Patient> rcl = new ArrayList();
             List<Double> cost = new ArrayList();
-            for (int h = 0; h < possibilities.size(); h++) {
-                if (sequence.size() > 0) {
-                    // écrire SwappableSequence.weightedSequence(list) te renverra une liste contenant 4 listes, dans l'ordre :
-                    // les cancellationLikelihoods dans le même ordre que les patients de la liste (à toi de faire des get(i) au bon endroit pour remplacer ton getDistance)
-                    // ton paramètre list (ordre d'arrivée), ordonné en low, high, low, high
-                    // la sous-liste contenant tous les low dans le même ordre que la list ordonnée
-                    // la sous-liste contenant tous les high dans le même ordre que la list ordonnée
-                    // --> pour faire ta list possibilities en removant ce qu'il faut dedans en fonction de ta greedyness
-                    // et en réinitialisant à chaque fois avec la bonne sous-liste (low ou high selon ce que t'as fait avant)
-                    // je te conseille de prendre un patient random sinon tu vas toujours avoir le même en position 0
-                    // y'a juste à checker dans quelle sous-liste il est pour savoir si c'est un low ou high, et mettre possibilities comme étant la sous-liste opposée
-                    cost.add(Math.abs(sequence.get(sequence.size()).getDistance() - possibilities.get(h).getDistance()));
-                    // get(sequence.size())
-                } else {
-                    cost.add(Math.abs(possibilities.get(h).getDistance()));
-                }
-            }
-            double maxcost = Collections.max(cost);
-            double mincost = Collections.min(cost);
-            for (int k = 0; k < possibilities.size(); k++) {
-                if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
-                    rcl.add(possibilities.get(k));
-                    possibilities.remove(k);
-                }
-                Random rand = new Random();
-                Patient randomElement = rcl.get(rand.nextInt(rcl.size()));
-                sequence.add(randomElement);
-            }
+            if (possibilitiesHbackup.contains(sequence.get(sequence.size() - 1))) {
+                for (int h = 0; h < possibilitiesL.size(); h++) {
+                    cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesL.get(h).getCancellationLikelihood()));
 
+                }
+                double maxcost = Collections.max(cost);
+                double mincost = Collections.min(cost);
+
+                for (int k = 0; k < possibilitiesL.size(); k++) {
+                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                        rcl.add(possibilitiesL.get(k));
+                    }
+                }
+                 int limit = rcl.size() - 1;
+                if (limit == 0) {
+                    sequence.add(rcl.get(limit));
+                    randomElement = rcl.get(limit);
+                } else {
+                    System.out.println(limit);
+                    randomElement = rcl.get(rand.nextInt(limit));
+                    sequence.add(randomElement);
+                }
+                possibilitiesL.remove(possibilitiesL.indexOf(randomElement));
+
+            } else if ((possibilitiesLbackup.contains(sequence.get(sequence.size() - 1)))) {
+                for (int h = 0; h < possibilitiesH.size(); h++) {
+                    cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesH.get(h).getCancellationLikelihood()));
+                }
+
+                double maxcost = Collections.max(cost);
+                double mincost = Collections.min(cost);
+
+                for (int k = 0; k < possibilitiesH.size(); k++) {
+                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                        rcl.add(possibilitiesH.get(k));
+                    }
+                }
+                int limit = rcl.size() - 1;
+                if (limit == 0) {
+                    sequence.add(rcl.get(limit));
+                    randomElement = rcl.get(limit);
+                } else {
+                    System.out.println(limit);
+                    randomElement = rcl.get(rand.nextInt(limit));
+                    sequence.add(randomElement);
+                }
+
+                possibilitiesH.remove(possibilitiesH.indexOf(randomElement));
+
+            }
         }
         return sequence;
-
     }
 
     /**
@@ -197,9 +225,9 @@ public class Functions {
     public List<Patient> localSearch(List<Patient> scur, int nboccur) {
         List<Patient> bestPosition = scur;
         int improv = 0;
-        int numiter=0;
+        int numiter = 0;
         while (improv < nboccur) {
-            scur = SwappableSequence.deterministicSwap(scur,numiter % (scur.size()), (numiter + 1) % (scur.size()));
+            scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
             if (fO(scur) < fO(bestPosition)) {
                 bestPosition = scur;
             } else {
