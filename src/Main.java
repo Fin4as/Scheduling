@@ -65,35 +65,7 @@ public class Main {
           long t_1GR = System.nanoTime();
         System.out.println("Length of the algorithm : " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
 
-//        
-//        Test m = new Test(listPatient);
-//        m.addTask();
-//        
-//           
-////            
-//            System.out.print(listPatient.get(i).getPatientID());
-//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
-//        }
-//        Test m = new Test(listPatient);
-////        
-//        m.addTask();
-//        System.out.println(m.calculateMakespan());
-//         Test v = new Test(listPatient);
-//        v.addTask();
-//        System.out.println(v.calculateMakespan());
-//        System.out.println("lol");
-//        System.out.println("\t");
-//        for (int i = 0; i < m.getListPatient().size(); i++) {
-//            System.out.print(m.getListPatient().get(i).getPatientID() + "\t");
-//            System.out.println(Arrays.toString(m.getListPatient().get(i).getSchedule()));
-//        }
-//        System.out.println();
-//        System.out.print("Total Waiting Time : ");
-//        System.out.println(m.getTotalWaitingTime());
-//        System.out.print("Maskespan : ");
-//        System.out.println(m.getMakespan());
-//        System.out.print("Lateness : ");
-//        System.out.println(m.getLateness());
+
     }
 
 }
