@@ -48,23 +48,22 @@ public class Main {
 //       t.addTask();
 //
         long t_0A = System.nanoTime();
-        List<Patient> best = f.annealingMin(3, 5, listPatient);
+        List<Patient> best = f.annealingMin(3, 5, arrivalSequence);
         System.out.println(best + " " + f.fO(best));
-         long t_1A = System.nanoTime();
+        long t_1A = System.nanoTime();
         System.out.println("Length of the algorithm : " + (t_1A - t_0A) / pow(10, 9) + " s.");
 
-//        for(int i =0; i<listPatient.size(); i++){
-//            System.out.print(listPatient.get(i).getPatientID());
-//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
-//        }
-//        
- long t_0G = System.nanoTime();
-        List<Patient> gene = f.genetic(50, 4, listPatient);
+        long t_0G = System.nanoTime();
+        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
         System.out.println(gene + " " + f.fO(gene));
- long t_1G = System.nanoTime();
+        long t_1G = System.nanoTime();
         System.out.println("Length of the algorithm : " + (t_1G - t_0G) / pow(10, 9) + " s.");
+        
+        long t_0GR = System.nanoTime();
         List<Patient> grasp = f.grasp(0.4, 20, arrivalSequence);
         System.out.println(grasp + " " + f.fO(grasp));
+          long t_1GR = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
 
 //        
 //        Test m = new Test(listPatient);
