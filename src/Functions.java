@@ -2,6 +2,7 @@
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
@@ -116,100 +117,121 @@ public class Functions {
     }
 
     /**
-     * Genetic Algorithm
      *
-     * @param sizePopulation size of the population studied
-     * @param nbrGeneration number of generation done before finding the best
-     * sequence
-     * @return the sequence with the best fitness
+     * @param greedyness
+     * @param nbIteration
+     * @param scur
+     * @return
      */
-    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur) {
-        // List of Sequences considered as a population
-        List<List<Patient>> population = new ArrayList();
-        // Declaration of the initial sequence 
-        List<Patient> bestPosition = scur;
+    public List<Patient> grasp(double greedyness, int nbIteration, List<Patient> scur) {
+        //defined by a random function
+        List<Patient> bestPosition = new ArrayList<Patient>();
+        bestPosition = scur;
+        int i = 0;
+        while (i < nbIteration) {
+            scur = greedyRandomizedConstruction(greedyness, scur);
+            scur = localSearch(scur, 100);
 
-        //Initialization of the two lists used for the parents
-        List<Patient> bestPopulation1;
-        List<Patient> bestPopulation2 ;
-
-        //Filling of the population by random sequences(replace by Quentin)
-        Random rd = new Random();
-        List<Patient> randomPatients;
-        List<Patient> possiblePatient = new ArrayList();
-        Patient randomPatient;
-        int iteratorCheck;
-
-        population.add(scur);
-        while (population.size() < sizePopulation) {
-            for (int i = 0; i < scur.size(); i++) {
-                possiblePatient.add(scur.get(i));
+            if (fO(scur) < fO(bestPosition)) {
+                bestPosition = scur;
             }
-            randomPatients = new ArrayList();
-            iteratorCheck = 0;
-            while (randomPatients.size() < scur.size()) {
-                randomPatient = possiblePatient.get(rd.nextInt(possiblePatient.size()));
-                randomPatients.add(randomPatient);
-                possiblePatient.remove(randomPatient);
-
-            }
-            while (iteratorCheck < population.size()) {
-                if (population.contains(randomPatients)) {
-                    break;
-                } else {
-                    iteratorCheck++;
-                }
-                if (iteratorCheck == population.size()) {
-                    population.add(randomPatients);
-                }
-            }
+            i++;
         }
-        //End of the part of Quentin
+        return bestPosition;
+    }
 
-        //Comparison of fitness of the two first sequences of the population to set -the first two parents
-        if (fO(population.get(0)) < fO(population.get(1))) {
-            bestPopulation1 = population.get(0);
-            bestPopulation2 = population.get(1);
-        } else {
-            bestPopulation1 = population.get(1);
-            bestPopulation2 = population.get(0);
-        }
+    /**
+     *
+     * @param greedyness
+     * @param list
+     * @return
+     */
+    public List<Patient> greedyRandomizedConstruction(double greedyness, List<Patient> list) {
+        List<Patient> sequence = new ArrayList();
+        List<Patient> possibilitiesL = SwappableSequence.weightedSequence(list).get(1);
+        List<Patient> possibilitiesLbackup = SwappableSequence.weightedSequence(list).get(1);
+        List<Patient> possibilitiesH = SwappableSequence.weightedSequence(list).get(2);
+        List<Patient> possibilitiesHbackup = SwappableSequence.weightedSequence(list).get(2);
+        Patient randomElement;
 
-        /*Evolution of the population to find the sequence with the best fitness
-        after a fixed number of iterations*/
-        int n = 0;
-        while (n < nbrGeneration) {
+        Random rand = new Random();
+        int firstpo = rand.nextInt(possibilitiesL.size());
+        sequence.add(possibilitiesL.get(firstpo));
+        possibilitiesL.remove(firstpo);
 
-            //Examination of the population to find the two fittest sequences
-            bestPopulation2=population.get(0);
-            for (int j = 0; j < sizePopulation; j++) {
-                List<Patient> read = population.get(j);
-                if (fO(read) < fO(bestPopulation2)) {
-                    if (fO(read) < fO(bestPopulation1)) {
-                        bestPopulation2 = bestPopulation1;
-                        bestPopulation1 = read;
+        while (sequence.size() < list.size()) {
+            List<Patient> rcl = new ArrayList();
+            List<Double> cost = new ArrayList();
+            if (possibilitiesHbackup.contains(sequence.get(sequence.size() - 1))) {
+                for (int h = 0; h < possibilitiesL.size(); h++) {
+                    cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesL.get(h).getCancellationLikelihood()));
+
+                }
+                double maxcost = Collections.max(cost);
+                double mincost = Collections.min(cost);
+
+                for (int k = 0; k < possibilitiesL.size(); k++) {
+                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                        rcl.add(possibilitiesL.get(k));
                     }
-                    bestPopulation2 = read;
                 }
+                 int limit = rcl.size() - 1;
+                if (limit == 0) {
+                    sequence.add(rcl.get(limit));
+                    randomElement = rcl.get(limit);
+                } else {
+                    System.out.println(limit);
+                    randomElement = rcl.get(rand.nextInt(limit));
+                    sequence.add(randomElement);
+                }
+                possibilitiesL.remove(possibilitiesL.indexOf(randomElement));
+
+            } else if ((possibilitiesLbackup.contains(sequence.get(sequence.size() - 1)))) {
+                for (int h = 0; h < possibilitiesH.size(); h++) {
+                    cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesH.get(h).getCancellationLikelihood()));
+                }
+
+                double maxcost = Collections.max(cost);
+                double mincost = Collections.min(cost);
+
+                for (int k = 0; k < possibilitiesH.size(); k++) {
+                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                        rcl.add(possibilitiesH.get(k));
+                    }
+                }
+                int limit = rcl.size() - 1;
+                if (limit == 0) {
+                    sequence.add(rcl.get(limit));
+                    randomElement = rcl.get(limit);
+                } else {
+                    System.out.println(limit);
+                    randomElement = rcl.get(rand.nextInt(limit));
+                    sequence.add(randomElement);
+                }
+
+                possibilitiesH.remove(possibilitiesH.indexOf(randomElement));
+
             }
-
-            //Realisation of the crossing over to create an offspring supposedly better than its two parents
-            List<Patient> child = SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, 4);
-//                //This offspring is added in the population 
-            population.add(child);
-            //The list fit parent in taken out of the population 
-            System.out.println(population.indexOf(bestPopulation2));
-            population.remove(population.indexOf(bestPopulation2));
-
-            //A Generation pass
-            n++;
         }
+        return sequence;
+    }
 
-        //Find the best sequence at the end of the evolution
-        bestPosition = population.get(0);
-        for (int m = 1; m < sizePopulation; m++) {
-            if (fO(population.get(m)) < fO(bestPosition)) {
-                bestPosition = population.get(m);
+    /**
+     *
+     * @param scur
+     * @param nboccur
+     * @return
+     */
+    public List<Patient> localSearch(List<Patient> scur, int nboccur) {
+        List<Patient> bestPosition = scur;
+        int improv = 0;
+        int numiter = 0;
+        while (improv < nboccur) {
+            scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+            if (fO(scur) < fO(bestPosition)) {
+                bestPosition = scur;
+            } else {
+                improv++;
             }
         }
         return bestPosition;

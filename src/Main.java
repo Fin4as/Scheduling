@@ -1,4 +1,5 @@
 
+import static java.lang.Math.pow;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,46 +19,52 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        List<Patient> listPatient = new ArrayList();
-        Patient p0 = new Patient("P0", "PR1");
-        Patient p1 = new Patient("P1", "PR1");
-        Patient p2 = new Patient("P2", "PR1");
-        Patient p3 = new Patient("P3", "PR1");
-        Patient p4 = new Patient("P4", "PR1");
-        Patient p5 = new Patient("P5", "PR1");
-        Patient p6 = new Patient("P6", "PR1");
-        Patient p7 = new Patient("P7", "PR1");
-        Patient p8 = new Patient("P8", "PR1");
-        Patient p9 = new Patient("P9", "PR1");
-        listPatient.add(p0);
-        listPatient.add(p1);
-        listPatient.add(p2);
-        listPatient.add(p3);
-        listPatient.add(p4);
-        listPatient.add(p5);
-        listPatient.add(p6);
-        listPatient.add(p7);
-        listPatient.add(p8);
-        listPatient.add(p9);
+        List<Patient> arrivalSequence = new ArrayList();
+        Patient p0 = new Patient("P0", "PR1", 85);
+        Patient p1 = new Patient("P1", "PR1", 22);
+        Patient p2 = new Patient("P2", "PR1", 102);
+        Patient p3 = new Patient("P3", "PR1", 68);
+        Patient p4 = new Patient("P4", "PR1", 19);
+        Patient p5 = new Patient("P5", "PR1", 29);
+        Patient p6 = new Patient("P6", "PR1", 23);
+        Patient p7 = new Patient("P7", "PR1", 86);
+        Patient p8 = new Patient("P8", "PR1", 27);
+        Patient p9 = new Patient("P9", "PR1", 76);
+        arrivalSequence.add(p3);
+        arrivalSequence.add(p6);
+        arrivalSequence.add(p9);
+        arrivalSequence.add(p0);
+        arrivalSequence.add(p4);
+        arrivalSequence.add(p5);
+        arrivalSequence.add(p7);
+        arrivalSequence.add(p2);
+        arrivalSequence.add(p1);
+        arrivalSequence.add(p8);
 
-        Schedule s = new Schedule(listPatient);
+        Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
 //
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 //
-        List<Patient> best = f.annealingMin(3, 5, listPatient);
+        long t_0A = System.nanoTime();
+        List<Patient> best = f.annealingMin(3, 5, arrivalSequence);
         System.out.println(best + " " + f.fO(best));
+        long t_1A = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1A - t_0A) / pow(10, 9) + " s.");
 
-//        for(int i =0; i<listPatient.size(); i++){
-//            System.out.print(listPatient.get(i).getPatientID());
-//            System.out.println(Arrays.toString(listPatient.get(i).getSchedule()));
-//        }
-//        
-       List<Patient> gene = f.genetic(50, 4, listPatient);
+        long t_0G = System.nanoTime();
+        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
         System.out.println(gene + " " + f.fO(gene));
+        long t_1G = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1G - t_0G) / pow(10, 9) + " s.");
         
-        
+        long t_0GR = System.nanoTime();
+        List<Patient> grasp = f.grasp(0.4, 20, arrivalSequence);
+        System.out.println(grasp + " " + f.fO(grasp));
+          long t_1GR = System.nanoTime();
+        System.out.println("Length of the algorithm : " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
+
 //        
 //        Test m = new Test(listPatient);
 //        m.addTask();
