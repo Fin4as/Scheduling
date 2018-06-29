@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 /*
@@ -18,36 +19,34 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        List<Patient> listPatient = new ArrayList();
-        Patient p0 = new Patient("P0", "PR1");
-        Patient p1 = new Patient("P1", "PR1");
-        Patient p2 = new Patient("P2", "PR1");
-        Patient p3 = new Patient("P3", "PR1");
-        Patient p4 = new Patient("P4", "PR1");
-        Patient p5 = new Patient("P5", "PR1");
-        Patient p6 = new Patient("P6", "PR1");
-        Patient p7 = new Patient("P7", "PR1");
-        Patient p8 = new Patient("P8", "PR1");
-        Patient p9 = new Patient("P9", "PR1");
-        listPatient.add(p0);
-        listPatient.add(p1);
-        listPatient.add(p2);
-        listPatient.add(p3);
-        listPatient.add(p4);
-        listPatient.add(p5);
-        listPatient.add(p6);
-        listPatient.add(p7);
-        listPatient.add(p8);
-        listPatient.add(p9);
+        List<Patient> arrivalSequence = new ArrayList();
+        Patient p0 = new Patient("P0", "PR1", 85);
+        Patient p1 = new Patient("P1", "PR1", 22);
+        Patient p2 = new Patient("P2", "PR1", 102);
+        Patient p3 = new Patient("P3", "PR1", 68);
+        Patient p4 = new Patient("P4", "PR1", 19);
+        Patient p5 = new Patient("P5", "PR1", 29);
+        Patient p6 = new Patient("P6", "PR1", 23);
+        Patient p7 = new Patient("P7", "PR1", 86);
+        Patient p8 = new Patient("P8", "PR1", 27);
+        Patient p9 = new Patient("P9", "PR1", 76);
+        arrivalSequence.add(p3);
+        arrivalSequence.add(p6);
+        arrivalSequence.add(p9);
+        arrivalSequence.add(p0);
+        arrivalSequence.add(p4);
+        arrivalSequence.add(p5);
+        arrivalSequence.add(p7);
+        arrivalSequence.add(p2);
+        arrivalSequence.add(p1);
+        arrivalSequence.add(p8);
 
-        Schedule s = new Schedule(listPatient);
+        Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
 //
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 //
-        List<Patient> best = f.annealingMin(3, 5, listPatient);
-        System.out.println(best + " " + f.fO(best));
 
 //        for(int i =0; i<listPatient.size(); i++){
 //            System.out.print(listPatient.get(i).getPatientID());

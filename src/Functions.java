@@ -147,16 +147,24 @@ public class Functions {
      * @return
      */
     public List<Patient> greedyRandomizedConstruction(double greedyness, List<Patient> list) {
-        List<Patient> sequence = new ArrayList<Patient>();
-        List<Patient> possibilities = new ArrayList<Patient>();
+        List<Patient> sequence = new ArrayList();
+        List<Patient> possibilities = new ArrayList();
         possibilities = list;
-        ArrayList<Patient> rcl = new ArrayList<Patient>();
+        List<Patient> rcl = new ArrayList();
 
         while (sequence.size() < list.size()) {
-            ArrayList<Double> cost = new ArrayList<>();
+            List<Double> cost = new ArrayList();
             for (int h = 0; h < possibilities.size(); h++) {
                 if (sequence.size() > 0) {
-
+                    // écrire SwappableSequence.weightedSequence(list) te renverra une liste contenant 4 listes, dans l'ordre :
+                    // les cancellationLikelihoods dans le même ordre que les patients de la liste (à toi de faire des get(i) au bon endroit pour remplacer ton getDistance)
+                    // ton paramètre list (ordre d'arrivée), ordonné en low, high, low, high
+                    // la sous-liste contenant tous les low dans le même ordre que la list ordonnée
+                    // la sous-liste contenant tous les high dans le même ordre que la list ordonnée
+                    // --> pour faire ta list possibilities en removant ce qu'il faut dedans en fonction de ta greedyness
+                    // et en réinitialisant à chaque fois avec la bonne sous-liste (low ou high selon ce que t'as fait avant)
+                    // je te conseille de prendre un patient random sinon tu vas toujours avoir le même en position 0
+                    // y'a juste à checker dans quelle sous-liste il est pour savoir si c'est un low ou high, et mettre possibilities comme étant la sous-liste opposée
                     cost.add(Math.abs(sequence.get(sequence.size()).getDistance() - possibilities.get(h).getDistance()));
                     // get(sequence.size())
                 } else {

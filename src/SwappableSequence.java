@@ -95,7 +95,7 @@ public abstract class SwappableSequence {
         return child;
     }
 
-    public static List<List> weightedSequence(List<Patient> arrivalSequence, List<Integer> data) {
+    public static List<List> weightedSequence(List<Patient> arrivalSequence) {
 
         List<Double> cancellationLikelihoods = new ArrayList();
         double cancellationLikelihood;
@@ -107,18 +107,17 @@ public abstract class SwappableSequence {
         List<Patient> weightedInitialSolution = new ArrayList();
         List<List> output = new ArrayList();
 
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i) <= 84) {
-                cancellationLikelihood = 0.4 * (- 1 / (0.05 * (data.get(i) + 20)) + ((double) 31 / 26));
+        for (int i = 0; i < n; i++) {
+            int ageInformation = arrivalSequence.get(i).getAgeInformation();
+            if (ageInformation <= 84) {
+                cancellationLikelihood = 0.4 * (- 1 / (0.05 * (ageInformation + 20)) + ((double) 31 / 26));
             } else {
-                cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (data.get(i) - (5 * Math.log((double) 3 / 2) + 84))));
+                cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
             }
             cancellationLikelihoods.add(cancellationLikelihood);
         }
 
-        sortedCancellationLikelihoods.add(cancellationLikelihoods.get(0));
-
-        for (int i = 1; i < n; i++) {
+        for (int i = 0; i < n; i++) {
             int indexInsertion = 0;
             for (int j = 0; j < sortedCancellationLikelihoods.size(); j++) {
                 if (cancellationLikelihoods.get(i) >= sortedCancellationLikelihoods.get(j)) {
@@ -135,12 +134,11 @@ public abstract class SwappableSequence {
         } else {
             median = sortedCancellationLikelihoods.get(n / 2);
         }
-        System.out.println(median);
 
         for (int i = 0; i < n; i++) {
-            if (cancellationLikelihoods.get(Integer.getInteger(arrivalSequence.get(i).getPatientID().substring(1))) < median) {
+            if (cancellationLikelihoods.get(i) < median) {
                 lowCancellationLikelihoods.add(arrivalSequence.get(i));
-            } else if (cancellationLikelihoods.get(Integer.getInteger(arrivalSequence.get(i).getPatientID().substring(1))).equals(median)) {
+            } else if (cancellationLikelihoods.get(i).equals(median)) {
                 if (lowCancellationLikelihoods.size() <= highCancellationLikelihoods.size()) {
                     lowCancellationLikelihoods.add(arrivalSequence.get(i));
                 } else {

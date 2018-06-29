@@ -14,13 +14,15 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
+    private int ageInformation;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
-    public Patient(String id, String processID) {
+    public Patient(String id, String processID, int ageInformation) {
         this.patientID = id;
         schedule = new String[800];
         this.processID = processID;
+        this.ageInformation = ageInformation;
     }
 
     /**
@@ -71,6 +73,10 @@ public class Patient {
 
     public String getProcessID() {
         return processID;
+    }
+    
+    public int getAgeInformation(){
+        return ageInformation;
     }
 
     public void setSchedule() {
