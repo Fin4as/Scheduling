@@ -29,7 +29,7 @@ public class Test {
         totalWaitingTime = 0;
         lateness = 0;
 
-        listProcess = s.getListProcess(); 
+        listProcess = s.getListProcess();
 //        for(int l=0; l<listProcess.size();l++){
 //            Process pl = s.getListProcess().get(l);
 //            for (int length= 0 ; length<pl.getListResource().size();length++){
@@ -39,8 +39,6 @@ public class Test {
 //            }
 //            
 //        }
-        
-
 
     }
 
@@ -168,40 +166,91 @@ public class Test {
             int endLastTask = 0;
             Process process = this.getProcess(pat.getProcessID());
             for (int k = 0; k < process.getListTask().size(); k++) {
+                boolean waiting = false;
+                ArrayList<Task> tasksToSchedule = new ArrayList();
+                int ind = k + 1;
+                while (!waiting && ind < process.getListTask().size()) {
+                    int opMode = process.getListTask().get(ind).getOpMode();
+                    if (opMode == 0) {
+                        tasksToSchedule.add(process.getListTask().get(ind));
+                    } else if (opMode == 1) {
+                        waiting = true;
+                    }
+                    ind++;
+                }
+
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
-//                int opMode = t.getOpMode();
+                if (tasksToSchedule.size() == 0) {
+
 //                
 //remove switch case, call getfastestvailable for every tasks, getOP mode for the next task. Get the next task in NextTaskList 
 //write a method similar with get Process , to get the next Task
-
 // ecrire un if non waiting k++ pour aller à la tache suivante
 //esle rien
-                if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                    Skill s = t.getSkill();
-                    int r = s.getFastestAvailable(time, t.getAvTime());
-                    if (r != -1) {
-                        Resource res = t.getSkill().getListResource().get(r);
-                        int start = res.getNextAvailableTime(time, t.getAvTime());
-                        if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                            res.setTime(start, t.getAvTime(), t.getTaskID());
-                            if (!listResource.contains(res)) {
-                                listResource.add(res);
+                    if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
+                        Skill s = t.getSkill();
+                        int r = s.getFastestAvailable(time, t.getAvTime());
+                        if (r != -1) {
+                            Resource res = t.getSkill().getListResource().get(r);
+                            int start = res.getNextAvailableTime(time, t.getAvTime());
+                            if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                                res.setTime(start, t.getAvTime(), t.getTaskID());
+
+                                pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+                                totalWaitingTime += (start - endLastTask);
+                                endLastTask = start + t.getAvTime();
+
                             }
-                            pat.setSchedule(start, t.getAvTime(), t.getTaskID());
-                            totalWaitingTime += (start - endLastTask);
-                            endLastTask = start + t.getAvTime();
 
                         }
 
                     }
+                } else {
+
+                    tasksToSchedule.add(0, t);
+                    int avTimeTotal = 0;
+                    for (int iv = 0; iv < tasksToSchedule.size(); iv++) {
+                        avTimeTotal += tasksToSchedule.get(iv).getAvTime();
+                    }
+                    if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
+                        Skill s = t.getSkill();
+                        int r = s.getFastestAvailable(time, t.getAvTime());
+                        if (r != -1) {
+                            Resource res = t.getSkill().getListResource().get(r);
+                            int start = res.getNextAvailableTime(time, t.getAvTime());
+                            ArrayList<Resource> resourcesToUse = new ArrayList();
+                            resourcesToUse.add(0, res);
+                            for (int iz = 0; iz < tasksToSchedule.size(); iz++) {
+                                Skill sk = tasksToSchedule.get(iz).getSkill();
+                                int re = sk.getStrictestAvailable(start + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
+                                if (re != -1) {
+                                    resourcesToUse.add(sk.getListResource().get(re));
+                                } else {
+                                    resourcesToUse.add(null);
+                                }
+                            }
+                            if (!resourcesToUse.contains(null)) {
+                                int currentStart = start;
+                                for (int ip = 0; ip < resourcesToUse.size(); ip++) {
+                                    //order is important
+                                    int currentAvTime = tasksToSchedule.get(ip).getAvTime();
+                                    String taskID = tasksToSchedule.get(ip).getTaskID();
+                                    resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
+                                    pat.setSchedule(currentStart, currentAvTime, taskID);
+                                    currentStart += tasksToSchedule.get(ip).getAvTime() + 1;
+                                }
+                                k += tasksToSchedule.size();
+                                totalWaitingTime += (start - endLastTask);
+                                endLastTask = start + avTimeTotal;
+                            }
+                        }
+                    }
 
                 }
-                
             }
 
         }
-
     }
 
 }
