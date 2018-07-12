@@ -58,7 +58,7 @@ public class Resource {
                 }
                 i++;
             }
-            if (i == i + avTime + 1) {
+            if (i == startTime + avTime + 1) {
                 available=true;
             }
         }

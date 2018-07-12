@@ -183,11 +183,7 @@ public class Test {
                 int time = pat.getNextAvailableTime();
                 if (tasksToSchedule.size() == 0) {
 
-//                
-//remove switch case, call getfastestvailable for every tasks, getOP mode for the next task. Get the next task in NextTaskList 
-//write a method similar with get Process , to get the next Task
-// ecrire un if non waiting k++ pour aller à la tache suivante
-//esle rien
+
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         Skill s = t.getSkill();
                         int r = s.getFastestAvailable(time, t.getAvTime());
@@ -220,8 +216,8 @@ public class Test {
                             Resource res = t.getSkill().getListResource().get(r);
                             int start = res.getNextAvailableTime(time, t.getAvTime());
                             ArrayList<Resource> resourcesToUse = new ArrayList();
-                            resourcesToUse.add(0, res);
-                            for (int iz = 0; iz < tasksToSchedule.size(); iz++) {
+                            resourcesToUse.add( res);
+                            for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
                                 Skill sk = tasksToSchedule.get(iz).getSkill();
                                 int re = sk.getStrictestAvailable(start + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
                                 if (re != -1) {
