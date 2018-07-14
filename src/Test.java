@@ -150,6 +150,20 @@ public class Test {
     }
 
     public void addTask() {
+
+        System.out.println("");
+        System.out.print("Process ID");
+        System.out.print("\t");
+        System.out.print("Patient ID");
+        System.out.print("\t");
+        System.out.print("Task ID");
+        System.out.print("\t");
+        System.out.print("Starting Time");
+        System.out.print("\t");
+        System.out.print("Ending Time");
+        System.out.print("\t");
+        System.out.println("Waiting Time");
+
         //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
             listPatient.get(p).resetSchedule(); // change this method's name
@@ -166,6 +180,7 @@ public class Test {
             int endLastTask = 0;
             Process process = this.getProcess(pat.getProcessID());
             for (int k = 0; k < process.getListTask().size(); k++) {
+
                 boolean waiting = false;
                 ArrayList<Task> tasksToSchedule = new ArrayList();
                 int ind = k + 1;
@@ -183,7 +198,6 @@ public class Test {
                 int time = pat.getNextAvailableTime();
                 if (tasksToSchedule.size() == 0) {
 
-
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         Skill s = t.getSkill();
                         int r = s.getFastestAvailable(time, t.getAvTime());
@@ -195,6 +209,20 @@ public class Test {
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
                                 totalWaitingTime += (start - endLastTask);
+
+                                System.out.print(process.getID());
+                                System.out.print("\t\t");
+                                System.out.print(pat.getPatientID());
+                                System.out.print("\t\t");
+                                System.out.print(t.getTaskID());
+                                System.out.print("\t\t");
+                                System.out.print(start + "");
+                                System.out.print("\t\t");
+                                System.out.print(t.getAvTime() + start + "");
+                                System.out.print("\t\t");
+                                System.out.print(start - endLastTask + "");
+                                System.out.println("");
+
                                 endLastTask = start + t.getAvTime();
 
                             }
@@ -216,7 +244,7 @@ public class Test {
                             Resource res = t.getSkill().getListResource().get(r);
                             int start = res.getNextAvailableTime(time, t.getAvTime());
                             ArrayList<Resource> resourcesToUse = new ArrayList();
-                            resourcesToUse.add( res);
+                            resourcesToUse.add(res);
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
                                 Skill sk = tasksToSchedule.get(iz).getSkill();
                                 int re = sk.getStrictestAvailable(start + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
@@ -228,22 +256,43 @@ public class Test {
                             }
                             if (!resourcesToUse.contains(null)) {
                                 int currentStart = start;
+                                
+                                int currentEnd = endLastTask;
+                                
                                 for (int ip = 0; ip < resourcesToUse.size(); ip++) {
                                     //order is important
                                     int currentAvTime = tasksToSchedule.get(ip).getAvTime();
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
+                                    
+                                    System.out.print(process.getID());
+                                    System.out.print("\t\t");
+                                    System.out.print(pat.getPatientID());
+                                    System.out.print("\t\t");
+                                    System.out.print(taskID);
+                                    System.out.print("\t\t");
+                                    System.out.print(currentStart + "");
+                                    System.out.print("\t\t");
+                                    System.out.print(currentAvTime + currentStart + "");
+                                    System.out.print("\t\t");
+                                    System.out.print(currentStart - currentEnd  + "");
+                                    System.out.println("");
+                                    
+                                    currentEnd = currentStart + currentAvTime;
                                     currentStart += tasksToSchedule.get(ip).getAvTime() + 1;
+
                                 }
-                                k += tasksToSchedule.size();
+                                k += tasksToSchedule.size() - 1;
                                 totalWaitingTime += (start - endLastTask);
                                 endLastTask = start + avTimeTotal;
+
                             }
                         }
                     }
 
                 }
+
             }
 
         }
