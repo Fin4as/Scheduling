@@ -20,16 +20,16 @@ public class Main {
     public static void main(String[] args) {
 
         List<Patient> listPatient = new ArrayList();
-        Patient p0 = new Patient("P0", "PR1");
-        Patient p1 = new Patient("P1", "PR1");
-        Patient p2 = new Patient("P2", "PR1");
-        Patient p3 = new Patient("P3", "PR1");
-        Patient p4 = new Patient("P4", "PR1");
-        Patient p5 = new Patient("P5", "PR1");
-        Patient p6 = new Patient("P6", "PR1");
-        Patient p7 = new Patient("P7", "PR1");
-        Patient p8 = new Patient("P8", "PR1");
-        Patient p9 = new Patient("P9", "PR1");
+        Patient p0 = new Patient("P0", "PR1", 5);
+        Patient p1 = new Patient("P1", "PR1", 60);
+        Patient p2 = new Patient("P2", "PR1", 15);
+        Patient p3 = new Patient("P3", "PR1", 70);
+        Patient p4 = new Patient("P4", "PR1", 25);
+        Patient p5 = new Patient("P5", "PR1", 10);
+        Patient p6 = new Patient("P6", "PR1", 90);
+        Patient p7 = new Patient("P7", "PR1", 30);
+        Patient p8 = new Patient("P8", "PR1", 40);
+        Patient p9 = new Patient("P9", "PR1", 20);
         listPatient.add(p0);
         listPatient.add(p1);
         listPatient.add(p2);

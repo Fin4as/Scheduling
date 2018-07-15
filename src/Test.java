@@ -228,6 +228,10 @@ public class Test {
                             }
 
                         }
+                        else{
+                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            return; // to get out the addTask Method
+                        }
 
                     }
                 } else {
@@ -245,17 +249,19 @@ public class Test {
                             int start = res.getNextAvailableTime(time, t.getAvTime());
                             ArrayList<Resource> resourcesToUse = new ArrayList();
                             resourcesToUse.add(res);
+                            int currentStart = start;
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
                                 Skill sk = tasksToSchedule.get(iz).getSkill();
-                                int re = sk.getStrictestAvailable(start + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
+                                int re = sk.getStrictestAvailable(currentStart + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
                                 if (re != -1) {
                                     resourcesToUse.add(sk.getListResource().get(re));
                                 } else {
                                     resourcesToUse.add(null);
                                 }
+                                currentStart += tasksToSchedule.get(iz).getAvTime() +1;
                             }
                             if (!resourcesToUse.contains(null)) {
-                                int currentStart = start;
+                                currentStart = start;
                                 
                                 int currentEnd = endLastTask;
                                 
@@ -288,6 +294,14 @@ public class Test {
                                 endLastTask = start + avTimeTotal;
 
                             }
+                            else {
+                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            return; // to get out the addTask Method
+                            }
+                        }
+                        else{
+                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            return; // to get out the addTask Method
                         }
                     }
 

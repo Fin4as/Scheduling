@@ -14,11 +14,13 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
+    private int arrivalTime;
 
-    public Patient(String id, String processID) {
+    public Patient(String id, String processID, int arrivalTime) {
         this.patientID = id;
         schedule = new String[800];
         this.processID = processID;
+        this.arrivalTime = arrivalTime;
     }
 
     /**
@@ -42,7 +44,7 @@ public class Patient {
     }
 
     public int getNextAvailableTime() {
-        int time = 0;
+        int time = arrivalTime;
         if (!isEmptyStringArray(schedule)) {
             int i = schedule.length - 1;
             boolean found = false;
