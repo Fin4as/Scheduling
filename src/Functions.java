@@ -91,7 +91,7 @@ public class Functions {
     }
 
     public List<Patient> grasp(int nbIteration, List<Patient> scur) {
-        List<Patient> bestPosition = new ArrayList<Patient>();
+        List<Patient> bestPosition = new ArrayList();
         bestPosition = scur;
         int i = 0;
         while (i < nbIteration) {
@@ -108,7 +108,7 @@ public class Functions {
     
     public List<Patient> randomizedConstruction(List<Patient> list){
         List<Patient> sequence = new ArrayList();
-        List<Patient> patientList = null ; 
+        List<Patient> patientList =new ArrayList();
         for (Patient e : list){
             patientList.add(e);
         }
@@ -120,7 +120,6 @@ public class Functions {
             sequence.add(randomElement);
             patientList.remove(randomElement);
         }
-        System.out.println(sequence);
         return sequence;
     }
 
