@@ -46,6 +46,24 @@ public class Resource {
 
         return available;
     }
+    
+   public boolean isAvailable(int startTime, int avTime) {
+        boolean available = false;
+        boolean free = true;
+        int i = startTime;
+        if (i + avTime < time.length) {
+            while (free && i <= startTime + avTime) {
+                if (time[i] != null) {
+                    free = false;
+                }
+                i++;
+            }
+            if (i == startTime + avTime + 1) {
+                available=true;
+            }
+        }
+        return available;
+    }
 
     public boolean isEmptyStringArray(String[] array) {
         for (int i = 0; i < array.length; i++) {

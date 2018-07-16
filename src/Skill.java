@@ -37,6 +37,18 @@ public class Skill {
     public void addResource(Resource r) {
         listResource.add(r);
     }
+    
+       public int getStrictestAvailable(int startTime, int avTime) {
+        int resource = -1;
+        for (int j = 0; j < listResource.size(); j++) {
+            boolean available = listResource.get(j).isAvailable(startTime, avTime);
+            if(available){
+                resource=j;
+                break;
+            }
+        }
+        return resource;
+    }
 
     public int getFastestAvailable(int startTime, int avTime) {
         int resource = -1;
@@ -45,7 +57,7 @@ public class Skill {
             if (listResource.size() == 1 && min != -1) {
                 resource = 0;
             } else if (listResource.size() > 1) {
-                for (int i = j++; i < listResource.size(); i++) { // before, it was i = 1
+                for (int i = j+1; i < listResource.size(); i++) { 
                     int currentTime = listResource.get(i).getNextAvailableTime(startTime, avTime);
                     if (min != -1 && currentTime <= min) {
                         resource = i;

@@ -6,6 +6,7 @@
 
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,13 +24,13 @@ public class Process {
     String processType;
     String ProcessName;
     private List<Task> listTask;
-    private List<Resource> allResources;
-
-    public Process(String processID,List<Task> listTask,List<Resource> allResources) {
+ 
+    public Process(String processID) {
         this.processID = processID;
+        this.listTask = new ArrayList();
 //        st = s;
-        this.listTask = listTask;
-        this.allResources = allResources;
+//        this.listTask = listTask;
+//        this.allResources = allResources;
 //        getConnectDB();
 
     }
@@ -45,13 +46,17 @@ public class Process {
         return listTask;
     }
     
-    public List<Resource> getListResource() {
-        return allResources;
+    public void addListTask(Task t){
+        listTask.add(t);
     }
-
-
-    public List<Resource> getAllResources() {
-        return allResources;
-    }
+    
+//    public List<Resource> getListResource() {
+//        return allResources;
+//    }
+//
+//
+//    public List<Resource> getAllResources() {
+//        return allResources;
+//    }
   
 }

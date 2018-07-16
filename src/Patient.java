@@ -13,12 +13,13 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
+    private int arrivalTime;
     private int ageInformation;
     private double cancellationLikelihood;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
-    public Patient(String id, String processID, int ageInformation) {
+    public Patient(String id, String processID, int arrivalTime,int ageInformation ) {
         this.patientID = id;
         schedule = new String[800];
         this.processID = processID;
@@ -28,6 +29,7 @@ public class Patient {
         } else {
             this.cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
         }
+        this.arrivalTime = arrivalTime;
     }
 
     public int getAgeInformation() {
@@ -55,7 +57,7 @@ public class Patient {
     }
 
     public int getNextAvailableTime() {
-        int time = 0;
+        int time = arrivalTime;
         if (!isEmptyStringArray(schedule)) {
             int i = schedule.length - 1;
             boolean found = false;
@@ -84,7 +86,7 @@ public class Patient {
         return processID;
     }
 
-    public void setSchedule() {
+    public void resetSchedule() {
         this.schedule = new String[800];
     }
 
