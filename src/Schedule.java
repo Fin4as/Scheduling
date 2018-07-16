@@ -24,6 +24,8 @@ public class Schedule {
     private List<Process> listProcess;
     private List<Resource> allResources;
 
+    private List<Process> listProcess;
+
     public Schedule(List<Patient> listPatient) {
         allResources = new ArrayList();
         List<String> listP = this.getProcess(listPatient);
@@ -167,6 +169,7 @@ public class Schedule {
             }
         }
     }
+}
 
 //    public void getResourceData(List<Task> listTask, List<Resource> allResources) {
 //
@@ -263,4 +266,3 @@ public class Schedule {
 //    public ResultSet getResultSet() {
 //        return rs;
 //    }
-}
