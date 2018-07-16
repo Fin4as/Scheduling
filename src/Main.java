@@ -40,6 +40,8 @@ public class Main {
         arrivalSequence.add(p2);
         arrivalSequence.add(p1);
         arrivalSequence.add(p8);
+        
+//        arrivalSequence = SwappableSequence.weightedSequence(arrivalSequence).get(0);
 
         Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
@@ -52,25 +54,6 @@ public class Main {
         System.out.println(best + " " + f.fO(best));
         long t_1A = System.nanoTime();
         System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
-
-        long t_0G = System.nanoTime();
-        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
-        System.out.println(gene + " " + f.fO(gene));
-        long t_1G = System.nanoTime();
-        System.out.println("Length of the algorithm Genetic: " + (t_1G - t_0G) / pow(10, 9) + " s.");
-        
-        long t_0GRCL = System.nanoTime();
-        List<Patient> graspRCL = f.graspRCL(0.4, 20, arrivalSequence);
-        System.out.println(graspRCL + " " + f.fO(graspRCL));
-          long t_1GRCL = System.nanoTime();
-        System.out.println("Length of the algorithm GRASP RCL: " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s.");
-        
-         long t_0GR = System.nanoTime();
-       List<Patient> grasp=f.grasp(5,arrivalSequence);
-       System.out.println(grasp + " " + f.fO(grasp));
-        long t_1GR = System.nanoTime();
-        System.out.println("Length of the algorithm GRASP: " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
-
 
     }
 
