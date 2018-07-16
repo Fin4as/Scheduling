@@ -58,11 +58,11 @@ public class Functions {
         List<Patient> minb = scur;
 
         while (temperature >= tempmin) {
-            
+
             if (numiter < itermax) {
                 sold = scur;
                 scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
-                
+
                 dif = fO(scur) - fO(sold);
 
                 if (dif <= 0) {
@@ -79,7 +79,7 @@ public class Functions {
                         sold = scur;
                     }
                 }
-                numiter++;                  
+                numiter++;
 
             } else {
                 temperature = coolingRate * temperature;
@@ -90,6 +90,40 @@ public class Functions {
         return minb;
     }
 
+    public List<Patient> grasp(int nbIteration, List<Patient> scur) {
+        List<Patient> bestPosition = new ArrayList<Patient>();
+        bestPosition = scur;
+        int i = 0;
+        while (i < nbIteration) {
+           scur = randomizedConstruction(scur);
+            scur = localSearch(scur, 100);
+
+            if (fO(scur) < fO(bestPosition)) {
+                bestPosition = scur;
+            }
+            i++;
+        } 
+        return bestPosition;
+    }
+    
+    public List<Patient> randomizedConstruction(List<Patient> list){
+        List<Patient> sequence = new ArrayList();
+        List<Patient> patientList = null ; 
+        for (Patient e : list){
+            patientList.add(e);
+        }
+        Random rand = new Random();
+        Patient randomElement;
+        
+        while (sequence.size() < list.size()) {
+            randomElement = patientList.get(rand.nextInt(patientList.size()));
+            sequence.add(randomElement);
+            patientList.remove(randomElement);
+        }
+        System.out.println(sequence);
+        return sequence;
+    }
+
     /**
      *
      * @param greedyness
@@ -97,7 +131,7 @@ public class Functions {
      * @param scur
      * @return
      */
-    public List<Patient> grasp(double greedyness, int nbIteration, List<Patient> scur) {
+    public List<Patient> graspRCL(double greedyness, int nbIteration, List<Patient> scur) {
         //defined by a random function
         List<Patient> bestPosition = new ArrayList<Patient>();
         bestPosition = scur;
@@ -209,7 +243,6 @@ public class Functions {
         return bestPosition;
     }
 
-    
     /**
      * Genetic Algorithm
      *
@@ -308,5 +341,3 @@ public class Functions {
         return bestPosition;
     }
 }
-
-
