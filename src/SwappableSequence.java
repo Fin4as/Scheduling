@@ -18,6 +18,7 @@ public abstract class SwappableSequence {
 
         if (i == j) {
             throw new IllegalArgumentException("Error: i should be different from j.");
+            
         }
 
         Patient tmp = sequence.get(j);
