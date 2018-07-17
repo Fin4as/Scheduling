@@ -295,7 +295,7 @@ public class Test {
 
                             }
                             else {
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            //System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
                             return; // to get out the addTask Method
                             }
                         }
