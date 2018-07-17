@@ -76,7 +76,7 @@ public class Schedule {
         try {
 
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
+            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_copy_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
             System.out.println("You are connected ! ");
@@ -141,7 +141,7 @@ public class Schedule {
         ArrayList<String> nameResource = new ArrayList();
         for (int i = 0; i < listTask.size(); i++) {
             try {
-                String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill JOIN Task ON Task.ID = ResourceSkill.IDcouple WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND SkillID ='" + listTask.get(i).getSkill().getSkillID() + "'";
+                String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getSkill().getSkillID() + "'";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
 

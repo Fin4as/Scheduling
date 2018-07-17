@@ -149,20 +149,9 @@ public class Test {
         return mksp;
     }
 
-    public void addTask() {
+    public void addTask(boolean giveDetails) {
 
-//        System.out.println("");
-//        System.out.print("Process ID");
-//        System.out.print("\t");
-//        System.out.print("Patient ID");
-//        System.out.print("\t");
-//        System.out.print("Task ID");
-//        System.out.print("\t");
-//        System.out.print("Starting Time");
-//        System.out.print("\t");
-//        System.out.print("Ending Time");
-//        System.out.print("\t");
-//        System.out.println("Waiting Time");
+        
 
         //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
@@ -173,12 +162,28 @@ public class Test {
         for (int r = 0; r < listResource.size(); r++) {
             listResource.get(r).setZero();
         }
+      
         totalWaitingTime = 0;
+        if (giveDetails == true) {
+            System.out.println("");
+            System.out.print("Process ID");
+            System.out.print("\t");
+            System.out.print("Patient ID");
+            System.out.print("\t");
+            System.out.print("Task ID");
+            System.out.print("\t");
+            System.out.print("Starting Time");
+            System.out.print("\t");
+            System.out.print("Ending Time");
+            System.out.print("\t");
+            System.out.println("Waiting Time");
+        }
 
         for (int j = 0; j < listPatient.size(); j++) {
             Patient pat = listPatient.get(j);
             int endLastTask = 0;
             Process process = this.getProcess(pat.getProcessID());
+                                      
             for (int k = 0; k < process.getListTask().size(); k++) {
 
                 boolean waiting = false;
@@ -209,27 +214,26 @@ public class Test {
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
                                 totalWaitingTime += (start - endLastTask);
-
-//                                System.out.print(process.getID());
-//                                System.out.print("\t\t");
-//                                System.out.print(pat.getPatientID());
-//                                System.out.print("\t\t");
-//                                System.out.print(t.getTaskID());
-//                                System.out.print("\t\t");
-//                                System.out.print(start + "");
-//                                System.out.print("\t\t");
-//                                System.out.print(t.getAvTime() + start + "");
-//                                System.out.print("\t\t");
-//                                System.out.print(start - endLastTask + "");
-//                                System.out.println("");
-
+                                if (giveDetails == true) {
+                                    System.out.print(process.getID());
+                                    System.out.print("\t\t");
+                                    System.out.print(pat.getPatientID());
+                                    System.out.print("\t\t");
+                                    System.out.print(t.getTaskID());
+                                    System.out.print("\t\t");
+                                    System.out.print(start + "");
+                                    System.out.print("\t\t");
+                                    System.out.print(t.getAvTime() + start + "");
+                                    System.out.print("\t\t");
+                                    System.out.print(start - endLastTask + "");
+                                    System.out.println("");
+                                }
                                 endLastTask = start + t.getAvTime();
 
                             }
 
-                        }
-                        else{
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                        } else {
+                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
                             return; // to get out the addTask Method
                         }
 
@@ -258,33 +262,33 @@ public class Test {
                                 } else {
                                     resourcesToUse.add(null);
                                 }
-                                currentStart += tasksToSchedule.get(iz).getAvTime() +1;
+                                currentStart += tasksToSchedule.get(iz).getAvTime() + 1;
                             }
                             if (!resourcesToUse.contains(null)) {
                                 currentStart = start;
-                                
+
                                 int currentEnd = endLastTask;
-                                
+
                                 for (int ip = 0; ip < resourcesToUse.size(); ip++) {
                                     //order is important
                                     int currentAvTime = tasksToSchedule.get(ip).getAvTime();
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
-                                    
-//                                    System.out.print(process.getID());
-//                                    System.out.print("\t\t");
-//                                    System.out.print(pat.getPatientID());
-//                                    System.out.print("\t\t");
-//                                    System.out.print(taskID);
-//                                    System.out.print("\t\t");
-//                                    System.out.print(currentStart + "");
-//                                    System.out.print("\t\t");
-//                                    System.out.print(currentAvTime + currentStart + "");
-//                                    System.out.print("\t\t");
-//                                    System.out.print(currentStart - currentEnd  + "");
-//                                    System.out.println("");
-                                    
+                                    if (giveDetails == true) {
+                                        System.out.print(process.getID());
+                                        System.out.print("\t\t");
+                                        System.out.print(pat.getPatientID());
+                                        System.out.print("\t\t");
+                                        System.out.print(taskID);
+                                        System.out.print("\t\t");
+                                        System.out.print(currentStart + "");
+                                        System.out.print("\t\t");
+                                        System.out.print(currentAvTime + currentStart + "");
+                                        System.out.print("\t\t");
+                                        System.out.print(currentStart - currentEnd + "");
+                                        System.out.println("");
+                                    }
                                     currentEnd = currentStart + currentAvTime;
                                     currentStart += tasksToSchedule.get(ip).getAvTime() + 1;
 
@@ -293,14 +297,12 @@ public class Test {
                                 totalWaitingTime += (start - endLastTask);
                                 endLastTask = start + avTimeTotal;
 
+                            } else {
+//                                System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                                return; // to get out the addTask Method
                             }
-                            else {
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
-                            return; // to get out the addTask Method
-                            }
-                        }
-                        else{
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                        } else {
+//                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
                             return; // to get out the addTask Method
                         }
                     }
