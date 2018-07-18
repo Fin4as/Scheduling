@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+//package Scheduling_First_Try;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -163,10 +163,13 @@ public class Test {
         System.out.print("Ending Time");
         System.out.print("\t");
         System.out.println("Waiting Time");
+        
+        
 
         //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
             listPatient.get(p).resetSchedule(); // change this method's name
+            listPatient.get(p).getDiagramValues().clear();
         }
 
         //Empty the table of time of each resource 
@@ -208,6 +211,9 @@ public class Test {
                                 res.setTime(start, t.getAvTime(), t.getTaskID());
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
+                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
+                                pat.addDiagramValues(t.getAvTime()); // then add the duration
+                                
                                 totalWaitingTime += (start - endLastTask);
 
                                 System.out.print(process.getID());
@@ -271,6 +277,8 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
+                                    pat.addDiagramValues(currentStart -currentEnd);
+                                    pat.addDiagramValues(currentAvTime);
                                     
                                     System.out.print(process.getID());
                                     System.out.print("\t\t");
@@ -295,12 +303,12 @@ public class Test {
 
                             }
                             else {
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            System.out.println("No resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
                             return; // to get out the addTask Method
                             }
                         }
                         else{
-                            System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
+                            System.out.println("No resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
                             return; // to get out the addTask Method
                         }
                     }
@@ -310,6 +318,14 @@ public class Test {
             }
 
         }
+        
+        ExcelWriter excelWriter = new ExcelWriter();
+        excelWriter.write(listPatient);
+        for (int q = 0; q < listResource.size(); q++) {
+            listResource.get(q).timeToDiagramValues();
+        }
+        
+        
     }
 
 }

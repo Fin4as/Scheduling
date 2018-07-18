@@ -1,9 +1,11 @@
+
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 
 /**
  *
@@ -15,12 +17,14 @@ public class Resource {
     private int capacity;
     private String name;
     private String time[];
+    private ArrayList<Integer> diagramValues;
 
     public Resource(String resourceID, int capacity, String name) {
         this.capacity = capacity;
         this.resourceID = resourceID;
         this.name = name;
         time = new String[800];
+        diagramValues = new ArrayList<>();
     }
 
     public int getNextAvailableTime(int startTime, int avTime) {
@@ -46,8 +50,8 @@ public class Resource {
 
         return available;
     }
-    
-   public boolean isAvailable(int startTime, int avTime) {
+
+    public boolean isAvailable(int startTime, int avTime) {
         boolean available = false;
         boolean free = true;
         int i = startTime;
@@ -59,7 +63,7 @@ public class Resource {
                 i++;
             }
             if (i == startTime + avTime + 1) {
-                available=true;
+                available = true;
             }
         }
         return available;
@@ -110,12 +114,48 @@ public class Resource {
             time[i] = taskID;
         }
     }
-    
-    
-    
-    public void setZero(){
-        this.time=new String[800];
+
+    public void setZero() {
+        this.time = new String[800];
     }
-    
+
+    public void timeToDiagramValues() {
+        for (int i = 0; i < time.length; i++) {
+            if (time[i] == null) {
+                boolean free = true;
+                int waiting = 0;
+                int j = i;
+                while (free && j < time.length) {
+                    if (time[j] == null) {
+                        waiting++;
+                    } else {
+                        free = false;
+                    }
+
+                    j++;
+                }
+                diagramValues.add(waiting);
+                i = j - 1;
+            } else {
+                if (i == 0) {
+                    diagramValues.add(0);
+                }
+                boolean busy = true;
+                int committed = 0;
+                int j = i;
+                while (busy && j < time.length) {
+                    if (time[j] == null) {
+                        committed++;
+                    } else {
+                        busy = false;
+                    }
+
+                    j++;
+                }
+                diagramValues.add(committed);
+                i = j - 1;
+            }
+        }
+    }
 
 }
