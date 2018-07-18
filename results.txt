@@ -1,0 +1,4 @@
+[Patient@3d646c37, Patient@41cf53f9, Patient@5a10411, Patient@2ef1e4fa, Patient@306a30c7, Patient@b81eda8, Patient@68de145, Patient@27fa135a, Patient@46f7f36a, Patient@421faab1] 439.79166666666663 0.0411911 s.
+[Patient@2ef1e4fa, Patient@421faab1, Patient@46f7f36a, Patient@306a30c7, Patient@41cf53f9, Patient@68de145, Patient@b81eda8, Patient@27fa135a, Patient@5a10411, Patient@3d646c37] 168.375 0.082958882 s.
+[Patient@46f7f36a, Patient@306a30c7, Patient@5a10411, Patient@b81eda8, Patient@27fa135a, Patient@68de145, Patient@3d646c37, Patient@2ef1e4fa, Patient@421faab1, Patient@41cf53f9] 169.75 0.227195597 s.
+[Patient@2ef1e4fa, Patient@3d646c37, Patient@68de145, Patient@27fa135a, Patient@306a30c7, Patient@41cf53f9, Patient@421faab1, Patient@5a10411, Patient@b81eda8, Patient@46f7f36a] 168.375 0.036835225 s.
