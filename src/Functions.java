@@ -36,11 +36,12 @@ public class Functions {
         return result;
     }
 
-    public double fO(List<Patient> sequence) {
+    public double fO(List<Patient> sequence,boolean giveDetails) {
+        
         double result = 0;
 
         Test t = new Test(sequence, s);
-        t.addTask();
+        t.addTask(giveDetails);
 
         result = t.calculateMakespan();
 
@@ -76,11 +77,11 @@ public class Functions {
                 sold = scur;
                 scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
 
-                dif = fO(scur) - fO(sold);
+                dif = fO(scur, false) - fO(sold, false);
 
                 if (dif <= 0) {
                     sold = scur;
-                    double dif2 = fO(sold) - fO(minb);
+                    double dif2 = fO(sold, false) - fO(minb, false);
                     if (dif2 <= 0) {
                         minb = sold;
 
@@ -111,7 +112,7 @@ public class Functions {
            scur = randomizedConstruction(scur);
             scur = localSearch(scur, 100);
 
-            if (fO(scur) < fO(bestPosition)) {
+            if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
             }
             i++;
@@ -152,7 +153,7 @@ public class Functions {
             scur = greedyRandomizedConstruction(greedyness, scur);
             scur = localSearch(scur, 100);
 
-            if (fO(scur) < fO(bestPosition)) {
+            if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
             }
             i++;
@@ -246,7 +247,7 @@ public class Functions {
         int numiter = 0;
         while (improv < nboccur) {
             scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
-            if (fO(scur) < fO(bestPosition)) {
+            if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
             } else {
                 improv++;
@@ -307,7 +308,7 @@ public class Functions {
         //End of the part of Quentin
 
         //Comparison of fitness of the two first sequences of the population to set -the first two parents
-        if (fO(population.get(0)) < fO(population.get(1))) {
+        if (fO(population.get(0), false) < fO(population.get(1), false)) {
             bestPopulation1 = population.get(0);
             bestPopulation2 = population.get(1);
         } else {
@@ -324,8 +325,8 @@ public class Functions {
             bestPopulation2 = population.get(0);
             for (int j = 0; j < sizePopulation; j++) {
                 List<Patient> read = population.get(j);
-                if (fO(read) < fO(bestPopulation2)) {
-                    if (fO(read) < fO(bestPopulation1)) {
+                if (fO(read, false) < fO(bestPopulation2, false)) {
+                    if (fO(read, false) < fO(bestPopulation1, false)) {
                         bestPopulation2 = bestPopulation1;
                         bestPopulation1 = read;
                     }
@@ -346,7 +347,7 @@ public class Functions {
         //Find the best sequence at the end of the evolution
         bestPosition = population.get(0);
         for (int m = 1; m < sizePopulation; m++) {
-            if (fO(population.get(m)) < fO(bestPosition)) {
+            if (fO(population.get(m), false) < fO(bestPosition, false)) {
                 bestPosition = population.get(m);
             }
         }
