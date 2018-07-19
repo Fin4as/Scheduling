@@ -1,4 +1,9 @@
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
@@ -36,8 +41,8 @@ public class Functions {
         return result;
     }
 
-    public double fO(List<Patient> sequence,boolean giveDetails) {
-        
+    public double fO(List<Patient> sequence, boolean giveDetails) {
+
         double result = 0;
 
         Test t = new Test(sequence, s);
@@ -70,35 +75,43 @@ public class Functions {
         double dif;
         double rd;
         List<Patient> minb = scur;
+        System.out.println(fO(scur,false));
+        try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementAnnealing.txt", true)))) {
+             writer1.append("Original value: "+ fO(scur, false) + "\r\n");
+            while (temperature >= tempmin) {
 
-        while (temperature >= tempmin) {
-
-            if (numiter < itermax) {
-                sold = scur;
-                scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
-
-                dif = fO(scur, false) - fO(sold, false);
-
-                if (dif <= 0) {
+                if (numiter < itermax) {
                     sold = scur;
-                    double dif2 = fO(sold, false) - fO(minb, false);
-                    if (dif2 <= 0) {
-                        minb = sold;
+                    scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
 
+                    dif = fO(scur, false) - fO(sold, false);
+
+                    if (dif <= 0) {
+                        sold = scur;
+                        double dif2 = fO(sold, false) - fO(minb, false);
+                        if (dif2 < 0) {
+                            minb = sold;
+
+                            System.out.println(fO(minb, false));
+                            writer1.append("Improved : "  + fO(minb, false) + "\r\n");
+
+                        } else {
+                            rd = Math.random();
+                            if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
+                                sold = scur;
+                            }
+                        }
                     }
+                    numiter++;
 
                 } else {
-                    rd = Math.random();
-                    if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                        sold = scur;
-                    }
+                    temperature = coolingRate * temperature;
+                    numiter = 0;
                 }
-                numiter++;
-
-            } else {
-                temperature = coolingRate * temperature;
-                numiter = 0;
             }
+        } catch (IOException e) {
+            e.printStackTrace();
 
         }
         return minb;
@@ -108,27 +121,38 @@ public class Functions {
         List<Patient> bestPosition = new ArrayList();
         bestPosition = scur;
         int i = 0;
-        while (i < nbIteration) {
-           scur = randomizedConstruction(scur);
-            scur = localSearch(scur, 100);
+        try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementGRASP.txt", true)))) {
+            writer2.append("Original position : " + fO(bestPosition, false) + "\r\n");
 
-            if (fO(scur, false) < fO(bestPosition, false)) {
-                bestPosition = scur;
+            while (i < nbIteration) {
+                scur = randomizedConstruction(scur);
+                scur = localSearch(scur, 100);
+
+                if (fO(scur, false) < fO(bestPosition, false)) {
+                    bestPosition = scur;
+                    System.out.println(fO(bestPosition, false));
+                    writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
+
+                }
+                i++;
             }
-            i++;
-        } 
+        } catch (IOException e) {
+            e.printStackTrace();
+
+        }
         return bestPosition;
     }
-    
-    public List<Patient> randomizedConstruction(List<Patient> list){
+
+    public List<Patient> randomizedConstruction(List<Patient> list) {
         List<Patient> sequence = new ArrayList();
-        List<Patient> patientList =new ArrayList();
-        for (Patient e : list){
+        List<Patient> patientList = new ArrayList();
+        for (Patient e : list) {
             patientList.add(e);
         }
         Random rand = new Random();
         Patient randomElement;
-        
+
         while (sequence.size() < list.size()) {
             randomElement = patientList.get(rand.nextInt(patientList.size()));
             sequence.add(randomElement);
@@ -148,6 +172,9 @@ public class Functions {
         //defined by a random function
         List<Patient> bestPosition = new ArrayList<Patient>();
         bestPosition = scur;
+        try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementgraspRCL.txt", true)))) {
+            writer3.append("Original position : " + fO(bestPosition, false) + "\r\n");
         int i = 0;
         while (i < nbIteration) {
             scur = greedyRandomizedConstruction(greedyness, scur);
@@ -155,8 +182,13 @@ public class Functions {
 
             if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
+                writer3.append("Improved : " + fO(bestPosition, false) + "\r\n");
             }
             i++;
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
         return bestPosition;
     }
@@ -274,7 +306,7 @@ public class Functions {
         List<Patient> bestPopulation1;
         List<Patient> bestPopulation2;
 
-        //Filling of the population by random sequences(replace by Quentin)
+        //Filling of the population by random sequences
         Random rd = new Random();
         List<Patient> randomPatients;
         List<Patient> possiblePatient = new ArrayList();
@@ -282,6 +314,9 @@ public class Functions {
         int iteratorCheck;
 
         population.add(scur);
+         try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementGenetic.txt", true)))) {
+            writer4.append("Original position : " + fO(bestPosition, false) + "\r\n");
         while (population.size() < sizePopulation) {
             for (int i = 0; i < scur.size(); i++) {
                 possiblePatient.add(scur.get(i));
@@ -305,7 +340,7 @@ public class Functions {
                 }
             }
         }
-        //End of the part of Quentin
+        
 
         //Comparison of fitness of the two first sequences of the population to set -the first two parents
         if (fO(population.get(0), false) < fO(population.get(1), false)) {
@@ -329,9 +364,11 @@ public class Functions {
                     if (fO(read, false) < fO(bestPopulation1, false)) {
                         bestPopulation2 = bestPopulation1;
                         bestPopulation1 = read;
+                        writer4.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
                     }
                     bestPopulation2 = read;
                 }
+                
             }
             //Realisation of the crossing over to create an offspring supposedly better than its two parents
             List<Patient> child = SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, 4);
@@ -350,6 +387,10 @@ public class Functions {
             if (fO(population.get(m), false) < fO(bestPosition, false)) {
                 bestPosition = population.get(m);
             }
+        }
+        } catch (IOException e) {
+            e.printStackTrace();
+
         }
         return bestPosition;
     }

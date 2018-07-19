@@ -54,7 +54,7 @@ public class Main {
 ////
 
         long t_0A = System.nanoTime();
-        List<Patient> best = f.annealingMin(3, 5, arrivalSequence);
+        List<Patient> best = f.annealingMin(5, 5, arrivalSequence);
         System.out.println(best + " " + f.fO(best, true));
         long t_1A = System.nanoTime();
         System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
