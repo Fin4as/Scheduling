@@ -52,7 +52,7 @@ public class ExcelWriter {
                 cell.setCellValue(fullColumns.get(i));
             }
 
-            // Create Other rows and cells with employees data
+            // Create Other rows and cells with  data
             int rowNum = 1;
             for (Patient p : lp) {
                 Row row = sheet.createRow(rowNum++);

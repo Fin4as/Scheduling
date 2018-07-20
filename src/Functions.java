@@ -1,5 +1,4 @@
 
-
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
@@ -37,8 +36,8 @@ public class Functions {
         return result;
     }
 
-    public double fO(List<Patient> sequence,boolean giveDetails) {
-        
+    public double fO(List<Patient> sequence, boolean giveDetails) {
+
         double result = 0;
 
         Test t = new Test(sequence, s);
@@ -48,17 +47,20 @@ public class Functions {
 
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
-//         System.out.println(wait(t.totalWaitingTime));
-//        for(int i =0; i<sequence.size(); i++){
-//            System.out.print(sequence.get(i).getPatientID());
-//            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
-//        }
-//        System.out.println("");
-//        
-//        for(int j =0; j<t.getListResource().size(); j++){
-//            System.out.print(t.getListResource().get(j).getResourceID());
-//            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
-//        }
+//         System.out.println(wait(t.totalWaitingTime));*
+
+        if (giveDetails == true) {
+            for (int i = 0; i < sequence.size(); i++) {
+                System.out.print(sequence.get(i).getPatientID());
+                System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+            }
+            System.out.println("");
+
+            for (int j = 0; j < t.getListResource().size(); j++) {
+                System.out.print(t.getListResource().get(j).getResourceID());
+                System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+            }
+        }
 
         return result;
     }
@@ -110,26 +112,26 @@ public class Functions {
         bestPosition = scur;
         int i = 0;
         while (i < nbIteration) {
-           scur = randomizedConstruction(scur);
-            scur = localSearch(scur, 100);
+            scur = randomizedConstruction(scur);
+            scur = localSearch(scur, 5);
 
             if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
             }
             i++;
-        } 
+        }
         return bestPosition;
     }
-    
-    public List<Patient> randomizedConstruction(List<Patient> list){
+
+    public List<Patient> randomizedConstruction(List<Patient> list) {
         List<Patient> sequence = new ArrayList();
-        List<Patient> patientList =new ArrayList();
-        for (Patient e : list){
+        List<Patient> patientList = new ArrayList();
+        for (Patient e : list) {
             patientList.add(e);
         }
         Random rand = new Random();
         Patient randomElement;
-        
+
         while (sequence.size() < list.size()) {
             randomElement = patientList.get(rand.nextInt(patientList.size()));
             sequence.add(randomElement);

@@ -20,6 +20,7 @@ public class Patient {
     private int ageInformation;
     private double cancellationLikelihood;
     private ArrayList<Integer> diagramValues;
+    private ArrayList<String> diagramResourceIdUsed;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
@@ -35,6 +36,7 @@ public class Patient {
         }
         this.arrivalTime = arrivalTime;
         diagramValues = new ArrayList<>();
+        diagramResourceIdUsed = new ArrayList<>();
     }
 
     public int getAgeInformation() {
@@ -91,7 +93,7 @@ public class Patient {
         return processID;
     }
 
-    public void resetSchedule() {
+    public void setZeroSchedule() {
         this.schedule = new String[800];
     }
 
@@ -101,6 +103,14 @@ public class Patient {
 
     public void addDiagramValues(int i){
         diagramValues.add(i);
+    }
+    
+    public void addDiagramResourceUsed(String r){
+        diagramResourceIdUsed.add(r);
+    }
+    
+       public ArrayList<String> getDiagramResourcesIdUsed(){
+        return diagramResourceIdUsed;
     }
     
     public ArrayList<Integer> getDiagramValues(){
