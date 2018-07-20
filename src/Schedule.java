@@ -76,7 +76,7 @@ public class Schedule {
         try {
 
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_copy_test", "152416_sir", "projetsir2018");
+            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
             System.out.println("You are connected ! ");

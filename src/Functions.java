@@ -1,4 +1,9 @@
 
+import java.io.BufferedWriter;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
 import java.util.ArrayList;
@@ -36,8 +41,8 @@ public class Functions {
         return result;
     }
 
-    public double fO(List<Patient> sequence,boolean giveDetails) {
-        
+    public double fO(List<Patient> sequence, boolean giveDetails) {
+
         double result = 0;
 
         Test t = new Test(sequence, s);
@@ -48,6 +53,8 @@ public class Functions {
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
 //         System.out.println(wait(t.totalWaitingTime));
+
+
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -62,44 +69,66 @@ public class Functions {
         return result;
     }
 
-    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> scur) {
-        List<Patient> sold;
+    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> sold) {
+        List<Patient> scur = new ArrayList();
         double tempmin = 0.1;
-        int numiter = 0;
+        int numiter = 1;
+        int numiterBest = 1;
         double coolingRate = 0.01;
         double dif;
         double rd;
-        List<Patient> minb = scur;
+        List<Patient> minb = new ArrayList();
+        for (Patient e : sold) {
+            minb.add(e);
+        }
+        
+        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("iteratorAnnealing.txt"), "utf-8"))) {
 
-        while (temperature >= tempmin) {
+            while (temperature >= tempmin) {
 
-            if (numiter < itermax) {
-                sold = scur;
-                scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
-
-                dif = fO(scur, false) - fO(sold, false);
-
-                if (dif <= 0) {
-                    sold = scur;
-                    double dif2 = fO(sold, false) - fO(minb, false);
-                    if (dif2 <= 0) {
-                        minb = sold;
-
+                if (numiter <= itermax) {
+                    scur = new ArrayList();
+                    for (Patient i : sold) {
+                        scur.add(i);
                     }
+                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+                    dif = fO(scur, false) - fO(sold, false);
 
+                    if (dif <= 0) {
+                        sold = new ArrayList();
+                        for (Patient p : scur) {
+                            sold.add(p);
+                        }
+                        double dif2 = fO(sold, false) - fO(minb, false);
+                        if (dif2 < 0) {
+                            minb = new ArrayList();
+                            for (Patient d : sold) {
+                                minb.add(d);
+                            }
+                            System.out.println(fO(minb, true));
+                            numiterBest = Integer.valueOf(numiter);
+
+                        }
+
+                    } else {
+                        rd = Math.random();
+                        if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
+                            sold = scur;
+                        }
+                    }
+                    
+                    
                 } else {
-                    rd = Math.random();
-                    if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                        sold = scur;
-                    }
+                    temperature = coolingRate * temperature;
+                    numiter = 0;
                 }
                 numiter++;
 
-            } else {
-                temperature = coolingRate * temperature;
-                numiter = 0;
+                writer.append(numiterBest + "\r\n");
             }
-
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return minb;
     }
@@ -109,26 +138,26 @@ public class Functions {
         bestPosition = scur;
         int i = 0;
         while (i < nbIteration) {
-           scur = randomizedConstruction(scur);
+            scur = randomizedConstruction(scur);
             scur = localSearch(scur, 100);
 
             if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;
             }
             i++;
-        } 
+        }
         return bestPosition;
     }
-    
-    public List<Patient> randomizedConstruction(List<Patient> list){
+
+    public List<Patient> randomizedConstruction(List<Patient> list) {
         List<Patient> sequence = new ArrayList();
-        List<Patient> patientList =new ArrayList();
-        for (Patient e : list){
+        List<Patient> patientList = new ArrayList();
+        for (Patient e : list) {
             patientList.add(e);
         }
         Random rand = new Random();
         Patient randomElement;
-        
+
         while (sequence.size() < list.size()) {
             randomElement = patientList.get(rand.nextInt(patientList.size()));
             sequence.add(randomElement);

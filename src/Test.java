@@ -216,7 +216,7 @@ public class Test {
 //                                pat.addDiagramValues(t.getAvTime()); // then add the duration
 
                                 totalWaitingTime += (start - endLastTask);
-                                
+
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
                                     System.out.print("\t\t");
@@ -278,7 +278,7 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
-                                    
+
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
                                         System.out.print("\t\t");
@@ -303,13 +303,17 @@ public class Test {
                                 endLastTask = start + avTimeTotal;
 
                             } else {
+                                if (giveDetails == true) {
 //                                System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
-                                return; // to get out the addTask Method
+                                    return; // to get out the addTask Method
+                                }
                             }
 
                         } else {
+                            if (giveDetails == true) {
 //                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
-                            return; // to get out the addTask Method
+                                return; // to get out the addTask Method
+                            }
                         }
 
                     }
