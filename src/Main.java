@@ -52,40 +52,57 @@ public class Main {
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 ////
-
+ try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("AnnealingScore.txt")))) {
+  try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("AnnealingTime.txt")))) {   
+     
+for (int i=0;i<10000;i++){
         long t_0A = System.nanoTime();
         List<Patient> best = f.annealingMin(3, 5, arrivalSequence);
-        System.out.println(best + " " + f.fO(best, true));
+        System.out.println(best + " " + f.fO(best,false));
         long t_1A = System.nanoTime();
         System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
 
-        long t_0G = System.nanoTime();
-        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
-        System.out.println(gene + " " + f.fO(gene, true));
-        long t_1G = System.nanoTime();
-        System.out.println("Length of the algorithm Genetic: " + (t_1G - t_0G) / pow(10, 9) + " s.");
-
-        long t_0GRCL = System.nanoTime();
-        List<Patient> graspRCL = f.graspRCL(0.4, 20, arrivalSequence);
-        System.out.println(graspRCL + " " + f.fO(graspRCL, true));
-        long t_1GRCL = System.nanoTime();
-        System.out.println("Length of the algorithm GRASP RCL: " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s.");
-
-        long t_0GR = System.nanoTime();
-        List<Patient> grasp = f.grasp(5, arrivalSequence);
-        System.out.println(grasp + " " + f.fO(grasp, true));
-        long t_1GR = System.nanoTime();
-        System.out.println("Length of the algorithm GRASP: " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
-
-        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("results.txt"), "utf-8"))) {
-            writer.write(best.toString() + " " + f.fO(best, true) + " " + (t_1A - t_0A) / pow(10, 9) + " s." + "\r\n");
-            writer.write(gene + " " + f.fO(gene, true)+ " " + (t_1G - t_0G) / pow(10, 9) + " s." + "\r\n");
-            writer.write(graspRCL + " " + f.fO(graspRCL, true)+ " " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s." + "\r\n");
-            writer.write(grasp + " " + f.fO(grasp, true) + " " + (t_1GR - t_0GR) / pow(10, 9) + " s." + "\r\n");
-        } catch (IOException e) {
-            e.printStackTrace();
+       
+            writer1.append(""+f.fO(best, true)+"\r\n");
+            writer2.append(""+(t_1A - t_0A) / pow(10, 9)+"\r\n");
+       
         }
+ } catch (IOException e) {
+            e.printStackTrace();
+}
+  } catch (IOException e) {
+            e.printStackTrace();
+}
+        
+//        long t_0G = System.nanoTime();
+//        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
+//        System.out.println(gene + " " + f.fO(gene, true));
+//        long t_1G = System.nanoTime();
+//        System.out.println("Length of the algorithm Genetic: " + (t_1G - t_0G) / pow(10, 9) + " s.");
+//
+//        long t_0GRCL = System.nanoTime();
+//        List<Patient> graspRCL = f.graspRCL(0.4, 20, arrivalSequence);
+//        System.out.println(graspRCL + " " + f.fO(graspRCL, true));
+//        long t_1GRCL = System.nanoTime();
+//        System.out.println("Length of the algorithm GRASP RCL: " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s.");
+//
+//        long t_0GR = System.nanoTime();
+//        List<Patient> grasp = f.grasp(5, arrivalSequence);
+//        System.out.println(grasp + " " + f.fO(grasp, true));
+//        long t_1GR = System.nanoTime();
+//        System.out.println("Length of the algorithm GRASP: " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
+
+//        try (Writer writer = new BufferedWriter(new OutputStreamWriter(
+//                new FileOutputStream("results.txt"), "utf-8"))) {
+//            writer.write(best.toString() + " " + f.fO(best, true) + " " + (t_1A - t_0A) / pow(10, 9) + " s." + "\r\n");
+//            writer.write(gene + " " + f.fO(gene, true)+ " " + (t_1G - t_0G) / pow(10, 9) + " s." + "\r\n");
+//            writer.write(graspRCL + " " + f.fO(graspRCL, true)+ " " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s." + "\r\n");
+//            writer.write(grasp + " " + f.fO(grasp, true) + " " + (t_1GR - t_0GR) / pow(10, 9) + " s." + "\r\n");
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
     }
 
