@@ -1,3 +1,6 @@
+//package Scheduling_First_Try;
+import java.util.ArrayList;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -16,6 +19,8 @@ public class Patient {
     private int arrivalTime;
     private int ageInformation;
     private double cancellationLikelihood;
+    private ArrayList<Integer> diagramValues;
+    private ArrayList<String> diagramResourceIdUsed;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
@@ -30,6 +35,8 @@ public class Patient {
             this.cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
         }
         this.arrivalTime = arrivalTime;
+        diagramValues = new ArrayList<>();
+        diagramResourceIdUsed = new ArrayList<>();
     }
 
     public int getAgeInformation() {
@@ -86,7 +93,7 @@ public class Patient {
         return processID;
     }
 
-    public void resetSchedule() {
+    public void setZeroSchedule() {
         this.schedule = new String[800];
     }
 
@@ -94,4 +101,19 @@ public class Patient {
         return cancellationLikelihood;
     }
 
+    public void addDiagramValues(int i){
+        diagramValues.add(i);
+    }
+    
+    public void addDiagramResourceUsed(String r){
+        diagramResourceIdUsed.add(r);
+    }
+    
+       public ArrayList<String> getDiagramResourcesIdUsed(){
+        return diagramResourceIdUsed;
+    }
+    
+    public ArrayList<Integer> getDiagramValues(){
+        return diagramValues;
+    }
 }

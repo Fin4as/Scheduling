@@ -52,12 +52,24 @@ public class Main {
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 ////
-
+//
         long t_0A = System.nanoTime();
         List<Patient> best = f.annealingMin(3, 1000, arrivalSequence);
         System.out.println(best + " " + f.fO(best, true));
         long t_1A = System.nanoTime();
         System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
+//
+//        long t_0G = System.nanoTime();
+//        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
+//        System.out.println(gene + " " + f.fO(gene, true));
+//        long t_1G = System.nanoTime();
+//        System.out.println("Length of the algorithm Genetic: " + (t_1G - t_0G) / pow(10, 9) + " s.");
+//
+//        long t_0GRCL = System.nanoTime();
+//        List<Patient> graspRCL = f.graspRCL(0.4, 20, arrivalSequence);
+//        System.out.println(graspRCL + " " + f.fO(graspRCL, true));
+//        long t_1GRCL = System.nanoTime();
+//        System.out.println("Length of the algorithm GRASP RCL: " + (t_1GRCL - t_0GRCL) / pow(10, 9) + " s.");
 
 //        long t_0G = System.nanoTime();
 //        List<Patient> gene = f.genetic(50, 4, arrivalSequence);

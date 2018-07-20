@@ -66,6 +66,19 @@ public class Functions {
 //            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
 //        }
 
+        if (giveDetails == true) {
+            for (int i = 0; i < sequence.size(); i++) {
+                System.out.print(sequence.get(i).getPatientID());
+                System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+            }
+            System.out.println("");
+
+            for (int j = 0; j < t.getListResource().size(); j++) {
+                System.out.print(t.getListResource().get(j).getResourceID());
+                System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+            }
+        }
+
         return result;
     }
 
@@ -139,7 +152,7 @@ public class Functions {
         int i = 0;
         while (i < nbIteration) {
             scur = randomizedConstruction(scur);
-            scur = localSearch(scur, 100);
+            scur = localSearch(scur, 5);
 
             if (fO(scur, false) < fO(bestPosition, false)) {
                 bestPosition = scur;

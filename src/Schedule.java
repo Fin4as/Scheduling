@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+//package scheduling_First_Try;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -91,7 +91,7 @@ public class Schedule {
     public void getTaskData(Process pro) {
         
         try {
-            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'";
+            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'" + "ORDER BY `Task`.`TaskID` ASC";
             rs = st.executeQuery(query);
 
             while (rs.next()) {
@@ -160,13 +160,14 @@ public class Schedule {
                     }
 
                 }
-
+               
             } catch (Exception ex) {
-                System.out.println("Hey 3");
+               
                 System.out.println(ex);
 
             }
         }
+
     }
 
 
@@ -220,7 +221,7 @@ public class Schedule {
     public void getPrevTask(List<Task> listTask, String processID) {
 
         try {
-            String query = "SELECT TaskID, PrevTaskID FROM PreviousTask JOIN Task ON Task.ID = PreviousTask.IDcouple WHERE Task.ProcessID ='" + processID + "'";
+            String query = "SELECT TaskID, PrevTaskID FROM PreviousTask JOIN Task ON Task.ID = PreviousTask.IDcouple WHERE Task.ProcessID ='" + processID + "'"+ "ORDER BY `PreviousTask`.`IDchar` ASC";
             rs = st.executeQuery(query);
             while (rs.next()) {
 
@@ -241,7 +242,7 @@ public class Schedule {
 
     public void getNextTask(List<Task> listTask, String processID) {
         try {
-            String query = "SELECT TaskID, NextTaskID FROM NextTask JOIN Task ON Task.ID = NextTask.IDcouple WHERE Task.ProcessID ='" + processID + "'";
+            String query = "SELECT TaskID, NextTaskID FROM NextTask JOIN Task ON Task.ID = NextTask.IDcouple WHERE Task.ProcessID ='" + processID + "'" + "ORDER BY `NextTask`.`IDchar` ASC";
             rs = st.executeQuery(query);
             while (rs.next()) {
                 String nextTask = rs.getString("NextTaskID");
