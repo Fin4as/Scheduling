@@ -23,10 +23,12 @@ public class Schedule {
     Connection conn;
     private List<Process> listProcess;
     private List<Resource> allResources;
+    private List<String> nameResource;
 
 
     public Schedule(List<Patient> listPatient) {
         allResources = new ArrayList();
+        nameResource = new ArrayList();
         List<String> listP = this.getProcess(listPatient);
         listProcess = new ArrayList();
         getConnectDB(); // connect to DataBAase
@@ -40,9 +42,9 @@ public class Schedule {
             List<Task> listTask = pro.getListTask();
             this.getPrevTask(pro.getListTask(), processID);
             this.getNextTask(pro.getListTask(), processID);
-            this.getSkillData(pro.getListTask());
+            this.getSkillData(pro.getListTask(), processID);
             this.getResourceData(pro.getListTask());
-
+           
 //            this.getResourceData(listTask, allResources);
 //              Process pro = new Process(namePro, listTask, allResources);
 //            listPro.add(pro);
@@ -91,7 +93,7 @@ public class Schedule {
     public void getTaskData(Process pro) {
         
         try {
-            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'" + "ORDER BY `Task`.`TaskID` ASC";
+            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID()+"'";
             rs = st.executeQuery(query);
 
             while (rs.next()) {
@@ -114,12 +116,12 @@ public class Schedule {
         
     }
 
-    public void getSkillData(List<Task> listTask) {
+    public void getSkillData(List<Task> listTask, String processID) {
 
         for (int i = 0; i < listTask.size(); i++) {
             try {
 
-                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "'";
+                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND Task.ProcessID = '" + processID+"'";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
 
@@ -138,7 +140,7 @@ public class Schedule {
     }
 
     public void getResourceData(List<Task> listTask) {
-        ArrayList<String> nameResource = new ArrayList();
+        
         for (int i = 0; i < listTask.size(); i++) {
             try {
                 String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getSkill().getSkillID() + "'";
@@ -167,6 +169,7 @@ public class Schedule {
 
             }
         }
+
 
     }
 

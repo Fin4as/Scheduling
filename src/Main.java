@@ -52,7 +52,11 @@ public class Main {
 //       Test t = new Test(listPatient,s);
 //       t.addTask();
 ////
-//
+        for(int j = 0; j <s.getAllResources().size(); j++){
+            System.out.println(s.getAllResources().get(j).getResourceID()); 
+        }
+        
+
         long t_0A = System.nanoTime();
         List<Patient> best = f.annealingMin(3, 5, arrivalSequence);
         System.out.println(best + " " + f.fO(best, true));
