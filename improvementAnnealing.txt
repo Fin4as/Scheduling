@@ -1,3 +1,9 @@
 Original value: 180.0
 Original value: 180.0
 Original value: 180.0
+Original value: 950.5
+Improved : 947.1666666666666
+Improved : 902.1666666666666
+Improved : 898.8333333333333
+Improved : 895.5
+Improved : 892.1666666666666

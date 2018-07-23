@@ -7,3 +7,8 @@ Improved : 198.625
 Improved : 197.41666666666666
 Original position : 439.79166666666663
 Improved : 197.41666666666666
+Original position : 950.5
+Improved : 863.5833333333333
+Improved : 844.75
+Original position : 950.5
+Improved : 844.75

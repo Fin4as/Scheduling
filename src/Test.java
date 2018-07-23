@@ -335,11 +335,11 @@ public class Test {
 
             }
 
-            ExcelWriter excelWriter = new ExcelWriter();
-            excelWriter.write(listPatient);
-            for (int q = 0; q < listResource.size(); q++) {
-                listResource.get(q).timeToDiagramValues();
-            }
+//            ExcelWriter excelWriter = new ExcelWriter();
+//            excelWriter.write(listPatient);
+//            for (int q = 0; q < listResource.size(); q++) {
+//                listResource.get(q).timeToDiagramValues();
+//            }
         }
 
     }
