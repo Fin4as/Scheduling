@@ -317,18 +317,14 @@ public class Test {
 
                             } else {
                                 if (giveDetails == true) {
-
-                                    System.out.println("Reeeeeeeeee2");
-
-                                    System.out.println("No resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
+//                                System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
                                     return; // to get out the addTask Method
                                 }
                             }
 
                         } else {
                             if (giveDetails == true) {
-                                System.out.println("Reeeeeeeeee3");
-                                System.out.println("No resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
+//                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
                                 return; // to get out the addTask Method
                             }
                         }
