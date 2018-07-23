@@ -53,6 +53,8 @@ public class Functions {
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
 //         System.out.println(wait(t.totalWaitingTime));
+
+
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -64,43 +66,72 @@ public class Functions {
 //            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
 //        }
 
+        if (giveDetails == true) {
+            for (int i = 0; i < sequence.size(); i++) {
+                System.out.print(sequence.get(i).getPatientID());
+                System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+            }
+            System.out.println("");
+
+            for (int j = 0; j < t.getListResource().size(); j++) {
+                System.out.print(t.getListResource().get(j).getResourceID());
+                System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+            }
+        }
+
         return result;
     }
 
-    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> scur) {
-        List<Patient> sold;
+    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> sold) {
+        List<Patient> scur = new ArrayList();
         double tempmin = 0.1;
-        int numiter = 0;
+        int numiter = 1;
+        int numiterBest = 1;
         double coolingRate = 0.01;
         double dif;
         double rd;
-        List<Patient> minb = scur;
-        System.out.println(fO(scur,false));
+        List<Patient> minb = new ArrayList();
+        for (Patient e : sold) {
+            minb.add(e);
+        }
+        
         try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementAnnealing.txt", true)))) {
              writer1.append("Original value: "+ fO(scur, false) + "\r\n");
             while (temperature >= tempmin) {
 
-                if (numiter < itermax) {
-                    sold = scur;
-                    scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+        while (temperature >= tempmin) {
 
+                if (numiter <= itermax) {
+                    scur = new ArrayList();
+                    for (Patient i : sold) {
+                        scur.add(i);
+                    }
+                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
                     dif = fO(scur, false) - fO(sold, false);
 
                     if (dif <= 0) {
-                        sold = scur;
+                        sold = new ArrayList();
+                        for (Patient p : scur) {
+                            sold.add(p);
+                        }
                         double dif2 = fO(sold, false) - fO(minb, false);
                         if (dif2 < 0) {
-                            minb = sold;
+                            minb = new ArrayList();
+                            for (Patient d : sold) {
+                                minb.add(d);
+                            }
+                            System.out.println(fO(minb, true));
+                            numiterBest = Integer.valueOf(numiter);
 
                             System.out.println(fO(minb, false));
                             writer1.append("Improved : "  + fO(minb, false) + "\r\n");
+                        }
 
-                        } else {
-                            rd = Math.random();
-                            if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                                sold = scur;
-                            }
+                    } else {
+                        rd = Math.random();
+                        if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
+                            sold = scur;
                         }
                     }
                     numiter++;
@@ -109,10 +140,14 @@ public class Functions {
                     temperature = coolingRate * temperature;
                     numiter = 0;
                 }
+                numiter++;
+
+            } else {
+                temperature = coolingRate * temperature;
+                numiter = 0;
             }
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         return minb;
     }
@@ -137,6 +172,8 @@ public class Functions {
                 }
                 i++;
             }
+            i++;
+        }
         } catch (IOException e) {
             e.printStackTrace();
 

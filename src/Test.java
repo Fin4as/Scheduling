@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+//package Scheduling_First_Try;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -153,7 +153,8 @@ public class Test {
 
         //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
-            listPatient.get(p).resetSchedule(); // change this method's name
+            listPatient.get(p).setZeroSchedule(); // change this method's name
+            listPatient.get(p).getDiagramValues().clear();
         }
 
         //Empty the table of time of each resource 
@@ -173,7 +174,9 @@ public class Test {
             System.out.print("\t");
             System.out.print("Ending Time");
             System.out.print("\t");
-            System.out.println("Waiting Time");
+            System.out.print("Waiting Time");
+            System.out.print("\t");
+            System.out.println("Resource used");
         }
 
         totalWaitingTime = 0;
@@ -212,11 +215,13 @@ public class Test {
                                 res.setTime(start, t.getAvTime(), t.getTaskID());
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
-//                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
-//                                pat.addDiagramValues(t.getAvTime()); // then add the duration
+                                
+                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
+                                pat.addDiagramValues(t.getAvTime()); // then add the duration
+                                pat.addDiagramResourceUsed(res.getResourceID());
 
                                 totalWaitingTime += (start - endLastTask);
-                                
+
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
                                     System.out.print("\t\t");
@@ -229,15 +234,19 @@ public class Test {
                                     System.out.print(t.getAvTime() + start + "");
                                     System.out.print("\t\t");
                                     System.out.print(start - endLastTask + "");
-                                    System.out.println("");
+                                    System.out.print("\t\t");
+                                    System.out.println(res.getResourceID());
                                 }
                                 endLastTask = start + t.getAvTime();
 
                             }
 
                         } else {
-                            System.out.println("No resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
-                            return; // to get out the addTask Method
+                            if (giveDetails == true) {
+                                System.out.println("Reeeeeeeeee1");
+                                System.out.println("No resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
+                                return; // to get out the addTask Method
+                            }
                         }
 
                     }
@@ -278,7 +287,10 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
-                                    
+                                    pat.addDiagramValues(currentStart - currentEnd);
+                                    pat.addDiagramValues(currentAvTime);
+                                    pat.addDiagramResourceUsed(resourcesToUse.get(ip).getResourceID());
+
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
                                         System.out.print("\t\t");
@@ -291,7 +303,8 @@ public class Test {
                                         System.out.print(currentAvTime + currentStart + "");
                                         System.out.print("\t\t");
                                         System.out.print(currentStart - currentEnd + "");
-                                        System.out.println("");
+                                        System.out.print("\t\t");
+                                        System.out.println(resourcesToUse.get(ip).getResourceID());
                                     }
 
                                     currentEnd = currentStart + currentAvTime;
@@ -303,13 +316,17 @@ public class Test {
                                 endLastTask = start + avTimeTotal;
 
                             } else {
+                                if (giveDetails == true) {
 //                                System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
-                                return; // to get out the addTask Method
+                                    return; // to get out the addTask Method
+                                }
                             }
 
                         } else {
+                            if (giveDetails == true) {
 //                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
-                            return; // to get out the addTask Method
+                                return; // to get out the addTask Method
+                            }
                         }
 
                     }
@@ -318,11 +335,11 @@ public class Test {
 
             }
 
-//            ExcelWriter excelWriter = new ExcelWriter();
-//            excelWriter.write(listPatient);
-//            for (int q = 0; q < listResource.size(); q++) {
-//                listResource.get(q).timeToDiagramValues();
-//            }
+            ExcelWriter excelWriter = new ExcelWriter();
+            excelWriter.write(listPatient);
+            for (int q = 0; q < listResource.size(); q++) {
+                listResource.get(q).timeToDiagramValues();
+            }
         }
 
     }
