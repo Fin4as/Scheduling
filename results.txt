@@ -1,8 +1,1 @@
-<<<<<<< HEAD
-[Patient@1cf53f9, Patient@1a10411, Patient@f1e4fa, Patient@6a30c7, Patient@181eda8, Patient@8de145, Patient@1fa135a, Patient@f7f36a, Patient@1faab1, Patient@171fc7e] 439.79166666666663 0.012982011 s.
-[Patient@6a30c7, Patient@1cf53f9, Patient@181eda8, Patient@1fa135a, Patient@8de145, Patient@f7f36a, Patient@1faab1, Patient@f1e4fa, Patient@1a10411, Patient@171fc7e] 168.375 0.087643491 s.
-[Patient@f7f36a, Patient@8de145, Patient@f1e4fa, Patient@181eda8, Patient@1faab1, Patient@1fa135a, Patient@1cf53f9, Patient@6a30c7, Patient@171fc7e, Patient@1a10411] 197.41666666666666 0.523622261 s.
-[Patient@1faab1, Patient@6a30c7, Patient@8de145, Patient@1a10411, Patient@171fc7e, Patient@f7f36a, Patient@1cf53f9, Patient@f1e4fa, Patient@1fa135a, Patient@181eda8] 169.75 0.116215469 s.
-=======
-[Patient@1cf53f9, Patient@1a10411, Patient@f1e4fa, Patient@6a30c7, Patient@181eda8, Patient@8de145, Patient@1fa135a, Patient@f7f36a, Patient@1faab1, Patient@171fc7e] 367.66666666666663 0.696428693 s.
->>>>>>> ExcelWriter
+[Patient@421faab1, Patient@2b71fc7e, Patient@5ce65a89, Patient@25f38edc, Patient@1a86f2f1, Patient@3eb07fd3, Patient@506c589e, Patient@69d0a921, Patient@446cdf90, Patient@799f7e29] 910.625 1.913631756 s.

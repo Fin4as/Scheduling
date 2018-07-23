@@ -43,12 +43,11 @@ public class Functions {
 
     public double fO(List<Patient> sequence, boolean giveDetails) {
 
-        double result = 0;
-
+        try{
         Test t = new Test(sequence, s);
         t.addTask(giveDetails);
 
-        result = t.calculateMakespan();
+        double result = t.calculateMakespan();
 
         result += wait(t.getTotalWaitingTime());
         result += late(t.getLateness());
@@ -75,9 +74,14 @@ public class Functions {
                 System.out.print(t.getListResource().get(j).getResourceID());
                 System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
             }
+                        ExcelWriter excelWriter = new ExcelWriter();
+            excelWriter.write(t.listPatient);
         }
 
-        return result;
+        return result;}
+        catch(IllegalArgumentException e){
+            return Double.MAX_VALUE;
+        }
     }
 
     public List<Patient> annealingMin(double temperature, int itermax, List<Patient> sold) {
@@ -119,17 +123,17 @@ public class Functions {
                                 for (Patient d : sold) {
                                     minb.add(d);
                                 }
-                                System.out.println(fO(minb, true));
-                                numiterBest = Integer.valueOf(numiter);
-
                                 System.out.println(fO(minb, false));
+                                numiterBest = Integer.valueOf(numiter);
                                 writer1.append("Improved : " + fO(minb, false) + "\r\n");
                             }
 
                         } else {
                             rd = Math.random();
                             if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                                sold = scur;
+                                for (Patient p : scur){
+                                    sold.add(p);
+                                }
                             }
                         }
 
@@ -379,9 +383,7 @@ public class Functions {
                     }
                 }
             }
-            for(List<Patient> p : population){
-            System.out.println(p);
-            }
+            
             //Comparison of fitness of the two first sequences of the population to set -the first two parents
             if (fO(population.get(0), false) < fO(population.get(1), false)) {
                 bestPopulation1 = new ArrayList();
