@@ -3,10 +3,23 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+<<<<<<< HEAD
             <file>file:/C:/Users/Hayat/Documents/NetBeansProjects/Scheduling_first_try/Scheduling_First_Try/src/Main.java</file>
             <file>file:/C:/Users/Hayat/Documents/NetBeansProjects/Scheduling_first_try/Scheduling_First_Try/src/Functions.java</file>
             <file>file:/C:/Users/Hayat/Documents/NetBeansProjects/Scheduling_first_try/Scheduling_First_Try/src/Test.java</file>
             <file>file:/C:/Users/Hayat/Documents/NetBeansProjects/Scheduling_first_try/Scheduling_First_Try/src/Patient.java</file>
+=======
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/SwappableSequence.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Schedule.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Functions.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Test.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Resource.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Patient.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Task.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Main.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Process.java</file>
+            <file>file:/C:/Users/robin/Documents/NetBeansProjects/Scheduling_First_Try/src/Skill.java</file>
+>>>>>>> Studying_Annealing
         </group>
     </open-files>
 </project-private>
