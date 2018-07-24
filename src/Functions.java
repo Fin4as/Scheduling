@@ -43,14 +43,16 @@ public class Functions {
 
     public double fO(List<Patient> sequence, boolean giveDetails) {
 
-        try{
-        Test t = new Test(sequence, s);
-        t.addTask(giveDetails);
+        try {
+            Test t = new Test(sequence, s);
+            t.addTask(giveDetails);
 
-        double result = t.calculateMakespan();
+            double result = t.calculateMakespan();
 
-        result += wait(t.getTotalWaitingTime());
-        result += late(t.getLateness());
+            result += wait(t.getTotalWaitingTime());
+            result += late(t.getLateness());
+
+//            System.out.println(result);
 //         System.out.println(wait(t.totalWaitingTime));
 
 //        for(int i =0; i<sequence.size(); i++){
@@ -63,30 +65,30 @@ public class Functions {
 //            System.out.print(t.getListResource().get(j).getResourceID());
 //            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
 //        }
-        if (giveDetails == true) {
-            for (int i = 0; i < sequence.size(); i++) {
-                System.out.print(sequence.get(i).getPatientID());
-                System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
-            }
-            System.out.println("");
+            if (giveDetails == true) {
+                for (int i = 0; i < sequence.size(); i++) {
+                    System.out.print(sequence.get(i).getPatientID());
+                    System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+                }
+                System.out.println("");
 
-            for (int j = 0; j < t.getListResource().size(); j++) {
-                System.out.print(t.getListResource().get(j).getResourceID());
-                System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+                for (int j = 0; j < t.getListResource().size(); j++) {
+                    System.out.print(t.getListResource().get(j).getResourceID());
+                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+                }
+                ExcelWriter excelWriter = new ExcelWriter();
+                excelWriter.write(t.listPatient);
             }
-            ExcelWriter excelWriter = new ExcelWriter();
-            excelWriter.write(t.listPatient);
-        }
 
-        return result;}
-        catch(IllegalArgumentException e){
+            return result;
+        } catch (IllegalArgumentException e) {
             return Double.MAX_VALUE;
         }
     }
 
-    public List<Patient> annealingMin(double temperature, double coolingRate, int itermax, List<Patient> sold) {
+    public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> sold) {
         List<Patient> scur = new ArrayList();
-        double tempmin = 0.1;
+        double coolingRate = 0.75;
         int numiter = 1;
         int numiterBest = 1;
         double dif;
@@ -101,49 +103,54 @@ public class Functions {
             writer1.append("Original value: " + fO(sold, false) + "\r\n");
             while (temperature >= tempmin) {
 
-                while (temperature >= tempmin) {
+                if (numiter <= itermax) {
+                    scur = new ArrayList();
+                    for (Patient i : sold) {
+                        scur.add(i);
+                    }
+                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+                    dif = fO(scur, false) - fO(sold, false);
 
-                    if (numiter <= itermax) {
-                        scur = new ArrayList();
-                        for (Patient i : sold) {
-                            scur.add(i);
+                    if (dif <= 0) {
+                        sold = new ArrayList();
+                        for (Patient p : scur) {
+                            sold.add(p);
                         }
-                        SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
-                        dif = fO(scur, false) - fO(sold, false);
-
-                        if (dif <= 0) {
-                            sold = new ArrayList();
-                            for (Patient p : scur) {
-                                sold.add(p);
+                        double dif2 = fO(sold, false) - fO(minb, false);
+                        if (dif2 < 0) {
+                            minb = new ArrayList();
+                            for (Patient d : sold) {
+                                minb.add(d);
                             }
-                            double dif2 = fO(sold, false) - fO(minb, false);
-                            if (dif2 < 0) {
-                                minb = new ArrayList();
-                                for (Patient d : sold) {
-                                    minb.add(d);
-                                }
-                                //System.out.println(fO(minb, false));
-                                numiterBest = Integer.valueOf(numiter);
-                                writer1.append("Improved : " + fO(minb, false) + "\r\n");
-                            }
-
-                        } else {
-                            rd = Math.random();
-                            if (rd < exp(-dif / (1.38064852 * pow(10, -23)) * temperature)) {
-                                for (Patient p : scur){
-                                    sold.add(p);
-                                }
-                            }
+                            //System.out.println(fO(minb, false));
+                            numiterBest = Integer.valueOf(numiter);
+                            writer1.append("Improved : " + fO(minb, false) + "\r\n");
                         }
 
                     } else {
-                        temperature = coolingRate * temperature;
-                        numiter = 0;
-                    }
-                    numiter++;
+                        if (dif < pow(10, 9)) {
+                            //System.out.println(dif);
+                            rd = Math.random();
+                            double choice = exp(-dif / temperature);
+                            if (rd < choice) {
+                                sold = new ArrayList();
+                                for (Patient p : scur) {
+                                    sold.add(p);
+                                }
+                                writer1.append("Accepted : " + fO(sold, false) + "\r\n");
 
+                            }
+                        }
+                    }
+
+                } else {
+                    temperature = coolingRate * Double.valueOf(temperature);
+                    numiter = 0;
                 }
+                numiter++;
+
             }
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -339,7 +346,7 @@ public class Functions {
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
         List<Patient> bestPosition = new ArrayList();
-        for (Patient p : scur){
+        for (Patient p : scur) {
             bestPosition.add(p);
         }
 
@@ -354,7 +361,6 @@ public class Functions {
         Patient randomPatient;
         int iteratorCheck;
         population.add(scur);
-       
 
         try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGenetic.txt", true)))) {
@@ -382,7 +388,7 @@ public class Functions {
                     }
                 }
             }
-            
+
             //Comparison of fitness of the two first sequences of the population to set -the first two parents
             if (fO(population.get(0), false) < fO(population.get(1), false)) {
                 bestPopulation1 = new ArrayList();
@@ -431,15 +437,15 @@ public class Functions {
                             writer4.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
                         }
                         bestPopulation2 = new ArrayList();
-                        for (Patient p : read ){
+                        for (Patient p : read) {
                             bestPopulation2.add(p);
-                        }    
+                        }
                     }
 
                 }
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
-                for (Patient p: SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)){
+                for (Patient p : SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)) {
                     child.add(p);
                 }
 //                //This offspring is added in the population 
@@ -453,15 +459,15 @@ public class Functions {
 
             //Find the best sequence at the end of the evolution
             bestPosition = new ArrayList();
-            for (Patient p :population.get(0) ){
+            for (Patient p : population.get(0)) {
                 bestPosition.add(p);
             }
             for (int m = 1; m < sizePopulation; m++) {
                 if (fO(population.get(m), false) < fO(bestPosition, false)) {
                     bestPosition = new ArrayList();
-                    for (Patient p : population.get(m) ){
+                    for (Patient p : population.get(m)) {
                         bestPosition.add(p);
-                    }               
+                    }
                 }
             }
         } catch (IOException e) {
