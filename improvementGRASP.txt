@@ -45,3 +45,17 @@ Improvement : 996.9166666666666
 Original position : 1.7976931348623157E308
 Improvement : 1011.7083333333333
 Improvement : 932.125
+Original position : 1.7976931348623157E308
+Improvement : 1080.125
+Improvement : 1002.25
+Improvement : 929.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 987.375
+Improvement : 911.625
+Original position : 1.7976931348623157E308
+Improvement : 995.125
+Original position : 1.7976931348623157E308
+Improvement : 938.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 1012.0833333333333
+Improvement : 922.4166666666666

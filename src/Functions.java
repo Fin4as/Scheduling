@@ -74,7 +74,7 @@ public class Functions {
                 System.out.print(t.getListResource().get(j).getResourceID());
                 System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
             }
-                        ExcelWriter excelWriter = new ExcelWriter();
+            ExcelWriter excelWriter = new ExcelWriter();
             excelWriter.write(t.listPatient);
         }
 
@@ -123,7 +123,7 @@ public class Functions {
                                 for (Patient d : sold) {
                                     minb.add(d);
                                 }
-                                System.out.println(fO(minb, false));
+                                //System.out.println(fO(minb, false));
                                 numiterBest = Integer.valueOf(numiter);
                                 writer1.append("Improved : " + fO(minb, false) + "\r\n");
                             }
@@ -169,7 +169,7 @@ public class Functions {
                     bestPosition = new ArrayList();
 
                     bestPosition = scur;
-                    System.out.println(fO(bestPosition, false));
+                    //System.out.println(fO(bestPosition, false));
                     writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
 
                 }

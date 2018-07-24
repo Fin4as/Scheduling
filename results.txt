@@ -1,1 +1,1 @@
-[Patient@421faab1, Patient@2b71fc7e, Patient@5ce65a89, Patient@25f38edc, Patient@1a86f2f1, Patient@3eb07fd3, Patient@506c589e, Patient@69d0a921, Patient@446cdf90, Patient@799f7e29] 910.625 1.913631756 s.
+[Patient@6c589e, Patient@1d0a921, Patient@6cdf90, Patient@19f7e29, Patient@185612c, Patient@17050dc, Patient@1c29bfd, Patient@1aec35a, Patient@1424e82, Patient@110406] 910.625 0.463640281 s.
