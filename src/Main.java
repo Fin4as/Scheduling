@@ -54,7 +54,7 @@ public class Main {
 ////
 
         long t_0A = System.nanoTime();
-        List<Patient> best = f.annealingMin(3, 100, arrivalSequence);
+        List<Patient> best = f.annealingMin(3, 0.01, 100, arrivalSequence);
         long t_1A = System.nanoTime();
         if (f.fO(best, false) != Double.MAX_VALUE) {
             System.out.println(best + " " + f.fO(best, false));
@@ -64,7 +64,7 @@ public class Main {
         }
 
         long t_0G = System.nanoTime();
-        List<Patient> gene = f.genetic(50, 4, arrivalSequence);
+        List<Patient> gene = f.genetic(50, 4, arrivalSequence, 25);
         long t_1G = System.nanoTime();
         if (f.fO(gene, false) != Double.MAX_VALUE) {
             System.out.println(gene + " " + f.fO(gene, false));

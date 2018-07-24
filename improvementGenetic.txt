@@ -96,3 +96,26 @@ Improved : 951.75
 Improved : 928.7916666666666
 Improved : 927.7916666666666
 Improved : 922.875
+Original position : 1.7976931348623157E308
+Improved : 982.2083333333333
+Improved : 969.0833333333333
+Improved : 965.7083333333333
+Improved : 887.25
+Original position : 1.7976931348623157E308
+Improved : 934.9166666666666
+Original position : 1.7976931348623157E308
+Improved : 984.0416666666666
+Improved : 978.875
+Improved : 970.375
+Improved : 948.9166666666666
+Improved : 931.75
+Improved : 927.25
+Improved : 887.25
+Original position : 1.7976931348623157E308
+Improved : 935.7083333333333
+Improved : 930.125
+Improved : 900.375
+Original position : 1.7976931348623157E308
+Improved : 920.7916666666666
+Improved : 914.9583333333333
+Improved : 879.375

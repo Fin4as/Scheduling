@@ -84,12 +84,11 @@ public class Functions {
         }
     }
 
-    public List<Patient> annealingMin(double temperature, int itermax, List<Patient> sold) {
+    public List<Patient> annealingMin(double temperature, double coolingRate, int itermax, List<Patient> sold) {
         List<Patient> scur = new ArrayList();
         double tempmin = 0.1;
         int numiter = 1;
         int numiterBest = 1;
-        double coolingRate = 0.01;
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
@@ -335,7 +334,7 @@ public class Functions {
      * sequence
      * @return the sequence with the best fitness
      */
-    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur) {
+    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int percentage) {
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
@@ -440,7 +439,7 @@ public class Functions {
                 }
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
-                for (Patient p: SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, 4)){
+                for (Patient p: SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)){
                     child.add(p);
                 }
 //                //This offspring is added in the population 

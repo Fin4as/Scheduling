@@ -52,7 +52,7 @@ public abstract class SwappableSequence {
         return sequence;
     }
 
-    public static List<Patient> makeACrossingOver(List<Patient> mother, List<Patient> father, int position) {
+    public static List<Patient> makeACrossingOver(List<Patient> mother, List<Patient> father, int percentage) {
 
         if (mother == null || father == null) {
             throw new NullPointerException("Error: At least one of the parent has not been set");
@@ -61,10 +61,15 @@ public abstract class SwappableSequence {
         if (mother.size() != father.size()) {
             throw new IllegalArgumentException("Error: Sequences of the parents differ in length");
         }
+        
+        if (percentage < 0 || percentage > 100) {
+            throw new IllegalArgumentException("Error: The percentage of the mother sequence kept must be between 0 and 100");
+        }
 
         List<Patient> child = new ArrayList();
         List<Patient> missing = new ArrayList();
         List<Integer> replica = new ArrayList();
+        int position = mother.size() * percentage / 100;
         Random rd = new Random();
 
         for (int i = 0; i < position; i++) {
