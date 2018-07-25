@@ -174,6 +174,7 @@ public class Functions {
 
     public List<Patient> grasp(int nbIteration, List<Patient> scur) {
         List<Patient> bestPosition = new ArrayList();
+        List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -183,8 +184,24 @@ public class Functions {
             writer2.append("Original position : " + fO(bestPosition, false) + "\r\n");
 
             while (i < nbIteration) {
-                scur = randomizedConstruction(scur);
-                scur = localSearch(scur, 100);
+                backUp = new ArrayList();
+                for(Patient p: scur){
+                    backUp.add(p);
+                }
+                scur = new ArrayList();
+                for(Patient p :randomizedConstruction(backUp)) {
+                scur.add(p);
+                }
+                backUp =  new ArrayList();
+                for(Patient p :localSearch(scur, 100)){
+                    backUp.add(p);
+                }
+                scur = new ArrayList();
+                for(Patient p : backUp){
+                    scur.add(p);
+                }
+            }
+               
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
                     bestPosition = new ArrayList();
@@ -195,8 +212,7 @@ public class Functions {
 
                 }
                 i++;
-            }
-            i++;
+           
         } catch (IOException e) {
             e.printStackTrace();
 
