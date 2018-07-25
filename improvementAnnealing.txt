@@ -2,17 +2,18 @@ Original value: The initial sequence is not schedulable
 
 Temperature : 100.0
 
-Improved value: 944.9583333333333
-Improved value: 941.625
-Improved value: 938.2916666666666
-Improved value: 934.9583333333333
-Improved value: 893.2083333333333
-Improved value: 890.5833333333333
+Improved value: 944.9583333333333 Total of generated sequences: 20 Current runtime : 0.033040846 s.
+Improved value: 941.625 Total of generated sequences: 24 Current runtime : 0.05044782 s.
+Improved value: 938.2916666666666 Total of generated sequences: 27 Current runtime : 0.058930646 s.
+Improved value: 934.9583333333333 Total of generated sequences: 36 Current runtime : 0.085521769 s.
+Improved value: 931.5833333333333 Total of generated sequences: 72 Current runtime : 0.125324636 s.
+Improved value: 928.25 Total of generated sequences: 77 Current runtime : 0.129543812 s.
 
 
 Temperature : 70.0
 
-Improved value: 879.375
+Improved value: 882.7083333333333 Total of generated sequences: 149 Current runtime : 0.168942992 s.
+Improved value: 879.375 Total of generated sequences: 169 Current runtime : 0.180367463 s.
 
 
 Temperature : 49.0
@@ -25,3 +26,7 @@ Temperature : 34.3
 
 Temperature : 24.009999999999998
 
+
+Best local solution: [P2, P4, P9, P6, P3, P1, P5, P0, P7, P8]
+Found in 0.180367463 s. on a total runtime of 0.398825785 s.
+This solution has been reached by generating 169 sequences on a fixed total generated sequences of 500 sequences.

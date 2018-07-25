@@ -86,7 +86,9 @@ public class Functions {
     }
 
     public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> sold) {
-        long startRuntime = System.nanoTime();
+        double startRuntime = System.nanoTime();
+        double currentRuntime = System.nanoTime();
+        double totalRuntime;
         List<Patient> scur = new ArrayList();
         double coolingRate = 0.70;
         int numtemp = 0;
@@ -135,7 +137,8 @@ public class Functions {
                                 minb.add(d);
                             }
                             numiterBest = itermax * numtemp + numiter;
-                            writer1.write("Improved value: " + fO(minb, false) + System.getProperty("line.separator"));
+                            currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                            writer1.write("Improved value: " + fO(minb, false) + " Total of generated sequences: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                         }
 
                     } else if (dif < pow(10, 9)) {
@@ -146,7 +149,7 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + " / " + numiterBest + System.getProperty("line.separator"));
+//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + System.getProperty("line.separator"));
                         }
                     }
 
@@ -163,7 +166,15 @@ public class Functions {
                 }
                 numiter++;
             }
-
+            totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+            List<String> bestSolution = new ArrayList();
+            for(Patient p : minb){
+                bestSolution.add(p.getPatientID());
+            }
+            writer1.write(System.getProperty("line.separator"));
+            writer1.write("Best local solution: " + bestSolution + System.getProperty("line.separator"));
+            writer1.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writer1.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
             writer1.close();
 
         } catch (IOException e) {
@@ -340,6 +351,7 @@ public class Functions {
         while (improv < nboccur) {
             scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
             if (fO(scur, false) < fO(bestPosition, false)) {
+                improv = 0;
                 bestPosition = scur;
             } else {
                 improv++;
