@@ -86,12 +86,9 @@ public class Functions {
     }
 
     public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> sold) {
-        long startRuntime = System.nanoTime();
         List<Patient> scur = new ArrayList();
         double coolingRate = 0.70;
-        int numtemp = 0;
         int numiter = 1;
-        int numiterBest = 1;
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
@@ -120,7 +117,7 @@ public class Functions {
                     for (Patient i : sold) {
                         scur.add(i);
                     }
-                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+                    SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
                     dif = fO(scur, false) - fO(sold, false);
 
                     if (dif <= 0) {
@@ -134,7 +131,6 @@ public class Functions {
                             for (Patient d : sold) {
                                 minb.add(d);
                             }
-                            numiterBest = itermax * numtemp + numiter;
                             writer1.write("Improved value: " + fO(minb, false) + System.getProperty("line.separator"));
                         }
 
@@ -146,14 +142,13 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + " / " + numiterBest + System.getProperty("line.separator"));
+//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + System.getProperty("line.separator"));
                         }
                     }
 
                 } else {
                     temperature = coolingRate * temperature;
                     numiter = 0;
-                    numtemp++;
                     if (temperature > tempmin) {
                         writer1.write(System.getProperty("line.separator"));
                         writer1.write(System.getProperty("line.separator"));
@@ -172,7 +167,7 @@ public class Functions {
         return minb;
     }
 
-    public List<Patient> grasp(int nbIteration, List<Patient> scur) {
+    public List<Patient> grasp(int nbIteration, int maxNonImprov, List<Patient> scur) {
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
@@ -193,24 +188,26 @@ public class Functions {
                     scur.add(p);
                 }
                 backUp = new ArrayList();
-                for (Patient p : localSearch(scur, 100)) {
+                for (Patient p : localSearch(scur, maxNonImprov)) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
                 for (Patient p : backUp) {
                     scur.add(p);
                 }
+
+                if (fO(scur, false) < fO(bestPosition, false)) {
+                    
+                    bestPosition = new ArrayList();
+                    for (Patient p : scur) {
+                        bestPosition.add(p);
+                    }
+                    
+                    writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
+
+                }
+                i++;
             }
-
-            if (fO(scur, false) < fO(bestPosition, false)) {
-                bestPosition = new ArrayList();
-
-                bestPosition = scur;
-                //System.out.println(fO(bestPosition, false));
-                writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
-
-            }
-            i++;
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -243,7 +240,7 @@ public class Functions {
      * @param scur
      * @return
      */
-    public List<Patient> graspRCL(double greedyness, int nbIteration, List<Patient> scur) {
+    public List<Patient> graspRCL(double greedyness, int nbIteration, int maxNonImprov, List<Patient> scur) {
         //defined by a random function
         List<Patient> bestPosition = new ArrayList<Patient>();
         List<Patient> backUp = new ArrayList();
@@ -264,17 +261,17 @@ public class Functions {
                     scur.add(p);
                 }
                 backUp = new ArrayList();
-                for (Patient p : localSearch(scur, 100)) {
+                for (Patient p : localSearch(scur, maxNonImprov)) {
                     backUp.add(p);
                 }
-                scur= new ArrayList();
+                scur = new ArrayList();
                 for (Patient p : backUp) {
                     scur.add(p);
                 }
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
                     bestPosition = new ArrayList();
-                    for(Patient p : scur){
+                    for (Patient p : scur) {
                         bestPosition.add(p);
                     }
                     writer3.append("Improved : " + fO(bestPosition, false) + "\r\n");
@@ -368,16 +365,22 @@ public class Functions {
      * @param nboccur
      * @return
      */
-    public List<Patient> localSearch(List<Patient> scur, int nboccur) {
-        List<Patient> bestPosition = scur;
-        int improv = 0;
-        int numiter = 0;
-        while (improv < nboccur) {
-            scur = SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+    public List<Patient> localSearch(List<Patient> scur, int maxNonImprov) {
+        List<Patient> bestPosition = new ArrayList();
+        for (Patient p : scur) {
+            bestPosition.add(p);
+        }
+        int numiter = 1;
+        while (numiter <= maxNonImprov) {
+            scur = SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
             if (fO(scur, false) < fO(bestPosition, false)) {
-                bestPosition = scur;
+                bestPosition = new ArrayList();
+                for (Patient p : scur) {
+                    bestPosition.add(p);
+                }
+                numiter = 1;
             } else {
-                improv++;
+                numiter++;
             }
         }
         return bestPosition;

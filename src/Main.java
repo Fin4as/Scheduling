@@ -84,7 +84,7 @@ public class Main {
 //        }
 //
         long t_0GR = System.nanoTime();
-        List<Patient> grasp = f.grasp(5, arrivalSequence);
+        List<Patient> grasp = f.grasp(30, 100, arrivalSequence);
         long t_1GR = System.nanoTime();
         if (f.fO(grasp, false) != Double.MAX_VALUE) {
             System.out.println(grasp + " " + f.fO(grasp, false));
