@@ -185,34 +185,33 @@ public class Functions {
 
             while (i < nbIteration) {
                 backUp = new ArrayList();
-                for(Patient p: scur){
+                for (Patient p : scur) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
-                for(Patient p :randomizedConstruction(backUp)) {
-                scur.add(p);
+                for (Patient p : randomizedConstruction(backUp)) {
+                    scur.add(p);
                 }
-                backUp =  new ArrayList();
-                for(Patient p :localSearch(scur, 100)){
+                backUp = new ArrayList();
+                for (Patient p : localSearch(scur, 100)) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
-                for(Patient p : backUp){
+                for (Patient p : backUp) {
                     scur.add(p);
                 }
             }
-               
 
-                if (fO(scur, false) < fO(bestPosition, false)) {
-                    bestPosition = new ArrayList();
+            if (fO(scur, false) < fO(bestPosition, false)) {
+                bestPosition = new ArrayList();
 
-                    bestPosition = scur;
-                    //System.out.println(fO(bestPosition, false));
-                    writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
+                bestPosition = scur;
+                //System.out.println(fO(bestPosition, false));
+                writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
 
-                }
-                i++;
-           
+            }
+            i++;
+
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -247,17 +246,37 @@ public class Functions {
     public List<Patient> graspRCL(double greedyness, int nbIteration, List<Patient> scur) {
         //defined by a random function
         List<Patient> bestPosition = new ArrayList<Patient>();
-        bestPosition = scur;
+        List<Patient> backUp = new ArrayList();
+        for (Patient p : scur) {
+            bestPosition.add(p);
+        }
         try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementgraspRCL.txt", true)))) {
             writer3.append("Original position : " + fO(bestPosition, false) + "\r\n");
             int i = 0;
             while (i < nbIteration) {
-                scur = greedyRandomizedConstruction(greedyness, scur);
-                scur = localSearch(scur, 100);
+                backUp = new ArrayList();
+                for (Patient p : scur) {
+                    backUp.add(p);
+                }
+                scur = new ArrayList();
+                for (Patient p : greedyRandomizedConstruction(greedyness, backUp)) {
+                    scur.add(p);
+                }
+                backUp = new ArrayList();
+                for (Patient p : localSearch(scur, 100)) {
+                    backUp.add(p);
+                }
+                scur= new ArrayList();
+                for (Patient p : backUp) {
+                    scur.add(p);
+                }
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
-                    bestPosition = scur;
+                    bestPosition = new ArrayList();
+                    for(Patient p : scur){
+                        bestPosition.add(p);
+                    }
                     writer3.append("Improved : " + fO(bestPosition, false) + "\r\n");
                 }
                 i++;
