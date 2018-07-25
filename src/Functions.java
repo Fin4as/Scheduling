@@ -54,7 +54,6 @@ public class Functions {
 
 //            System.out.println(result);
 //         System.out.println(wait(t.totalWaitingTime));
-
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -87,8 +86,10 @@ public class Functions {
     }
 
     public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> sold) {
+        long startRuntime = System.nanoTime();
         List<Patient> scur = new ArrayList();
-        double coolingRate = 0.75;
+        double coolingRate = 0.70;
+        int numtemp = 0;
         int numiter = 1;
         int numiterBest = 1;
         double dif;
@@ -99,8 +100,19 @@ public class Functions {
         }
 
         try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementAnnealing.txt", true)))) {
-            writer1.append("Original value: " + fO(sold, false) + "\r\n");
+                new FileOutputStream("improvementAnnealing.txt", false)))) {
+            if (fO(sold, false) == Double.MAX_VALUE) {
+                writer1.write("Original value: The initial sequence is not schedulable" + System.getProperty("line.separator"));
+                writer1.write(System.getProperty("line.separator"));
+                writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                writer1.write(System.getProperty("line.separator"));
+            } else {
+                writer1.write("Original value: " + fO(sold, false) + System.getProperty("line.separator"));
+                writer1.write(System.getProperty("line.separator"));
+                writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                writer1.write(System.getProperty("line.separator"));
+            }
+
             while (temperature >= tempmin) {
 
                 if (numiter <= itermax) {
@@ -122,34 +134,37 @@ public class Functions {
                             for (Patient d : sold) {
                                 minb.add(d);
                             }
-                            //System.out.println(fO(minb, false));
-                            numiterBest = Integer.valueOf(numiter);
-                            writer1.append("Improved : " + fO(minb, false) + "\r\n");
+                            numiterBest = itermax * numtemp + numiter;
+                            writer1.write("Improved value: " + fO(minb, false) + System.getProperty("line.separator"));
                         }
 
-                    } else {
-                        if (dif < pow(10, 9)) {
-                            //System.out.println(dif);
-                            rd = Math.random();
-                            double choice = exp(-dif / temperature);
-                            if (rd < choice) {
-                                sold = new ArrayList();
-                                for (Patient p : scur) {
-                                    sold.add(p);
-                                }
-                                writer1.append("Accepted : " + fO(sold, false) + "\r\n");
-
+                    } else if (dif < pow(10, 9)) {
+                        rd = Math.random();
+                        double choice = exp(-dif / temperature);
+                        if (rd < choice) {
+                            sold = new ArrayList();
+                            for (Patient p : scur) {
+                                sold.add(p);
                             }
+//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + " / " + numiterBest + System.getProperty("line.separator"));
                         }
                     }
 
                 } else {
-                    temperature = coolingRate * Double.valueOf(temperature);
+                    temperature = coolingRate * temperature;
                     numiter = 0;
+                    numtemp++;
+                    if (temperature > tempmin) {
+                        writer1.write(System.getProperty("line.separator"));
+                        writer1.write(System.getProperty("line.separator"));
+                        writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                        writer1.write(System.getProperty("line.separator"));
+                    }
                 }
                 numiter++;
-
             }
+
+            writer1.close();
 
         } catch (IOException e) {
             e.printStackTrace();

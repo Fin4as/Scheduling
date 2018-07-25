@@ -54,7 +54,7 @@ public class Main {
 ////
 
         long t_0A = System.nanoTime();
-        List<Patient> best = f.annealingMin(20,17, 100, arrivalSequence);
+        List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
         long t_1A = System.nanoTime();
         if (f.fO(best, false) != Double.MAX_VALUE) {
             System.out.println(best + " " + f.fO(best, false));
