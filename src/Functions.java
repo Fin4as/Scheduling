@@ -24,6 +24,8 @@ import java.util.Random;
 public class Functions {
 
     Schedule s;
+    private int totaliterGrasp;
+    private int totaliterBestGrasp;
 
     public Functions(Schedule s) {
         this.s = s;
@@ -91,7 +93,9 @@ public class Functions {
         double totalRuntime;
         List<Patient> scur = new ArrayList();
         double coolingRate = 0.70;
+        int numtemp = 0;
         int numiter = 1;
+        int numiterBest = 1;
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
@@ -99,18 +103,18 @@ public class Functions {
             minb.add(e);
         }
 
-        try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
+        try (Writer writerAnnealing = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementAnnealing.txt", false)))) {
             if (fO(sold, false) == Double.MAX_VALUE) {
-                writer1.write("Original value: The initial sequence is not schedulable" + System.getProperty("line.separator"));
-                writer1.write(System.getProperty("line.separator"));
-                writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                writer1.write(System.getProperty("line.separator"));
+                writerAnnealing.write("Initial value : The initial sequence is not schedulable" + System.getProperty("line.separator"));
+                writerAnnealing.write(System.getProperty("line.separator"));
+                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                writerAnnealing.write(System.getProperty("line.separator"));
             } else {
-                writer1.write("Original value: " + fO(sold, false) + System.getProperty("line.separator"));
-                writer1.write(System.getProperty("line.separator"));
-                writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                writer1.write(System.getProperty("line.separator"));
+                writerAnnealing.write("Initial value : " + fO(sold, false) + System.getProperty("line.separator"));
+                writerAnnealing.write(System.getProperty("line.separator"));
+                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                writerAnnealing.write(System.getProperty("line.separator"));
             }
 
             while (temperature >= tempmin) {
@@ -120,7 +124,7 @@ public class Functions {
                     for (Patient i : sold) {
                         scur.add(i);
                     }
-                    SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
+                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
                     dif = fO(scur, false) - fO(sold, false);
 
                     if (dif <= 0) {
@@ -136,7 +140,7 @@ public class Functions {
                             }
                             numiterBest = itermax * numtemp + numiter;
                             currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
-                            writer1.write("Improved value: " + fO(minb, false) + " Total of generated sequences: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                            writerAnnealing.write("Improved optimum found in the neighbourhood: " + fO(minb, false) + " Current total of generated sequences to get this optimum: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                         }
 
                     } else if (dif < pow(10, 9)) {
@@ -147,32 +151,33 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-//                            writer1.write("Accepted value: " + fO(sold, false) + " " + numiter + System.getProperty("line.separator"));
+//                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + System.getProperty("line.separator"));
                         }
                     }
 
                 } else {
                     temperature = coolingRate * temperature;
                     numiter = 0;
+                    numtemp++;
                     if (temperature > tempmin) {
-                        writer1.write(System.getProperty("line.separator"));
-                        writer1.write(System.getProperty("line.separator"));
-                        writer1.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                        writer1.write(System.getProperty("line.separator"));
+                        writerAnnealing.write(System.getProperty("line.separator"));
+                        writerAnnealing.write(System.getProperty("line.separator"));
+                        writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+                        writerAnnealing.write(System.getProperty("line.separator"));
                     }
                 }
                 numiter++;
             }
             totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
             List<String> bestSolution = new ArrayList();
-            for(Patient p : minb){
+            for (Patient p : minb) {
                 bestSolution.add(p.getPatientID());
             }
-            writer1.write(System.getProperty("line.separator"));
-            writer1.write("Best local solution: " + bestSolution + System.getProperty("line.separator"));
-            writer1.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writer1.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
-            writer1.close();
+            writerAnnealing.write(System.getProperty("line.separator"));
+            writerAnnealing.write("Best local solution: " + bestSolution + System.getProperty("line.separator"));
+            writerAnnealing.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writerAnnealing.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
+            writerAnnealing.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -181,15 +186,25 @@ public class Functions {
     }
 
     public List<Patient> grasp(int nbIteration, int maxNonImprov, List<Patient> scur) {
+        double startRuntime = System.nanoTime();
+        double currentRuntime = System.nanoTime();
+        double totalRuntime;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
             bestPosition.add(p);
         }
         int i = 0;
-        try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementGRASP.txt", true)))) {
-            writer2.append("Original position : " + fO(bestPosition, false) + "\r\n");
+        totaliterGrasp = 0;
+        try (Writer writerGrasp = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementGrasp.txt", false)))) {
+            if (fO(bestPosition, false) == Double.MAX_VALUE) {
+                writerGrasp.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
+                writerGrasp.write(System.getProperty("line.separator"));
+            } else {
+                writerGrasp.write("Value of the initial sequence: " + fO(bestPosition, false) + System.getProperty("line.separator"));
+                writerGrasp.write(System.getProperty("line.separator"));
+            }
 
             while (i < nbIteration) {
                 backUp = new ArrayList();
@@ -201,7 +216,7 @@ public class Functions {
                     scur.add(p);
                 }
                 backUp = new ArrayList();
-                for (Patient p : localSearch(scur, maxNonImprov)) {
+                for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGrasp)) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
@@ -210,21 +225,78 @@ public class Functions {
                 }
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
-                    
+
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
-                    
-                    writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
-
+                    currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    writerGrasp.write(System.getProperty("line.separator"));
+                    writerGrasp.write("==> New update of the optimum : " + fO(bestPosition, false) + " Minimum number of generated sequences to get this optimum : " + totaliterBestGrasp + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGrasp.write(System.getProperty("line.separator"));
+                    writerGrasp.write(System.getProperty("line.separator"));
+                } else {
+                    currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    writerGrasp.write(System.getProperty("line.separator"));
+                    writerGrasp.write("==> No update of the optimum." + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGrasp.write(System.getProperty("line.separator"));
+                    writerGrasp.write(System.getProperty("line.separator"));
                 }
                 i++;
             }
-
+            writerGrasp.write("Total of generated sequences : " + totaliterGrasp);
+            writerGrasp.close();
         } catch (IOException e) {
             e.printStackTrace();
 
+        }
+        return bestPosition;
+    }
+
+    public List<Patient> localSearch(List<Patient> scur, int maxNonImprov, double startRuntime, Writer writer) {
+        List<Patient> bestPosition = new ArrayList();
+        for (Patient p : scur) {
+            bestPosition.add(p);
+        }
+        int numiter = 1;
+        int numiterBest = 0;
+        totaliterBestGrasp = totaliterGrasp;
+        try {
+            if (fO(bestPosition, false) == Double.MAX_VALUE) {
+                writer.write("-------------------------------------------------------------------------------------------------------------------------------" + System.getProperty("line.separator"));
+                writer.write(System.getProperty("line.separator"));
+                writer.write("Value of the new random sequence : This random sequence is not schedulable" + System.getProperty("line.separator"));
+                writer.write("--> Search for improvement in the neighbourhood" + System.getProperty("line.separator"));
+                writer.write(System.getProperty("line.separator"));
+            } else {
+                writer.write("-------------------------------------------------------------------------------------------------------------------------------" + System.getProperty("line.separator"));
+                writer.write(System.getProperty("line.separator"));
+                writer.write("Value of the new random sequence : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+                writer.write("--> Search for improvement in the neighbourhood" + System.getProperty("line.separator"));
+                writer.write(System.getProperty("line.separator"));
+            }
+            while (numiter <= maxNonImprov) {
+                scur = SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
+                if (fO(scur, false) < fO(bestPosition, false)) {
+                    totaliterGrasp++;
+                    numiterBest += numiter;
+                    numiter = 1;
+
+                    bestPosition = new ArrayList();
+                    for (Patient p : scur) {
+                        bestPosition.add(p);
+                    }
+
+                    double currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    writer.write("Improved value found in the neighbourhood : " + fO(bestPosition, false) + " Current total of generated sequences in this try : " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                } else {
+                    totaliterGrasp++;
+                    numiter++;
+                }
+            }
+            totaliterBestGrasp += numiterBest;
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return bestPosition;
     }
@@ -255,15 +327,18 @@ public class Functions {
      */
     public List<Patient> graspRCL(double greedyness, int nbIteration, int maxNonImprov, List<Patient> scur) {
         //defined by a random function
-        List<Patient> bestPosition = new ArrayList<Patient>();
+        double startRuntime = System.nanoTime();
+        double totalRuntime;
+        List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
             bestPosition.add(p);
         }
+        int i = 0;
         try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementgraspRCL.txt", true)))) {
             writer3.append("Original position : " + fO(bestPosition, false) + "\r\n");
-            int i = 0;
+
             while (i < nbIteration) {
                 backUp = new ArrayList();
                 for (Patient p : scur) {
@@ -274,7 +349,7 @@ public class Functions {
                     scur.add(p);
                 }
                 backUp = new ArrayList();
-                for (Patient p : localSearch(scur, maxNonImprov)) {
+                for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writer3)) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
@@ -293,7 +368,6 @@ public class Functions {
             }
         } catch (IOException e) {
             e.printStackTrace();
-
         }
         return bestPosition;
     }
@@ -370,33 +444,6 @@ public class Functions {
             }
         }
         return sequence;
-    }
-
-    /**
-     *
-     * @param scur
-     * @param nboccur
-     * @return
-     */
-    public List<Patient> localSearch(List<Patient> scur, int maxNonImprov) {
-        List<Patient> bestPosition = new ArrayList();
-        for (Patient p : scur) {
-            bestPosition.add(p);
-        }
-        int numiter = 1;
-        while (numiter <= maxNonImprov) {
-            scur = SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
-            if (fO(scur, false) < fO(bestPosition, false)) {
-                bestPosition = new ArrayList();
-                for (Patient p : scur) {
-                    bestPosition.add(p);
-                }
-                numiter = 1;
-            } else {
-                numiter++;
-            }
-        }
-        return bestPosition;
     }
 
     /**
