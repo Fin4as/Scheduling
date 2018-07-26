@@ -216,9 +216,9 @@ public class Test {
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
                                 
-                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
-                                pat.addDiagramValues(t.getAvTime()); // then add the duration
-                                pat.addDiagramResourceUsed(res.getResourceID());
+//                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
+//                                pat.addDiagramValues(t.getAvTime()); // then add the duration
+//                                pat.addDiagramResourceUsed(res.getResourceID());
 
                                 totalWaitingTime += (start - endLastTask);
 
@@ -242,12 +242,8 @@ public class Test {
                             }
 
                         } else {
-                            if (giveDetails == true) {
-                                System.out.println("Reeeeeeeeee1");
-                                System.out.println("No resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
-                                return; // to get out the addTask Method
+                                throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                             }
-                        }
 
                     }
                 } else {
@@ -287,9 +283,9 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
-                                    pat.addDiagramValues(currentStart - currentEnd);
-                                    pat.addDiagramValues(currentAvTime);
-                                    pat.addDiagramResourceUsed(resourcesToUse.get(ip).getResourceID());
+//                                    pat.addDiagramValues(currentStart - currentEnd);
+//                                    pat.addDiagramValues(currentAvTime);
+//                                    pat.addDiagramResourceUsed(resourcesToUse.get(ip).getResourceID());
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
@@ -316,17 +312,11 @@ public class Test {
                                 endLastTask = start + avTimeTotal;
 
                             } else {
-                                if (giveDetails == true) {
-//                                System.out.println("Not resource available for patient "+ pat.getPatientID() + ". Moving to the next List order");
-                                    return; // to get out the addTask Method
-                                }
+                                throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                             }
 
                         } else {
-                            if (giveDetails == true) {
-//                            System.out.println("Not resource available for patient " + pat.getPatientID() + ". Moving to the next List order");
-                                return; // to get out the addTask Method
-                            }
+                                throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                         }
 
                     }
@@ -335,11 +325,10 @@ public class Test {
 
             }
 
-            ExcelWriter excelWriter = new ExcelWriter();
-            excelWriter.write(listPatient);
-            for (int q = 0; q < listResource.size(); q++) {
-                listResource.get(q).timeToDiagramValues();
-            }
+
+//            for (int q = 0; q < listResource.size(); q++) {
+//                listResource.get(q).timeToDiagramValues();
+//            }
         }
 
     }

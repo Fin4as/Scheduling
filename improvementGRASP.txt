@@ -1,0 +1,232 @@
+Original position : 439.79166666666663
+Improvement : 180.0
+Improvement : 179.33333333333334
+Original position : 439.79166666666663
+Improvement : 241.54166666666669
+Improvement : 169.75
+Original position : 439.79166666666663
+Improvement : 437.29166666666663
+Improvement : 189.75
+Improvement : 169.75
+Original position : 950.5
+Improvement : 925.5
+Original position : 950.5
+Improvement : 922.3333333333333
+Original position : 950.5
+Improvement : 834.5833333333333
+Original position : 1.7976931348623157E308
+Improvement : 903.2083333333333
+Original position : 1.7976931348623157E308
+Improvement : 1006.0833333333333
+Improvement : 942.25
+Original position : 1.7976931348623157E308
+Improvement : 1004.4166666666666
+Original position : 1.7976931348623157E308
+Improvement : 937.0833333333333
+Original position : 1.7976931348623157E308
+Improvement : 1019.2083333333333
+Original position : 1.7976931348623157E308
+Improvement : 914.9583333333333
+Original position : 1.7976931348623157E308
+Improvement : 993.125
+Improvement : 941.625
+Original position : 1.7976931348623157E308
+Improvement : 1023.375
+Improvement : 900.5833333333333
+Original position : 1.7976931348623157E308
+Improvement : 1006.875
+Improvement : 1004.5416666666666
+Improvement : 982.4583333333333
+Improvement : 930.625
+Original position : 1.7976931348623157E308
+Improvement : 998.4583333333333
+Improvement : 997.75
+Improvement : 996.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 1011.7083333333333
+Improvement : 932.125
+Original position : 1.7976931348623157E308
+Improvement : 1080.125
+Improvement : 1002.25
+Improvement : 929.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 987.375
+Improvement : 911.625
+Original position : 1.7976931348623157E308
+Improvement : 995.125
+Original position : 1.7976931348623157E308
+Improvement : 938.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 1012.0833333333333
+Improvement : 922.4166666666666
+Original position : 1.7976931348623157E308
+Improvement : 1001.2083333333333
+Improvement : 882.7083333333333
+Original position : 1.7976931348623157E308
+Improvement : 994.0416666666666
+Improvement : 978.625
+Original position : 1.7976931348623157E308
+Improvement : 1003.4583333333333
+Improvement : 995.125
+Original position : 1.7976931348623157E308
+Improvement : 1032.4583333333333
+Improvement : 1014.5416666666666
+Improvement : 929.9166666666666
+Original position : 1.7976931348623157E308
+Improvement : 1076.1666666666665
+Improvement : 1005.4583333333333
+Improvement : 988.2916666666666
+Improvement : 903.7083333333333
+Original position : 1.7976931348623157E308
+Improvement : 1012.7916666666666
+Improvement : 1004.125
+Original position : 1.7976931348623157E308
+Improvement : 998.7916666666666
+Improvement : 970.375
+Original position : 1.7976931348623157E308
+Improvement : 1023.5416666666666
+Improvement : 998.4583333333333
+Original position : 1.7976931348623157E308
+Improvement : 965.7083333333333
+Original position : 1.7976931348623157E308
+Improvement : 1002.4166666666666
+Improvement : 994.5416666666666
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 997.1666666666666
+Improvement : 919.75
+Original position : 1.7976931348623157E308
+Improvement : 1016.8333333333333
+Improvement : 1009.5833333333333
+Original position : 1.7976931348623157E308
+Improvement : 979.25
+Original position : 1.7976931348623157E308
+Improvement : 988.2916666666666
+Improvement : 979.875
+Improvement : 931.125
+Original position : 1.7976931348623157E308
+Improvement : 990.9166666666666
+Improvement : 965.2916666666666
+Original position : 1.7976931348623157E308
+Improvement : 1016.7083333333333
+Improvement : 994.5416666666666
+Improvement : 989.7916666666666
+Original position : 1.7976931348623157E308
+Improvement : 1023.5416666666666
+Original position : 1.7976931348623157E308
+Improvement : 978.875
+Original position : 1.7976931348623157E308
+Improvement : 991.2083333333333
+Original position : 1.7976931348623157E308
+Improvement : 1001.7916666666666
+Improvement : 962.375
+Original position : 1.7976931348623157E308
+Improvement : 992.25
+Improvement : 955.0833333333333
+Original position : 1.7976931348623157E308
+Improvement : 979.875
+Original position : 1.7976931348623157E308
+Improvement : 998.9166666666666
+Improvement : 996.5416666666666
+Original position : 1.7976931348623157E308
+Improvement : 975.75
+Original position : 1.7976931348623157E308
+Improvement : 992.2083333333333
+Original position : 1.7976931348623157E308
+Improvement : 935.7083333333333
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 1015.2916666666666
+Improvement : 1012.25
+Improvement : 984.9583333333333
+Original position : 1.7976931348623157E308
+Improvement : 1019.4583333333333
+Improvement : 987.9166666666666
+Improvement : 977.9583333333333
+Original position : 1.7976931348623157E308
+Improvement : 915.4166666666666
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 900.375
+Original position : 1.7976931348623157E308
+Improvement : 936.5833333333333
+Improvement : 929.125
+Improvement : 919.0833333333333
+Original position : 1.7976931348623157E308
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 912.0833333333333
+Improvement : 908.9583333333333
+Improvement : 905.625
+Original position : 1.7976931348623157E308
+Improvement : 910.5833333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 910.625
+Improvement : 893.2083333333333
+Improvement : 882.7083333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 931.125
+Improvement : 905.625
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 905.625
+Improvement : 893.2083333333333
+Improvement : 887.25
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 932.125
+Improvement : 887.25
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 975.375
+Improvement : 899.875
+Improvement : 893.2083333333333
+Improvement : 887.25
+Improvement : 882.7083333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 929.5416666666666
+Improvement : 916.2083333333333
+Improvement : 913.9166666666666
+Improvement : 899.875
+Improvement : 882.7083333333333
+Original position : 1.7976931348623157E308
+Improvement : 905.625
+Improvement : 887.25
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 945.5833333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 899.875
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 900.5833333333333
+Improvement : 900.375
+Improvement : 887.25
+Improvement : 882.7083333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 1016.4166666666666
+Improvement : 1016.25
+Improvement : 996.0833333333333
+Improvement : 986.4583333333333
+Improvement : 955.7916666666666
+Improvement : 950.125
+Improvement : 908.9583333333333
+Original position : 1.7976931348623157E308
+Improvement : 987.375
+Improvement : 930.125
+Original position : 1.7976931348623157E308
+Improvement : 934.7083333333333
+Improvement : 879.375
+Original position : 1.7976931348623157E308
+Improvement : 915.125
+Improvement : 890.5833333333333
+Improvement : 882.7083333333333
+Improvement : 879.375
