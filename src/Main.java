@@ -53,15 +53,15 @@ public class Main {
 //       t.addTask();
 ////
 
-        long t_0A = System.nanoTime();
-        List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
-        long t_1A = System.nanoTime();
-        if (f.fO(best, false) != Double.MAX_VALUE) {
-            System.out.println(best + " " + f.fO(best, false));
-            System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
-        } else {
-            System.out.println("You don't have enough resources to create a full schedule or you don't test enough sequences for this algorithm. Please add more resources, reduce the number of patients to add to the schedule or test more sequences.");
-        }
+//        long t_0A = System.nanoTime();
+//        List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
+//        long t_1A = System.nanoTime();
+//        if (f.fO(best, false) != Double.MAX_VALUE) {
+//            System.out.println(best + " " + f.fO(best, false));
+//            System.out.println("Length of the algorithm annealing: " + (t_1A - t_0A) / pow(10, 9) + " s.");
+//        } else {
+//            System.out.println("You don't have enough resources to create a full schedule or you don't test enough sequences for this algorithm. Please add more resources, reduce the number of patients to add to the schedule or test more sequences.");
+//        }
 //
 //        long t_0G = System.nanoTime();
 //        List<Patient> gene = f.genetic(50, 4, arrivalSequence, 25);
@@ -83,16 +83,16 @@ public class Main {
 //            System.out.println("You don't have enough resources to create a full schedule or you don't test enough sequences. Please add more resources, reduce the number of patients to add to the schedule or test more sequences.");
 //        }
 //
-//        long t_0GR = System.nanoTime();
-//        List<Patient> grasp = f.grasp(5, arrivalSequence);
-//        long t_1GR = System.nanoTime();
-//        if (f.fO(grasp, false) != Double.MAX_VALUE) {
-//            System.out.println(grasp + " " + f.fO(grasp, false));
-//            System.out.println("Length of the algorithm GRASP: " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
-//        }
-//        else{
-//            System.out.println("You don't have enough resources to create a full schedule or you don't test enough sequences. Please add more resources, reduce the number of patients to add to the schedule or test more sequences.");
-//        }
+        long t_0GR = System.nanoTime();
+        List<Patient> grasp = f.grasp(30, 100, arrivalSequence);
+        long t_1GR = System.nanoTime();
+        if (f.fO(grasp, false) != Double.MAX_VALUE) {
+            System.out.println(grasp + " " + f.fO(grasp, false));
+            System.out.println("Length of the algorithm GRASP: " + (t_1GR - t_0GR) / pow(10, 9) + " s.");
+        }
+        else{
+            System.out.println("You don't have enough resources to create a full schedule or you don't test enough sequences. Please add more resources, reduce the number of patients to add to the schedule or test more sequences.");
+        }
 //            try (Writer writer = new BufferedWriter(new OutputStreamWriter(
 //                    new FileOutputStream("results.txt"), "utf-8"))) {
 //                writer.write(best.toString() + " " + f.fO(best, false) + " " + (t_1A - t_0A) / pow(10, 9) + " s." + "\r\n");
