@@ -25,7 +25,7 @@ public class Functions {
 
     Schedule s;
     private int totaliterGrasp;
-    private int totaliterBestGrasp;
+    private int totaliterBest;
 
     public Functions(Schedule s) {
         this.s = s;
@@ -80,7 +80,6 @@ public class Functions {
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
             }
-
             return result;
         } catch (IllegalArgumentException e) {
             return Double.MAX_VALUE;
@@ -174,7 +173,7 @@ public class Functions {
                 bestSolution.add(p.getPatientID());
             }
             writerAnnealing.write(System.getProperty("line.separator"));
-            writerAnnealing.write("Best local solution: " + bestSolution + System.getProperty("line.separator"));
+            writerAnnealing.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(minb, false) + System.getProperty("line.separator"));
             writerAnnealing.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
             writerAnnealing.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
             writerAnnealing.close();
@@ -187,8 +186,10 @@ public class Functions {
 
     public List<Patient> grasp(int nbIteration, int maxNonImprov, List<Patient> scur) {
         double startRuntime = System.nanoTime();
-        double currentRuntime = System.nanoTime();
+        double currentRuntime1 = System.nanoTime();
+        double currentRuntime2 = System.nanoTime();
         double totalRuntime;
+        int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
@@ -230,21 +231,30 @@ public class Functions {
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
-                    currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    currentRuntime1 = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    totaliterBestGrasp = totaliterBest;
                     writerGrasp.write(System.getProperty("line.separator"));
-                    writerGrasp.write("==> New update of the optimum : " + fO(bestPosition, false) + " Minimum number of generated sequences to get this optimum : " + totaliterBestGrasp + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGrasp.write("==> New update of the optimum : " + fO(bestPosition, false) + " Minimum number of generated sequences to get this optimum : " + totaliterBest + " Current runtime : " + currentRuntime1 + " s." + System.getProperty("line.separator"));
                     writerGrasp.write(System.getProperty("line.separator"));
                     writerGrasp.write(System.getProperty("line.separator"));
                 } else {
-                    currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    currentRuntime2 = (System.nanoTime() - startRuntime) / pow(10, 9);
                     writerGrasp.write(System.getProperty("line.separator"));
-                    writerGrasp.write("==> No update of the optimum." + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGrasp.write("==> No update of the optimum." + " Current runtime : " + currentRuntime2 + " s." + System.getProperty("line.separator"));
                     writerGrasp.write(System.getProperty("line.separator"));
                     writerGrasp.write(System.getProperty("line.separator"));
                 }
                 i++;
             }
-            writerGrasp.write("Total of generated sequences : " + totaliterGrasp);
+            totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+            List<String> bestSolution = new ArrayList();
+            for (Patient p : bestPosition) {
+                bestSolution.add(p.getPatientID());
+            }
+            writerGrasp.write(System.getProperty("line.separator"));
+            writerGrasp.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGrasp.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writerGrasp.write("This solution has been reached by generating " + totaliterBestGrasp + " sequences on a total generated sequences of " + totaliterGrasp + " sequences.");
             writerGrasp.close();
         } catch (IOException e) {
             e.printStackTrace();
@@ -260,7 +270,7 @@ public class Functions {
         }
         int numiter = 1;
         int numiterBest = 0;
-        totaliterBestGrasp = totaliterGrasp;
+        totaliterBest = totaliterGrasp;
         try {
             if (fO(bestPosition, false) == Double.MAX_VALUE) {
                 writer.write("-------------------------------------------------------------------------------------------------------------------------------" + System.getProperty("line.separator"));
@@ -294,7 +304,7 @@ public class Functions {
                     numiter++;
                 }
             }
-            totaliterBestGrasp += numiterBest;
+            totaliterBest += numiterBest;
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -326,18 +336,28 @@ public class Functions {
      * @return
      */
     public List<Patient> graspRCL(double greedyness, int nbIteration, int maxNonImprov, List<Patient> scur) {
-        //defined by a random function
+        //defined by a random function        
         double startRuntime = System.nanoTime();
+        double currentRuntime1 = System.nanoTime();
+        double currentRuntime2 = System.nanoTime();
         double totalRuntime;
+        int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         for (Patient p : scur) {
             bestPosition.add(p);
         }
         int i = 0;
-        try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementgraspRCL.txt", true)))) {
-            writer3.append("Original position : " + fO(bestPosition, false) + "\r\n");
+        totaliterGrasp = 0;
+        try (Writer writerGraspRCL = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementGraspRCL.txt", false)))) {
+            if (fO(bestPosition, false) == Double.MAX_VALUE) {
+                writerGraspRCL.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
+                writerGraspRCL.write(System.getProperty("line.separator"));
+            } else {
+                writerGraspRCL.write("Value of the initial sequence: " + fO(bestPosition, false) + System.getProperty("line.separator"));
+                writerGraspRCL.write(System.getProperty("line.separator"));
+            }
 
             while (i < nbIteration) {
                 backUp = new ArrayList();
@@ -349,7 +369,7 @@ public class Functions {
                     scur.add(p);
                 }
                 backUp = new ArrayList();
-                for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writer3)) {
+                for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGraspRCL)) {
                     backUp.add(p);
                 }
                 scur = new ArrayList();
@@ -362,10 +382,31 @@ public class Functions {
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
-                    writer3.append("Improved : " + fO(bestPosition, false) + "\r\n");
+                    currentRuntime1 = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    totaliterBestGrasp = totaliterBest;
+                    writerGraspRCL.write(System.getProperty("line.separator"));
+                    writerGraspRCL.write("==> New update of the optimum : " + fO(bestPosition, false) + " Minimum number of generated sequences to get this optimum : " + totaliterBest + " Current runtime : " + currentRuntime1 + " s." + System.getProperty("line.separator"));
+                    writerGraspRCL.write(System.getProperty("line.separator"));
+                    writerGraspRCL.write(System.getProperty("line.separator"));
+                } else {
+                    currentRuntime2 = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    writerGraspRCL.write(System.getProperty("line.separator"));
+                    writerGraspRCL.write("==> No update of the optimum." + " Current runtime : " + currentRuntime2 + " s." + System.getProperty("line.separator"));
+                    writerGraspRCL.write(System.getProperty("line.separator"));
+                    writerGraspRCL.write(System.getProperty("line.separator"));
                 }
                 i++;
             }
+            totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+            List<String> bestSolution = new ArrayList();
+            for (Patient p : bestPosition) {
+                bestSolution.add(p.getPatientID());
+            }
+            writerGraspRCL.write(System.getProperty("line.separator"));
+            writerGraspRCL.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGraspRCL.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writerGraspRCL.write("This solution has been reached by generating " + totaliterBestGrasp + " sequences on a total generated sequences of " + totaliterGrasp + " sequences.");
+            writerGraspRCL.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -475,9 +516,9 @@ public class Functions {
         int iteratorCheck;
         population.add(scur);
 
-        try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
+        try (Writer writerGenetic = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGenetic.txt", true)))) {
-            writer4.append("Original position : " + fO(bestPosition, false) + "\r\n");
+            writerGenetic.append("Original position : " + fO(bestPosition, false) + "\r\n");
             while (population.size() < sizePopulation) {
                 for (int i = 0; i < scur.size(); i++) {
                     possiblePatient.add(scur.get(i));
@@ -547,7 +588,7 @@ public class Functions {
                             for (Patient p : read) {
                                 bestPopulation1.add(p);
                             }
-                            writer4.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
+                            writerGenetic.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
                         }
                         bestPopulation2 = new ArrayList();
                         for (Patient p : read) {

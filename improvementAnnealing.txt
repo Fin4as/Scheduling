@@ -2,14 +2,12 @@ Initial value : The initial sequence is not schedulable
 
 Temperature : 100.0
 
-Improved optimum found in the neighbourhood: 944.9583333333333 Current total of generated sequences to get this optimum: 20 Current runtime : 0.036898365 s.
-Improved optimum found in the neighbourhood: 941.625 Current total of generated sequences to get this optimum: 24 Current runtime : 0.055809639 s.
-Improved optimum found in the neighbourhood: 938.2916666666666 Current total of generated sequences to get this optimum: 27 Current runtime : 0.084182169 s.
-Improved optimum found in the neighbourhood: 929.9166666666666 Current total of generated sequences to get this optimum: 50 Current runtime : 0.126382729 s.
-Improved optimum found in the neighbourhood: 926.5833333333333 Current total of generated sequences to get this optimum: 54 Current runtime : 0.13211598 s.
-Improved optimum found in the neighbourhood: 900.5833333333333 Current total of generated sequences to get this optimum: 60 Current runtime : 0.14124246 s.
-Improved optimum found in the neighbourhood: 893.2083333333333 Current total of generated sequences to get this optimum: 61 Current runtime : 0.142061077 s.
-Improved optimum found in the neighbourhood: 882.7083333333333 Current total of generated sequences to get this optimum: 63 Current runtime : 0.143520903 s.
+Improved optimum found in the neighbourhood: 944.9583333333333 Current total of generated sequences to get this optimum: 20 Current runtime : 0.033623897 s.
+Improved optimum found in the neighbourhood: 941.625 Current total of generated sequences to get this optimum: 24 Current runtime : 0.050186351 s.
+Improved optimum found in the neighbourhood: 938.2916666666666 Current total of generated sequences to get this optimum: 27 Current runtime : 0.07665236 s.
+Improved optimum found in the neighbourhood: 929.9166666666666 Current total of generated sequences to get this optimum: 50 Current runtime : 0.115931312 s.
+Improved optimum found in the neighbourhood: 927.0833333333333 Current total of generated sequences to get this optimum: 54 Current runtime : 0.12283262 s.
+Improved optimum found in the neighbourhood: 890.5833333333333 Current total of generated sequences to get this optimum: 69 Current runtime : 0.137452874 s.
 
 
 Temperature : 70.0
@@ -18,16 +16,16 @@ Temperature : 70.0
 
 Temperature : 49.0
 
+Improved optimum found in the neighbourhood: 887.25 Current total of generated sequences to get this optimum: 253 Current runtime : 0.255265784 s.
 
 
 Temperature : 34.3
 
-Improved optimum found in the neighbourhood: 879.375 Current total of generated sequences to get this optimum: 362 Current runtime : 0.326798733 s.
 
 
 Temperature : 24.009999999999998
 
 
-Best local solution: [P2, P4, P6, P1, P7, P5, P9, P0, P8, P3]
-Found in 0.326798733 s. on a total runtime of 0.386642321 s.
-This solution has been reached by generating 362 sequences on a fixed total generated sequences of 500 sequences.
+Best solution proposed by the algorithm : [P2, P1, P9, P6, P8, P4, P0, P5, P3, P7] Objective function value associed : 887.25
+Found in 0.255265784 s. on a total runtime of 0.384402976 s.
+This solution has been reached by generating 253 sequences on a fixed total generated sequences of 500 sequences.
