@@ -52,8 +52,9 @@ public class Functions {
             result += wait(t.getTotalWaitingTime());
             result += late(t.getLateness());
 
-//            System.out.println(result);
-//         System.out.println(wait(t.totalWaitingTime));
+//        System.out.println(result);
+//        System.out.println(wait(t.totalWaitingTime));
+
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -75,8 +76,8 @@ public class Functions {
                     System.out.print(t.getListResource().get(j).getResourceID());
                     System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
                 }
-                ExcelWriter excelWriter = new ExcelWriter();
-                excelWriter.write(t.listPatient);
+//                ExcelWriter excelWriter = new ExcelWriter();
+//                excelWriter.write(t.listPatient);
             }
 
             return result;
@@ -197,12 +198,12 @@ public class Functions {
                 }
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
-                    
+
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
-                    
+
                     writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
 
                 }

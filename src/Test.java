@@ -216,8 +216,8 @@ public class Test {
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
                                 
-//                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
-//                                pat.addDiagramValues(t.getAvTime()); // then add the duration
+                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
+                                pat.addDiagramValues(t.getAvTime()); // then add the duration
 //                                pat.addDiagramResourceUsed(res.getResourceID());
 
                                 totalWaitingTime += (start - endLastTask);
@@ -283,8 +283,8 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(currentStart, currentAvTime, taskID);
-//                                    pat.addDiagramValues(currentStart - currentEnd);
-//                                    pat.addDiagramValues(currentAvTime);
+                                    pat.addDiagramValues(currentStart - currentEnd);
+                                    pat.addDiagramValues(currentAvTime);
 //                                    pat.addDiagramResourceUsed(resourcesToUse.get(ip).getResourceID());
 
                                     if (giveDetails == true) {

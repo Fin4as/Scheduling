@@ -15,7 +15,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-//package Scheduling_First_Try;
+
 public class ExcelWriter {
 
     private static String[] columns = {"Process", "Patient", "WaitingTime", "Duration"};
@@ -24,14 +24,9 @@ public class ExcelWriter {
     public void write(List<Patient> lp) {
 
         // Create a Workbook
-//             // new HSSFWorkbook() for generating `.xls` file
+           // new HSSFWorkbook() for generating `.xls` file
         try {
-            /* CreationHelper helps us create instances of various things like DataFormat, 
-           Hyperlink, RichTextString etc, in a format (HSSF, XSSF) independent way */
-//            CreationHelper createHelper = workbook.getCreationHelper();
-
            
-            
             Workbook workbook = new XSSFWorkbook();
             
 
@@ -76,7 +71,7 @@ public class ExcelWriter {
             }
 
             // Write the output to a file
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\quent\\Desktop\\Scheduling_Diagram.xlsx");
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram.xlsx");
             workbook.write(fileOut);
             fileOut.close();
 
@@ -86,11 +81,80 @@ public class ExcelWriter {
             System.out.println("Error :" + e);
         }
     }
+    
+     public void update(List<Resource> lr) {
+         
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("Resource");
+
+        try {
+            Workbook workbook = new XSSFWorkbook();
+
+            // Create a Sheet
+            Sheet sheet = workbook.createSheet("Resource Scheduling");
+
+            int nbr = getMaxNumberOfTasksForResources(lr);
+            for (int i = 1; i <= nbr; i += 2) {
+                columns.add(i, "WaitingTime");
+                columns.add(i + 1, "Duration");
+            }
+
+            // Get Row at index 1
+            //Row row = sheet.getRow(1);
+            Row headerRow = sheet.createRow(0);
+            
+             for (int i = 0; i < columns.size(); i++) {
+                Cell cell = headerRow.createCell(i);
+                cell.setCellValue(columns.get(i));
+            }
+
+            int rowNum = 1;
+            for (Resource r : lr) {
+                Row row = sheet.createRow(rowNum++);
+
+                row.createCell(0)
+                        .setCellValue(r.getResourceID());
+
+                for (int i = 0; i < r.getDiagramValues().size(); i++) {
+
+                    row.createCell(i + 1).setCellValue(r.getDiagramValues().get(i));
+                }
+
+            }
+
+            // Resize all columns to fit the content size
+            for (int i = 0; i < columns.size(); i++) {
+                sheet.autoSizeColumn(i);
+            }
+
+           // Write the output to a file
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram_Resource.xlsx");
+            workbook.write(fileOut);
+            fileOut.close();
+
+            // Closing the workbook
+            workbook.close();
+            
+        } catch (Exception e) {
+            System.out.println("Error :" + e);
+        }
+    }
 
     public int getMaxNumberOfTasks(List<Patient> lp) {
         int nbr = lp.get(0).getDiagramValues().size() / 2;
         for (int i = 1; i < lp.size(); i++) {
             int currentNbr = lp.get(i).getDiagramValues().size() / 2;
+            if (currentNbr > nbr) {
+                nbr = currentNbr;
+            }
+        }
+        return nbr;
+    }
+    
+       public int getMaxNumberOfTasksForResources(List<Resource> lr) {
+        int nbr = lr.get(0).getDiagramValues().size() / 2;
+        for (int i = 1; i < lr.size(); i++) {
+            int currentNbr = lr.get(i).getDiagramValues().size() / 2;
             if (currentNbr > nbr) {
                 nbr = currentNbr;
             }

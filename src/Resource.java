@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Hayat
@@ -119,6 +118,10 @@ public class Resource {
         this.time = new String[800];
     }
 
+    public ArrayList<Integer> getDiagramValues() {
+        return diagramValues;
+    }
+
     public void timeToDiagramValues() {
         for (int i = 0; i < time.length; i++) {
             if (time[i] == null) {
@@ -136,23 +139,19 @@ public class Resource {
                 }
                 diagramValues.add(waiting);
                 i = j - 1;
-            } else {
-                if (i == 0) {
-                    diagramValues.add(0);
-                }
+            } else if (time[i] != null) {
                 boolean busy = true;
-                int committed = 0;
+                String taskInProgress = time[i];
+                int taskDuration = 0;
                 int j = i;
                 while (busy && j < time.length) {
-                    if (time[j] == null) {
-                        committed++;
+                    if (time[i] == taskInProgress) {
+                        taskDuration++;
                     } else {
                         busy = false;
                     }
-
-                    j++;
                 }
-                diagramValues.add(committed);
+                diagramValues.add(taskDuration);
                 i = j - 1;
             }
         }

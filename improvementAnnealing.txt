@@ -11,12 +11,14 @@ Temperature : 70.0
 
 Temperature : 49.0
 
-Improved value: 879.375
 
 
 Temperature : 34.3
 
+Improved value: 887.25
 
 
 Temperature : 24.009999999999998
 
+Improved value: 882.7083333333333
+Improved value: 879.375
