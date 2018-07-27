@@ -12,13 +12,13 @@ import java.util.Random;
  *
  * @author quent
  */
-public abstract class SwappableSequence {
+public abstract class Sequence {
 
     public static List<Patient> deterministicSwap(List<Patient> sequence, int i, int j) {
 
         if (i == j) {
             throw new IllegalArgumentException("Error: i should be different from j.");
-            
+
         }
 
         Patient tmp = sequence.get(j);
@@ -61,7 +61,7 @@ public abstract class SwappableSequence {
         if (mother.size() != father.size()) {
             throw new IllegalArgumentException("Error: Sequences of the parents differ in length");
         }
-        
+
         if (percentage < 0 || percentage > 100) {
             throw new IllegalArgumentException("Error: The percentage of the mother sequence kept must be between 0 and 100");
         }
@@ -101,75 +101,54 @@ public abstract class SwappableSequence {
         return child;
     }
 
-    public static List<List> weightedSequence(List<Patient> arrivalSequence) {
-
-        List<Double> cancellationLikelihoods = new ArrayList();
-        double cancellationLikelihood;
-        List<Double> sortedCancellationLikelihoods = new ArrayList();
+    public static List<List> sortByCancellationLikelihood(List<Patient> arrivalSequence) {
         int n = arrivalSequence.size();
-        Double median;
+        List<Patient> sortedCancellationLikelihoods = new ArrayList();
         List<Patient> lowCancellationLikelihoods = new ArrayList();
         List<Patient> highCancellationLikelihoods = new ArrayList();
-        List<Patient> weightedInitialSolution = new ArrayList();
         List<List> output = new ArrayList();
-
-        for (int i = 0; i < n; i++) {
-            int ageInformation = arrivalSequence.get(i).getAgeInformation();
-            if (ageInformation <= 84) {
-                cancellationLikelihood = 0.4 * (- 1 / (0.05 * (ageInformation + 20)) + ((double) 31 / 26));
-            } else {
-                cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
-            }
-            cancellationLikelihoods.add(cancellationLikelihood);
-        }
-     
 
         for (int i = 0; i < n; i++) {
             int indexInsertion = 0;
             for (int j = 0; j < sortedCancellationLikelihoods.size(); j++) {
-                if (cancellationLikelihoods.get(i) >= sortedCancellationLikelihoods.get(j)) {
+                if (arrivalSequence.get(i).getCancellationLikelihood() >= sortedCancellationLikelihoods.get(j).getCancellationLikelihood()) {
                     indexInsertion++;
                 } else {
                     break;
                 }
             }
-            sortedCancellationLikelihoods.add(indexInsertion, cancellationLikelihoods.get(i));
+            sortedCancellationLikelihoods.add(indexInsertion, arrivalSequence.get(i));
         }
 
-        if (n % 2 == 0) {
-            median = (sortedCancellationLikelihoods.get((n / 2) - 1) + sortedCancellationLikelihoods.get(n / 2)) / 2;
-        } else {
-            median = sortedCancellationLikelihoods.get(n / 2);
+        for (Patient p : sortedCancellationLikelihoods.subList(0, (int) Math.ceil(n / 2.0))) {
+            lowCancellationLikelihoods.add(p);
+        }
+        for (Patient p : sortedCancellationLikelihoods.subList((int) Math.ceil(n / 2.0), n)) {
+            highCancellationLikelihoods.add(p);
         }
 
-        for (int i = 0; i < n; i++) {
-            if (cancellationLikelihoods.get(i) < median) {
-                lowCancellationLikelihoods.add(arrivalSequence.get(i));
-            } else if (cancellationLikelihoods.get(i).equals(median)) {
-                if (lowCancellationLikelihoods.size() <= highCancellationLikelihoods.size()) {
-                    lowCancellationLikelihoods.add(arrivalSequence.get(i));
-                } else {
-                    highCancellationLikelihoods.add(arrivalSequence.get(i));
-                }
-            } else {
-                highCancellationLikelihoods.add(arrivalSequence.get(i));
-            }
-        }
-
-        for (int i = 0; i < n / 2; i++) {
-            weightedInitialSolution.add(lowCancellationLikelihoods.get(i));
-            weightedInitialSolution.add(highCancellationLikelihoods.get(i));
-        }
-
-        if (n % 2 != 0) {
-            weightedInitialSolution.add(lowCancellationLikelihoods.get(n / 2));
-        }
-        
-        output.add(weightedInitialSolution);
         output.add(lowCancellationLikelihoods);
         output.add(highCancellationLikelihoods);
-        
+
         return output;
+    }
+
+    public static List<Patient> weightedInitialSequence(List<Patient> arrivalSequence) {
+
+        int n = arrivalSequence.size();
+        List<Patient> weightedInitialSequence = new ArrayList();
+        List<List> sortedCancellationLikelihoods = Sequence.sortByCancellationLikelihood(arrivalSequence);
+        List<Patient> lowCancellationLikelihoods = sortedCancellationLikelihoods.get(0);
+        List<Patient> highCancellationLikelihoods = sortedCancellationLikelihoods.get(1);
+
+        for (int i = 0; i < n / 2; i++) {
+            weightedInitialSequence.add(lowCancellationLikelihoods.get(i));
+            weightedInitialSequence.add(highCancellationLikelihoods.get(i));
+        }
+        if (lowCancellationLikelihoods.size() != highCancellationLikelihoods.size()) {
+            weightedInitialSequence.add(lowCancellationLikelihoods.get(lowCancellationLikelihoods.size() - 1));
+        }
+        return weightedInitialSequence;
     }
 
 }
