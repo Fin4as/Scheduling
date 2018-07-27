@@ -8776,3 +8776,6 @@ Original position : 1.7976931348623157E308
 Improvement : 908.9583333333333
 Improvement : 899.875
 Improvement : 887.25
+Original position : 988.8333333333333
+Improvement : 936.3333333333333
+Improvement : 921.1666666666666
