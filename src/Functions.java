@@ -78,8 +78,8 @@ public class Functions {
                     System.out.print(t.getListResource().get(j).getResourceID());
                     System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
                 }
-//                ExcelWriter excelWriter = new ExcelWriter();
-//                excelWriter.write(t.listPatient);
+                ExcelWriter excelWriter = new ExcelWriter();
+                excelWriter.write(t.listPatient);
             }
 
             return result;

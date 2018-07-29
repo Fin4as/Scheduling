@@ -155,6 +155,7 @@ public class Test {
             
             listPatient.get(p).setZeroSchedule(); 
             listPatient.get(p).getDiagramValues().clear();
+            listPatient.get(p).addArrayDiagram(0);
             
         }
 
@@ -218,8 +219,8 @@ public class Test {
                                     
                                     res.setTime(start, t.getAvTime(), t.getTaskID());
                                     pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
-                                    pat.addDiagramValues(start - endLastTask); //add the waiting time first
-                                    pat.addDiagramValues(t.getAvTime()); // then add the duration
+                                    pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
+                                    pat.addDiagramValues(0, t.getAvTime()); // then add the duration
 //                               
                                 }
 
@@ -260,11 +261,14 @@ public class Test {
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
                                         pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = indice du 2e tableau schedule dans parallelSchedules
-
-                                        pat.addDiagramValues(start - endLastTask); //add the waiting time first
-                                        pat.addDiagramValues(t.getAvTime()); // then add the duration
-                                        pat.addDiagramValues(start - endLastTask); //add the waiting time first
-                                        pat.addDiagramValues(pT.getAvTime()); // then add the duration
+                                        
+                                        pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
+                                        pat.addDiagramValues(0, t.getAvTime()); // then add the duration
+                                        
+                                        
+                                        pat.addArrayDiagram(1);
+                                        pat.addDiagramValues(1, start); //add the waiting time first
+                                        pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
 
                                         k++;
                                     }
@@ -349,8 +353,8 @@ public class Test {
                                     String taskID = tasksToSchedule.get(ip).getTaskID();
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    pat.addDiagramValues(currentStart - currentEnd);
-                                    pat.addDiagramValues(currentAvTime);                                 
+                                    pat.addDiagramValues(0, currentStart - currentEnd);
+                                    pat.addDiagramValues(0, currentAvTime);                                 
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
