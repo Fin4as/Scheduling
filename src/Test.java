@@ -269,7 +269,7 @@ public class Test {
                                         pat.addArrayDiagram(1);
                                         pat.addDiagramValues(1, start); //add the waiting time first
                                         pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
-
+                                        
                                         k++;
                                     }
                                     totalWaitingTime += (start - endLastTask);
@@ -394,9 +394,9 @@ public class Test {
 
             }
 
-//            for (int q = 0; q < listResource.size(); q++) {
-//                listResource.get(q).timeToDiagramValues();
-//            }
+            for (int q = 0; q < listResource.size(); q++) {
+                listResource.get(q).timeToDiagramValues();
+            }
         }
 
     }

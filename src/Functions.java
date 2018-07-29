@@ -80,6 +80,10 @@ public class Functions {
                 }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
+                for(int h =0; h <t.getListResource().size();h++){
+                    excelWriter.update(t.getListResource());
+                }
+                
             }
 
             return result;
