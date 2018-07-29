@@ -54,7 +54,6 @@ public class Functions {
 
 //        System.out.println(result);
 //        System.out.println(wait(t.totalWaitingTime));
-
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -68,7 +67,10 @@ public class Functions {
             if (giveDetails == true) {
                 for (int i = 0; i < sequence.size(); i++) {
                     System.out.print(sequence.get(i).getPatientID());
-                    System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+                    for (String [] e : sequence.get(i).getParallelSchedules()) {
+                        System.out.println(Arrays.toString(e));
+                       
+                    }
                 }
                 System.out.println("");
 
