@@ -153,9 +153,9 @@ public class ExcelWriter {
     }
 
     public int getMaxNumberOfTasksForResources(List<Resource> lr) {
-        int nbr = lr.get(0).getDiagramValues().size() / 2;
+        int nbr = lr.get(0).getDiagramValues().size() ;
         for (int i = 1; i < lr.size(); i++) {
-            int currentNbr = lr.get(i).getDiagramValues().size() / 2;
+            int currentNbr = lr.get(i).getDiagramValues().size();
             if (currentNbr > nbr) {
                 nbr = currentNbr;
             }

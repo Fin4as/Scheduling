@@ -152,11 +152,11 @@ public class Test {
 
         //Empty the table of time of each patient 
         for (int p = 0; p < listPatient.size(); p++) {
-            
-            listPatient.get(p).setZeroSchedule(); 
+
+            listPatient.get(p).setZeroSchedule();
             listPatient.get(p).getDiagramValues().clear();
             listPatient.get(p).addArrayDiagram(0);
-            
+
         }
 
         //Empty the table of time of each resource 
@@ -213,11 +213,11 @@ public class Test {
                         Skill s = t.getSkill();
                         int r = s.getFastestAvailable(time, t.getAvTime());
                         if (r != -1) {
-                            if (t.getParallelTask() == null) { 
+                            if (t.getParallelTask() == null) {
                                 Resource res = t.getSkill().getListResource().get(r);
                                 start = res.getNextAvailableTime(time, t.getAvTime());
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                    
+
                                     res.setTime(start, t.getAvTime(), t.getTaskID());
                                     pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
                                     pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
@@ -253,7 +253,7 @@ public class Test {
                                 int re = sk.getStrictestAvailable(time, pT.getAvTime());
                                 if (re != -1) {
                                     Resource res2 = pT.getSkill().getListResource().get(re);
-                                   
+
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
                                         res1.setTime(start, t.getAvTime(), t.getTaskID());
                                         res2.setTime(start, pT.getAvTime(), pT.getTaskID());
@@ -262,15 +262,14 @@ public class Test {
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
                                         pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = indice du 2e tableau schedule dans parallelSchedules
-                                        
+
                                         pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
                                         pat.addDiagramValues(0, t.getAvTime()); // then add the duration
-                                        
-                                        
+
                                         pat.addArrayDiagram(1);
                                         pat.addDiagramValues(1, start); //add the waiting time first
                                         pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
-                                        
+
                                         k++;
                                     }
                                     totalWaitingTime += (start - endLastTask);
@@ -355,7 +354,7 @@ public class Test {
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
                                     pat.addDiagramValues(0, currentStart - currentEnd);
-                                    pat.addDiagramValues(0, currentAvTime);                                 
+                                    pat.addDiagramValues(0, currentAvTime);
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
@@ -395,10 +394,9 @@ public class Test {
 
             }
 
-            for (int q = 0; q < listResource.size(); q++) {
-                listResource.get(q).timeToDiagramValues();
-            }
         }
-
+        for (int q = 0; q < listResource.size(); q++) {
+            listResource.get(q).timeToDiagramValues();
+        }
     }
 }

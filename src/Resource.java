@@ -25,8 +25,8 @@ public class Resource {
         time = new String[800];
         diagramValues = new ArrayList<>();
     }
-    
-    public ArrayList<Integer> getDiagramValues(){
+
+    public ArrayList<Integer> getDiagramValues() {
         return diagramValues;
     }
 
@@ -122,46 +122,38 @@ public class Resource {
         this.time = new String[800];
     }
 
-
-
     public void timeToDiagramValues() {
-       for (int i = 0; i < time.length; i++) {
-            if (time[i] == null) {
-                boolean free = true;
-                int waiting = 0;
-                int j = i;
-                while (free && j < time.length) {
-                    if (time[j] == null) {
-                        waiting++;
-                    } else {
-                        free = false;
-                    }
-
-                    j++;
-                }
+        String previousCell = time[0];
+        int waiting = 0;
+        int duration = 0;
+        for (int i = 0; i < time.length; i++) {
+            if (time[i] == null && previousCell == null) {
+                waiting++;
+            } else if (time[i] != null && previousCell == null) {
                 diagramValues.add(waiting);
-                i = j - 1;
-            } else {
-                if (i == 0) {
-                    diagramValues.add(0);
-                }
-                boolean busy = true;
-                int committed = 0;
-                int j = i;
-                String currentTask = time[i];
-                while (busy && j < time.length) {
-                    if (time[j] != null & currentTask.equals(time[j])) {
-                        committed++;
-                    } else {
-                        busy = false;
-                    }
+                waiting = 0;
+                duration++;
+            } else if (time[i] == null && previousCell != null) {
+                diagramValues.add(duration);
+                duration = 0;
+                waiting++;
 
-                    j++;
+            } else if (time[i] != null && previousCell != null) {
+                if (time[i].equals(previousCell)) {
+                    if (i == 0) {
+                        diagramValues.add(0);
+                    }
+                    duration++;
+                } else {
+                    diagramValues.add(duration);
+                    duration = 0;
+                    duration++;
                 }
-                diagramValues.add(committed);
-                i = j - 1;
+
             }
+            previousCell = time[i];
         }
+
     }
 
 }
