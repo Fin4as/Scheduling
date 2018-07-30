@@ -25,16 +25,16 @@ public class Main {
     public static void main(String[] args) {
 
         List<Patient> arrivalSequence = new ArrayList();
-        Patient p0 = new Patient("P0", "PR1", 85, 98);
-        Patient p1 = new Patient("P1", "PR1", 22, 38);
-        Patient p2 = new Patient("P2", "PR2", 102, 105);
-        Patient p3 = new Patient("P3", "PR1", 68, 13);
-        Patient p4 = new Patient("P4", "PR1", 19, 5);
-        Patient p5 = new Patient("P5", "PR1", 29, 56);
-        Patient p6 = new Patient("P6", "PR2", 23, 118);
-        Patient p7 = new Patient("P7", "PR1", 86, 24);
-        Patient p8 = new Patient("P8", "PR1", 27, 93);
-        Patient p9 = new Patient("P9", "PR1", 76, 72);
+        Patient p0 = new Patient("P0", "PR2", 98);
+        Patient p1 = new Patient("P1", "PR1", 38);
+        Patient p2 = new Patient("P2", "PR1", 105);
+        Patient p3 = new Patient("P3", "PR1", 13);
+        Patient p4 = new Patient("P4", "PR2", 5);
+        Patient p5 = new Patient("P5", "PR2", 56);
+        Patient p6 = new Patient("P6", "PR2", 118);
+        Patient p7 = new Patient("P7", "PR1", 24);
+        Patient p8 = new Patient("P8", "PR1", 93);
+        Patient p9 = new Patient("P9", "PR1", 72);
         arrivalSequence.add(p6);
         arrivalSequence.add(p3);
         arrivalSequence.add(p9);

@@ -52,8 +52,8 @@ public class Functions {
             result += wait(t.getTotalWaitingTime());
             result += late(t.getLateness());
 
-//            System.out.println(result);
-//         System.out.println(wait(t.totalWaitingTime));
+//        System.out.println(result);
+//        System.out.println(wait(t.totalWaitingTime));
 //        for(int i =0; i<sequence.size(); i++){
 //            System.out.print(sequence.get(i).getPatientID());
 //            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
@@ -67,7 +67,10 @@ public class Functions {
             if (giveDetails == true) {
                 for (int i = 0; i < sequence.size(); i++) {
                     System.out.print(sequence.get(i).getPatientID());
-                    System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
+                    for (String [] e : sequence.get(i).getParallelSchedules()) {
+                        System.out.println(Arrays.toString(e));
+                       
+                    }
                 }
                 System.out.println("");
 
@@ -77,6 +80,10 @@ public class Functions {
                 }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
+                for(int h =0; h <t.getListResource().size();h++){
+                    excelWriter.update(t.getListResource());
+                }
+                
             }
 
             return result;
@@ -199,12 +206,12 @@ public class Functions {
                 }
 
                 if (fO(scur, false) < fO(bestPosition, false)) {
-                    
+
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
-                    
+
                     writer2.append("Improvement : " + fO(bestPosition, false) + "\r\n");
 
                 }

@@ -1,0 +1,25 @@
+<<<<<<< HEAD
+=======
+Original value: The initial sequence is not schedulable
+
+Temperature : 100.0
+
+Improved value: 299.29166666666663
+Improved value: 248.33333333333331
+
+
+Temperature : 70.0
+
+
+
+Temperature : 49.0
+
+
+
+Temperature : 34.3
+
+
+
+Temperature : 24.009999999999998
+
+>>>>>>> ExcelWriterResource
