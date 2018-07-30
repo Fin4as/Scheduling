@@ -25,16 +25,16 @@ public class Main {
     public static void main(String[] args) {
 
         List<Patient> arrivalSequence = new ArrayList();
-        Patient p0 = new Patient("P0", "PR1", 85, 4);
-        Patient p1 = new Patient("P1", "PR1", 22, 2);
-        Patient p2 = new Patient("P2", "PR2", 102, 3);
-        Patient p3 = new Patient("P3", "PR1", 68, 6);
-        Patient p4 = new Patient("P4", "PR1", 19, 8);
-        Patient p5 = new Patient("P5", "PR1", 29, 7);
-        Patient p6 = new Patient("P6", "PR2", 23, 2);
-        Patient p7 = new Patient("P7", "PR1", 86, 7);
-        Patient p8 = new Patient("P8", "PR1", 27, 2);
-        Patient p9 = new Patient("P9", "PR1", 76, 9);
+        Patient p0 = new Patient("P0", "PR1", 85, 98);
+        Patient p1 = new Patient("P1", "PR1", 22, 38);
+        Patient p2 = new Patient("P2", "PR2", 102, 105);
+        Patient p3 = new Patient("P3", "PR1", 68, 13);
+        Patient p4 = new Patient("P4", "PR1", 19, 5);
+        Patient p5 = new Patient("P5", "PR1", 29, 56);
+        Patient p6 = new Patient("P6", "PR2", 23, 118);
+        Patient p7 = new Patient("P7", "PR1", 86, 24);
+        Patient p8 = new Patient("P8", "PR1", 27, 93);
+        Patient p9 = new Patient("P9", "PR1", 76, 72);
         arrivalSequence.add(p6);
         arrivalSequence.add(p3);
         arrivalSequence.add(p9);
@@ -48,7 +48,7 @@ public class Main {
 
         Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
-
+        
         long t_0A = System.nanoTime();
         List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
         long t_1A = System.nanoTime();

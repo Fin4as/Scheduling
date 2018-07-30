@@ -98,6 +98,7 @@ public class Functions {
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
+        sold = Sequence.weightedInitialSequence(scur);
         for (Patient e : sold) {
             minb.add(e);
         }
@@ -123,7 +124,7 @@ public class Functions {
                     for (Patient i : sold) {
                         scur.add(i);
                     }
-                    SwappableSequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
+                    Sequence.deterministicSwap(scur, numiter % (scur.size()), (numiter + 1) % (scur.size()));
                     dif = fO(scur, false) - fO(sold, false);
 
                     if (dif <= 0) {
@@ -192,6 +193,7 @@ public class Functions {
         int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
+//        scur = Sequence.weightedInitialSequence(scur);
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -286,7 +288,7 @@ public class Functions {
                 writer.write(System.getProperty("line.separator"));
             }
             while (numiter <= maxNonImprov) {
-                scur = SwappableSequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
+                scur = Sequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
                 if (fO(scur, false) < fO(bestPosition, false)) {
                     totaliterGrasp++;
                     numiterBest += numiter;
@@ -344,6 +346,7 @@ public class Functions {
         int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
+//        scur = Sequence.weightedInitialSequence(scur);
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -421,10 +424,17 @@ public class Functions {
      */
     public List<Patient> greedyRandomizedConstruction(double greedyness, List<Patient> list) {
         List<Patient> sequence = new ArrayList();
-        List<Patient> possibilitiesL = SwappableSequence.weightedSequence(list).get(1);
-        List<Patient> possibilitiesLbackup = SwappableSequence.weightedSequence(list).get(1);
-        List<Patient> possibilitiesH = SwappableSequence.weightedSequence(list).get(2);
-        List<Patient> possibilitiesHbackup = SwappableSequence.weightedSequence(list).get(2);
+        List<List> sortedCancellationLikelihoods = Sequence.sortByCancellationLikelihood(list);
+        List<Patient> possibilitiesL = sortedCancellationLikelihoods.get(0);
+        List<Patient> possibilitiesLbackup = new ArrayList();
+        for (Patient p : possibilitiesL) {
+            possibilitiesLbackup.add(p);
+        }
+        List<Patient> possibilitiesH = sortedCancellationLikelihoods.get(1);
+        List<Patient> possibilitiesHbackup = new ArrayList();
+        for (Patient p : possibilitiesH) {
+            possibilitiesHbackup.add(p);
+        }
         Patient randomElement;
 
         Random rand = new Random();
@@ -500,6 +510,7 @@ public class Functions {
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
         List<Patient> bestPosition = new ArrayList();
+//        scur = Sequence.weightedInitialSequence(scur);
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -599,7 +610,7 @@ public class Functions {
                 }
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
-                for (Patient p : SwappableSequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)) {
+                for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)) {
                     child.add(p);
                 }
 //                //This offspring is added in the population 

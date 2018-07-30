@@ -1,4 +1,5 @@
 //package Scheduling_First_Try;
+
 import java.util.ArrayList;
 
 /*
@@ -6,7 +7,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Hayat
@@ -24,23 +24,25 @@ public class Patient {
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
-    public Patient(String id, String processID, int arrivalTime,int ageInformation) {
+    public Patient(String id, String processID, int arrivalTime, int ageInformation) {
         this.patientID = id;
         schedule = new String[800];
         this.processID = processID;
         this.ageInformation = ageInformation;
-        if (ageInformation <= 84) {
-            this.cancellationLikelihood = 0.4 * (- 1 / (0.05 * (ageInformation + 20)) + ((double) 31 / 26));
+        if (ageInformation <= 7 || ageInformation > 112) {
+            cancellationLikelihood = 1;
+        } else if (ageInformation > 7 && ageInformation <= 15) {
+            cancellationLikelihood = (- 1 / (1 + Math.exp(-2 * (ageInformation - 11)))) + 1;
+        } else if (ageInformation > 15 && ageInformation <= 105) {
+            cancellationLikelihood = 0;
+        } else if (ageInformation > 105 && ageInformation <= 112) {
+            cancellationLikelihood = (- 1 / (1 + Math.exp(-2 * (ageInformation - 109))));
         } else {
-            this.cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
+            throw new IllegalArgumentException("Cancellation likelihood could not be calculated");
         }
         this.arrivalTime = arrivalTime;
         diagramValues = new ArrayList<>();
         diagramResourceIdUsed = new ArrayList<>();
-    }
-
-    public int getAgeInformation() {
-        return ageInformation;
     }
 
     /**
@@ -101,19 +103,19 @@ public class Patient {
         return cancellationLikelihood;
     }
 
-    public void addDiagramValues(int i){
+    public void addDiagramValues(int i) {
         diagramValues.add(i);
     }
-    
-    public void addDiagramResourceUsed(String r){
+
+    public void addDiagramResourceUsed(String r) {
         diagramResourceIdUsed.add(r);
     }
-    
-       public ArrayList<String> getDiagramResourcesIdUsed(){
+
+    public ArrayList<String> getDiagramResourcesIdUsed() {
         return diagramResourceIdUsed;
     }
-    
-    public ArrayList<Integer> getDiagramValues(){
+
+    public ArrayList<Integer> getDiagramValues() {
         return diagramValues;
     }
 }

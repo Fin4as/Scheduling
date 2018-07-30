@@ -1,149 +1,272 @@
-Original position : 439.79166666666663
-Improved : 265.8333333333333
-Improved : 255.20833333333331
-Improved : 197.41666666666666
-Original position : 439.79166666666663
-Improved : 198.625
-Improved : 197.41666666666666
-Original position : 439.79166666666663
-Improved : 197.41666666666666
-Original position : 950.5
-Improved : 863.5833333333333
-Improved : 844.75
-Original position : 950.5
-Improved : 844.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1008.375
-Improved : 999.4166666666666
-Improved : 986.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 1017.0
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1023.6666666666666
-Improved : 1020.0416666666666
-Improved : 1017.0
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1017.0
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 1017.0
-Improved : 1003.5416666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1023.6666666666666
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 1010.2083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 984.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 986.0833333333333
-Improved : 975.75
-Original position : 1.7976931348623157E308
-Original position : 1.7976931348623157E308
-Original position : 1.7976931348623157E308
-Improved : 975.75
+Value of the initial sequence: The initial sequence is not schedulable
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1008.9166666666666 Current total of generated sequences in this try : 1 Current runtime : 0.003516388 s.
+Improved value found in the neighbourhood : 947.2916666666666 Current total of generated sequences in this try : 12 Current runtime : 0.005180502 s.
+
+==> New update of the optimum : 947.2916666666666 Minimum number of generated sequences to get this optimum : 12 Current runtime : 0.012571513 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1000.7916666666666
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 927.7916666666666 Current total of generated sequences in this try : 1 Current runtime : 0.013254753 s.
+
+==> New update of the optimum : 927.7916666666666 Minimum number of generated sequences to get this optimum : 58 Current runtime : 0.023363573 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1087.0833333333333 Current total of generated sequences in this try : 1 Current runtime : 0.023902638 s.
+Improved value found in the neighbourhood : 927.7916666666666 Current total of generated sequences in this try : 4 Current runtime : 0.024575615 s.
+Improved value found in the neighbourhood : 913.0833333333333 Current total of generated sequences in this try : 25 Current runtime : 0.028529901 s.
+
+==> New update of the optimum : 913.0833333333333 Minimum number of generated sequences to get this optimum : 128 Current runtime : 0.036000086 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1081.4166666666665 Current total of generated sequences in this try : 1 Current runtime : 0.036542573 s.
+Improved value found in the neighbourhood : 1026.2083333333333 Current total of generated sequences in this try : 11 Current runtime : 0.038207664 s.
+Improved value found in the neighbourhood : 1008.375 Current total of generated sequences in this try : 21 Current runtime : 0.03959858 s.
+Improved value found in the neighbourhood : 1006.7916666666666 Current total of generated sequences in this try : 26 Current runtime : 0.040677688 s.
+Improved value found in the neighbourhood : 1000.125 Current total of generated sequences in this try : 36 Current runtime : 0.049057882 s.
+Improved value found in the neighbourhood : 991.625 Current total of generated sequences in this try : 46 Current runtime : 0.051374446 s.
+Improved value found in the neighbourhood : 984.25 Current total of generated sequences in this try : 47 Current runtime : 0.052076257 s.
+Improved value found in the neighbourhood : 972.4166666666666 Current total of generated sequences in this try : 57 Current runtime : 0.055524712 s.
+Improved value found in the neighbourhood : 940.625 Current total of generated sequences in this try : 78 Current runtime : 0.062057031 s.
+Improved value found in the neighbourhood : 936.7916666666666 Current total of generated sequences in this try : 88 Current runtime : 0.065419958 s.
+
+==> No update of the optimum. Current runtime : 0.07668315 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1005.5833333333333 Current total of generated sequences in this try : 1 Current runtime : 0.077018905 s.
+Improved value found in the neighbourhood : 943.9583333333333 Current total of generated sequences in this try : 12 Current runtime : 0.078634146 s.
+Improved value found in the neighbourhood : 931.625 Current total of generated sequences in this try : 32 Current runtime : 0.08254347 s.
+
+==> No update of the optimum. Current runtime : 0.091939238 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1012.625
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1002.4166666666666 Current total of generated sequences in this try : 1 Current runtime : 0.092653756 s.
+Improved value found in the neighbourhood : 999.0833333333333 Current total of generated sequences in this try : 11 Current runtime : 0.095076374 s.
+Improved value found in the neighbourhood : 919.0833333333333 Current total of generated sequences in this try : 12 Current runtime : 0.095458558 s.
+Improved value found in the neighbourhood : 915.5833333333333 Current total of generated sequences in this try : 33 Current runtime : 0.100349733 s.
+
+==> No update of the optimum. Current runtime : 0.110114001 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1022.875 Current total of generated sequences in this try : 1 Current runtime : 0.110556298 s.
+Improved value found in the neighbourhood : 960.75 Current total of generated sequences in this try : 4 Current runtime : 0.11130014 s.
+Improved value found in the neighbourhood : 959.125 Current total of generated sequences in this try : 5 Current runtime : 0.111684768 s.
+Improved value found in the neighbourhood : 952.25 Current total of generated sequences in this try : 11 Current runtime : 0.11324576 s.
+Improved value found in the neighbourhood : 938.4166666666666 Current total of generated sequences in this try : 41 Current runtime : 0.120345491 s.
+Improved value found in the neighbourhood : 938.2916666666666 Current total of generated sequences in this try : 70 Current runtime : 0.126415963 s.
+
+==> No update of the optimum. Current runtime : 0.140985879 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1092.25
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1032.125 Current total of generated sequences in this try : 10 Current runtime : 0.14394463 s.
+Improved value found in the neighbourhood : 969.125 Current total of generated sequences in this try : 11 Current runtime : 0.144342453 s.
+
+==> No update of the optimum. Current runtime : 0.155989784 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1098.9166666666665
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 929.5416666666666 Current total of generated sequences in this try : 3 Current runtime : 0.157930517 s.
+
+==> No update of the optimum. Current runtime : 0.170115447 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 917.25
+--> Search for improvement in the neighbourhood
+
+
+==> No update of the optimum. Current runtime : 0.180340584 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1013.625
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 950.625 Current total of generated sequences in this try : 1 Current runtime : 0.181640108 s.
+Improved value found in the neighbourhood : 938.2916666666666 Current total of generated sequences in this try : 21 Current runtime : 0.187192042 s.
+Improved value found in the neighbourhood : 936.5833333333333 Current total of generated sequences in this try : 24 Current runtime : 0.188515024 s.
+Improved value found in the neighbourhood : 933.25 Current total of generated sequences in this try : 64 Current runtime : 0.201095334 s.
+
+==> No update of the optimum. Current runtime : 0.218615204 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1028.7916666666665
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1011.9583333333333 Current total of generated sequences in this try : 20 Current runtime : 0.223438446 s.
+Improved value found in the neighbourhood : 1003.4583333333333 Current total of generated sequences in this try : 30 Current runtime : 0.225317111 s.
+Improved value found in the neighbourhood : 1001.7083333333333 Current total of generated sequences in this try : 31 Current runtime : 0.225687565 s.
+Improved value found in the neighbourhood : 998.625 Current total of generated sequences in this try : 37 Current runtime : 0.227165963 s.
+Improved value found in the neighbourhood : 988.2916666666666 Current total of generated sequences in this try : 47 Current runtime : 0.228987447 s.
+Improved value found in the neighbourhood : 984.25 Current total of generated sequences in this try : 48 Current runtime : 0.229349105 s.
+Improved value found in the neighbourhood : 981.9583333333333 Current total of generated sequences in this try : 52 Current runtime : 0.230355393 s.
+Improved value found in the neighbourhood : 965.7083333333333 Current total of generated sequences in this try : 53 Current runtime : 0.23271643 s.
+Improved value found in the neighbourhood : 962.375 Current total of generated sequences in this try : 63 Current runtime : 0.234557463 s.
+Improved value found in the neighbourhood : 879.375 Current total of generated sequences in this try : 64 Current runtime : 0.234939159 s.
+
+==> New update of the optimum : 879.375 Minimum number of generated sequences to get this optimum : 898 Current runtime : 0.243402436 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1030.2083333333333
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1023.7916666666666 Current total of generated sequences in this try : 3 Current runtime : 0.244477146 s.
+Improved value found in the neighbourhood : 1014.5833333333333 Current total of generated sequences in this try : 4 Current runtime : 0.244784066 s.
+Improved value found in the neighbourhood : 1005.5833333333333 Current total of generated sequences in this try : 14 Current runtime : 0.246723822 s.
+Improved value found in the neighbourhood : 996.0833333333333 Current total of generated sequences in this try : 24 Current runtime : 0.248115227 s.
+Improved value found in the neighbourhood : 937.2916666666666 Current total of generated sequences in this try : 35 Current runtime : 0.250192803 s.
+Improved value found in the neighbourhood : 917.4583333333333 Current total of generated sequences in this try : 45 Current runtime : 0.252610533 s.
+Improved value found in the neighbourhood : 910.625 Current total of generated sequences in this try : 55 Current runtime : 0.254868939 s.
+
+==> No update of the optimum. Current runtime : 0.265038849 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1023.7916666666666
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1014.5833333333333 Current total of generated sequences in this try : 1 Current runtime : 0.265568629 s.
+Improved value found in the neighbourhood : 1008.4583333333333 Current total of generated sequences in this try : 11 Current runtime : 0.267496166 s.
+Improved value found in the neighbourhood : 945.4583333333333 Current total of generated sequences in this try : 12 Current runtime : 0.267805042 s.
+Improved value found in the neighbourhood : 920.7916666666666 Current total of generated sequences in this try : 32 Current runtime : 0.271885908 s.
+Improved value found in the neighbourhood : 918.9166666666666 Current total of generated sequences in this try : 35 Current runtime : 0.272551065 s.
+Improved value found in the neighbourhood : 912.0833333333333 Current total of generated sequences in this try : 45 Current runtime : 0.274007959 s.
+
+==> No update of the optimum. Current runtime : 0.281478633 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1023.7916666666666
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1014.5833333333333 Current total of generated sequences in this try : 1 Current runtime : 0.282038225 s.
+Improved value found in the neighbourhood : 1011.0833333333333 Current total of generated sequences in this try : 11 Current runtime : 0.283961852 s.
+Improved value found in the neighbourhood : 947.0833333333333 Current total of generated sequences in this try : 12 Current runtime : 0.284256554 s.
+Improved value found in the neighbourhood : 922.25 Current total of generated sequences in this try : 32 Current runtime : 0.289928715 s.
+Improved value found in the neighbourhood : 920.7916666666666 Current total of generated sequences in this try : 33 Current runtime : 0.290452141 s.
+Improved value found in the neighbourhood : 918.9166666666666 Current total of generated sequences in this try : 36 Current runtime : 0.291490196 s.
+Improved value found in the neighbourhood : 912.0833333333333 Current total of generated sequences in this try : 46 Current runtime : 0.293841948 s.
+
+==> No update of the optimum. Current runtime : 0.305641762 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 959.125
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 938.4166666666666 Current total of generated sequences in this try : 33 Current runtime : 0.313481424 s.
+Improved value found in the neighbourhood : 938.2916666666666 Current total of generated sequences in this try : 62 Current runtime : 0.31800019 s.
+
+==> No update of the optimum. Current runtime : 0.326149216 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1013.9583333333333
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1010.4583333333333 Current total of generated sequences in this try : 10 Current runtime : 0.327946264 s.
+Improved value found in the neighbourhood : 1000.7916666666666 Current total of generated sequences in this try : 20 Current runtime : 0.329349887 s.
+Improved value found in the neighbourhood : 927.7916666666666 Current total of generated sequences in this try : 21 Current runtime : 0.329665604 s.
+Improved value found in the neighbourhood : 924.9583333333333 Current total of generated sequences in this try : 52 Current runtime : 0.335115882 s.
+Improved value found in the neighbourhood : 882.7083333333333 Current total of generated sequences in this try : 55 Current runtime : 0.336023448 s.
+
+==> No update of the optimum. Current runtime : 0.343231675 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1002.25 Current total of generated sequences in this try : 1 Current runtime : 0.344175895 s.
+Improved value found in the neighbourhood : 999.0833333333333 Current total of generated sequences in this try : 11 Current runtime : 0.345557525 s.
+Improved value found in the neighbourhood : 919.0833333333333 Current total of generated sequences in this try : 12 Current runtime : 0.345861024 s.
+Improved value found in the neighbourhood : 910.625 Current total of generated sequences in this try : 53 Current runtime : 0.353205118 s.
+
+==> No update of the optimum. Current runtime : 0.360002815 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : This random sequence is not schedulable
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 1022.875 Current total of generated sequences in this try : 1 Current runtime : 0.360324398 s.
+Improved value found in the neighbourhood : 1013.5416666666666 Current total of generated sequences in this try : 11 Current runtime : 0.36178569 s.
+Improved value found in the neighbourhood : 1005.0416666666666 Current total of generated sequences in this try : 21 Current runtime : 0.363138974 s.
+Improved value found in the neighbourhood : 1001.7916666666666 Current total of generated sequences in this try : 28 Current runtime : 0.364516694 s.
+Improved value found in the neighbourhood : 934.9583333333333 Current total of generated sequences in this try : 32 Current runtime : 0.36519749 s.
+Improved value found in the neighbourhood : 928.2916666666666 Current total of generated sequences in this try : 42 Current runtime : 0.367467625 s.
+Improved value found in the neighbourhood : 893.2083333333333 Current total of generated sequences in this try : 47 Current runtime : 0.368387897 s.
+
+==> No update of the optimum. Current runtime : 0.376255417 s.
+
+
+-------------------------------------------------------------------------------------------------------------------------------
+
+Value of the new random sequence : 1018.0833333333333
+--> Search for improvement in the neighbourhood
+
+Improved value found in the neighbourhood : 954.0833333333333 Current total of generated sequences in this try : 1 Current runtime : 0.376792527 s.
+Improved value found in the neighbourhood : 933.25 Current total of generated sequences in this try : 31 Current runtime : 0.381934908 s.
+
+==> No update of the optimum. Current runtime : 0.389663629 s.
+
+
+
+Best solution proposed by the algorithm : [P2, P4, P6, P1, P8, P0, P7, P9, P3, P5] Objective function value associed : 879.375
+Found in 0.243402436 s. on a total runtime of 0.389685133 s.
+This solution has been reached by generating 898 sequences on a total generated sequences of 1697 sequences.
