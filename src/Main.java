@@ -49,7 +49,7 @@ public class Main {
         Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
 
-//        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("resultsAnnealing.txt", true), "utf-8"))) {
                 long t_0A = System.nanoTime();
@@ -66,9 +66,9 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//        }
+        }
 
-//        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("resultsGenetic.txt", true), "utf-8"))) {
                 long t_0G = System.nanoTime();
@@ -85,9 +85,9 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//        }
+        }
 
-//        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("resultsGRASP_RCL.txt", true), "utf-8"))) {
                 long t_0GRCL = System.nanoTime();
@@ -105,9 +105,9 @@ public class Main {
                 e.printStackTrace();
             }
 
-//        }
+        }
 
-//        for (int i = 0; i < 1000; i++) {
+        for (int i = 0; i < 1000; i++) {
             try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
                     new FileOutputStream("resultsGRASP_RCL.txt", true), "utf-8"))) {
                 long t_0GR = System.nanoTime();
@@ -124,6 +124,6 @@ public class Main {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-//        }
+        }
     }
 }
