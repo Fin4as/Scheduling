@@ -2,17 +2,12 @@ Original value: The initial sequence is not schedulable
 
 Temperature : 100.0
 
-Improved value: 293.875
-Improved value: 293.75
-Improved value: 253.66666666666663
-Improved value: 245.875
+Improved value: 299.29166666666663
+Improved value: 248.33333333333331
 
 
 Temperature : 70.0
 
-Improved value: 237.54166666666663
-Improved value: 237.20833333333331
-Improved value: 233.04166666666663
 
 
 Temperature : 49.0

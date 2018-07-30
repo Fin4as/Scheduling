@@ -17,14 +17,13 @@ public class Patient {
     private ArrayList<String[]> parallelSchedules;
     private String schedule[];
     private String processID;
-    private int arrivalTime;
-    private int ageInformation;
+       private int ageInformation;
     private double cancellationLikelihood;
     private ArrayList<ArrayList<Integer>> diagramValues;
     private ArrayList<Integer> diagram;
 
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
-    public Patient(String id, String processID, int arrivalTime, int ageInformation) {
+    public Patient(String id, String processID, int ageInformation) {
         this.patientID = id;
         schedule = new String[800];
         parallelSchedules = new ArrayList<>();
@@ -36,7 +35,7 @@ public class Patient {
         } else {
             this.cancellationLikelihood = 1 / (1 + Math.exp(-0.2 * (ageInformation - (5 * Math.log((double) 3 / 2) + 84))));
         }
-        this.arrivalTime = arrivalTime;
+        
         diagramValues = new ArrayList<>();
         diagram = new ArrayList<>();
         diagramValues.add(diagram);
@@ -83,7 +82,7 @@ public class Patient {
     }
 
     public int getNextAvailableTime() {
-        int time = arrivalTime;
+        int time = 1;
         if (!isEmptyStringArray(parallelSchedules.get(0))) {
             int i = parallelSchedules.get(0).length - 1;
             boolean found = false;
