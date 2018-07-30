@@ -25,6 +25,10 @@ public class Resource {
         time = new String[800];
         diagramValues = new ArrayList<>();
     }
+    
+    public ArrayList<Integer> getDiagramValues(){
+        return diagramValues;
+    }
 
     public int getNextAvailableTime(int startTime, int avTime) {
         int available = -1;
@@ -118,12 +122,10 @@ public class Resource {
         this.time = new String[800];
     }
 
-    public ArrayList<Integer> getDiagramValues() {
-        return diagramValues;
-    }
+
 
     public void timeToDiagramValues() {
-        for (int i = 0; i < time.length; i++) {
+       for (int i = 0; i < time.length; i++) {
             if (time[i] == null) {
                 boolean free = true;
                 int waiting = 0;
@@ -139,19 +141,24 @@ public class Resource {
                 }
                 diagramValues.add(waiting);
                 i = j - 1;
-            } else if (time[i] != null) {
+            } else {
+                if (i == 0) {
+                    diagramValues.add(0);
+                }
                 boolean busy = true;
-                String taskInProgress = time[i];
-                int taskDuration = 0;
+                int committed = 0;
                 int j = i;
+                String currentTask = time[i];
                 while (busy && j < time.length) {
-                    if (time[i] == taskInProgress) {
-                        taskDuration++;
+                    if (time[j] != null & currentTask.equals(time[j])) {
+                        committed++;
                     } else {
                         busy = false;
                     }
+
+                    j++;
                 }
-                diagramValues.add(taskDuration);
+                diagramValues.add(committed);
                 i = j - 1;
             }
         }

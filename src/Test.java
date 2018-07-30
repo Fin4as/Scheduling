@@ -162,6 +162,7 @@ public class Test {
         //Empty the table of time of each resource 
         for (int r = 0; r < listResource.size(); r++) {
             listResource.get(r).setZero();
+            listResource.get(r).getDiagramValues().clear();
         }
 
         if (giveDetails == true) {

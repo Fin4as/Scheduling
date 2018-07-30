@@ -136,6 +136,7 @@ public class ExcelWriter {
             workbook.close();
 
         } catch (Exception e) {
+            System.out.println("CoucouSalma");
             System.out.println("Error :" + e);
         }
     }
