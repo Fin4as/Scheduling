@@ -98,9 +98,9 @@ public class Functions {
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
-        sold = Sequence.weightedInitialSequence(scur);
-        for (Patient e : sold) {
-            minb.add(e);
+//        sold = Sequence.weightedInitialSequence(sold);
+        for (Patient p : sold) {
+            minb.add(p);
         }
 
         try (Writer writerAnnealing = new BufferedWriter(new OutputStreamWriter(
@@ -316,8 +316,8 @@ public class Functions {
     public List<Patient> randomizedConstruction(List<Patient> list) {
         List<Patient> sequence = new ArrayList();
         List<Patient> patientList = new ArrayList();
-        for (Patient e : list) {
-            patientList.add(e);
+        for (Patient p : list) {
+            patientList.add(p);
         }
         Random rand = new Random();
         Patient randomElement;
@@ -506,6 +506,9 @@ public class Functions {
      * @return the sequence with the best fitness
      */
     public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int percentage) {
+        double startRuntime = System.nanoTime();
+        double currentRuntime = System.nanoTime();
+        double totalRuntime;
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
@@ -514,7 +517,7 @@ public class Functions {
         for (Patient p : scur) {
             bestPosition.add(p);
         }
-
+        double checkNewValue = fO(bestPosition, false);
         //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
         List<Patient> bestPopulation2;
@@ -528,8 +531,14 @@ public class Functions {
         population.add(scur);
 
         try (Writer writerGenetic = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementGenetic.txt", true)))) {
-            writerGenetic.append("Original position : " + fO(bestPosition, false) + "\r\n");
+                new FileOutputStream("improvementGenetic.txt", false)))) {
+            if (fO(bestPosition, false) == Double.MAX_VALUE) {
+                writerGenetic.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
+                writerGenetic.write(System.getProperty("line.separator"));
+            } else {
+                writerGenetic.write("Value of the initial sequence: " + fO(bestPosition, false) + System.getProperty("line.separator"));
+                writerGenetic.write(System.getProperty("line.separator"));
+            }
             while (population.size() < sizePopulation) {
                 for (int i = 0; i < scur.size(); i++) {
                     possiblePatient.add(scur.get(i));
@@ -577,12 +586,12 @@ public class Functions {
 
             /*Evolution of the population to find the sequence with the best fitness
         after a fixed number of iterations*/
-            int n = 0;
-            while (n < nbrGeneration) {
+            int n = 1;
+            while (n <= nbrGeneration) {
                 //Examination of the population to find the two fittest sequences
                 bestPopulation2 = new ArrayList();
-                for (Patient e : population.get(0)) {
-                    bestPopulation2.add(e);
+                for (Patient p : population.get(0)) {
+                    bestPopulation2.add(p);
                 }
                 for (int j = 0; j < sizePopulation; j++) {
                     List<Patient> read = new ArrayList();
@@ -599,14 +608,13 @@ public class Functions {
                             for (Patient p : read) {
                                 bestPopulation1.add(p);
                             }
-                            writerGenetic.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
+
                         }
                         bestPopulation2 = new ArrayList();
                         for (Patient p : read) {
                             bestPopulation2.add(p);
                         }
                     }
-
                 }
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
@@ -635,6 +643,15 @@ public class Functions {
                     }
                 }
             }
+            totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+            List<String> bestSolution = new ArrayList();
+            for (Patient p : bestPosition) {
+                bestSolution.add(p.getPatientID());
+            }
+            writerGenetic.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGenetic.write("Found in " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writerGenetic.write("This solution has been reached by generating " + (sizePopulation + (n - 1)) + " sequences (" + sizePopulation + " sequences from the initial pool + " + (n-1) + " children)");
+            writerGenetic.close();
         } catch (IOException e) {
             e.printStackTrace();
 

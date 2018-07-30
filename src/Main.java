@@ -80,7 +80,7 @@ public class Main {
         }
 
         long t_0G = System.nanoTime();
-        List<Patient> gene = f.genetic(50, 4, arrivalSequence, 20);
+        List<Patient> gene = f.genetic(150, 100, arrivalSequence, 20);
         long t_1G = System.nanoTime();
         if (f.fO(gene, false) != Double.MAX_VALUE) {
             System.out.println(gene + " " + f.fO(gene, false));
