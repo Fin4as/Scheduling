@@ -225,7 +225,9 @@ public class Test {
 //                               
                                 }
 
-                                totalWaitingTime += (start - endLastTask);
+                                if (k != 0) {
+                                    totalWaitingTime += (start - endLastTask);
+                                }
 
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
@@ -272,7 +274,10 @@ public class Test {
 
                                         k++;
                                     }
-                                    totalWaitingTime += (start - endLastTask);
+
+                                    if (k != 0) {
+                                        totalWaitingTime += (start - endLastTask);
+                                    }
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
@@ -377,7 +382,10 @@ public class Test {
 
                                 }
                                 k += tasksToSchedule.size() - 1;
-                                totalWaitingTime += (start - endLastTask);
+                                
+                                if (k != 0) {
+                                    totalWaitingTime += (start - endLastTask);
+                                }
                                 endLastTask = start + avTimeTotal;
 
                             } else {

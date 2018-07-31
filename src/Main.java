@@ -109,7 +109,7 @@ public class Main {
 
 //        for (int i = 0; i < 1000; i++) {
             try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
-                    new FileOutputStream("resultsGRASP_RCL.txt", true), "utf-8"))) {
+                    new FileOutputStream("resultsGRASP.txt", true), "utf-8"))) {
                 long t_0GR = System.nanoTime();
                 List<Patient> grasp = f.grasp(20, 45, arrivalSequence);
                 long t_1GR = System.nanoTime();
