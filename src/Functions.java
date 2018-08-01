@@ -411,16 +411,16 @@ public class Functions {
      * sequence
      * @return the sequence with the best fitness
      */
-    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int percentage) {
+    
+    
+     public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int startPercentage, int endPercentage, boolean reverse) {
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
-        List<Patient> bestPosition = new ArrayList();
-//        scur = Sequence.weightedInitialSequence(scur);
+        List<Patient> bestPositionImprovement = new ArrayList();
         for (Patient p : scur) {
-            bestPosition.add(p);
+            bestPositionImprovement.add(p);
         }
-
         //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
         List<Patient> bestPopulation2;
@@ -430,70 +430,60 @@ public class Functions {
         List<Patient> randomPatients;
         List<Patient> possiblePatient = new ArrayList();
         Patient randomPatient;
-        int iteratorCheck;
         population.add(scur);
+
 
         try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGenetic.txt", true)))) {
-            writer4.append("Original position : " + fO(bestPosition, false) + "\r\n");
+            writer4.append("Original position : " + fO(bestPositionImprovement, false) + "\r\n");
             while (population.size() < sizePopulation) {
                 for (int i = 0; i < scur.size(); i++) {
                     possiblePatient.add(scur.get(i));
                 }
                 randomPatients = new ArrayList();
-                iteratorCheck = 0;
                 while (randomPatients.size() < scur.size()) {
                     randomPatient = possiblePatient.get(rd.nextInt(possiblePatient.size()));
                     randomPatients.add(randomPatient);
                     possiblePatient.remove(randomPatient);
 
                 }
-                while (iteratorCheck < population.size()) {
-                    if (population.contains(randomPatients)) {
-                        break;
-                    } else {
-                        iteratorCheck++;
-                    }
-                    if (iteratorCheck == population.size()) {
-                        population.add(randomPatients);
-                    }
+                if (!population.contains(randomPatients)) {
+                    population.add(randomPatients);
                 }
             }
 
-            //Comparison of fitness of the two first sequences of the population to set -the first two parents
-            if (fO(population.get(0), false) < fO(population.get(1), false)) {
-                bestPopulation1 = new ArrayList();
-                for (Patient p : population.get(0)) {
-                    bestPopulation1.add(p);
-                }
-                bestPopulation2 = new ArrayList();
-                for (Patient p : population.get(1)) {
-                    bestPopulation2.add(p);
-                }
-            } else {
-                bestPopulation1 = new ArrayList();
-                for (Patient p : population.get(1)) {
-                    bestPopulation1.add(p);
-                }
-                bestPopulation2 = new ArrayList();
-                for (Patient p : population.get(0)) {
-                    bestPopulation2.add(p);
-                }
-            }
 
             /*Evolution of the population to find the sequence with the best fitness
         after a fixed number of iterations*/
             int n = 0;
             while (n < nbrGeneration) {
-                //Examination of the population to find the two fittest sequences
-                bestPopulation2 = new ArrayList();
-                for (Patient e : population.get(0)) {
-                    bestPopulation2.add(e);
+                
+                //Comparison of fitness of the two first sequences of the population to set -the first two parents
+                if (fO(population.get(0), false) < fO(population.get(1), false)) {
+                    bestPopulation1 = new ArrayList();
+                    for (Patient p : population.get(0)) {
+                        bestPopulation1.add(p);
+                    }
+                    bestPopulation2 = new ArrayList();
+                    for (Patient p : population.get(1)) {
+                        bestPopulation2.add(p);
+                    }
+                } else {
+                    bestPopulation1 = new ArrayList();
+                    for (Patient p : population.get(1)) {
+                        bestPopulation1.add(p);
+                    }
+                    bestPopulation2 = new ArrayList();
+                    for (Patient p : population.get(0)) {
+                        bestPopulation2.add(p);
+                    }
                 }
+
+                //Examination of the population to find the two fittest sequences
                 for (int j = 0; j < sizePopulation; j++) {
                     List<Patient> read = new ArrayList();
-                    for (Patient l : population.get(j)) {
-                        read.add(l);
+                    for (Patient p : population.get(j)) {
+                        read.add(p);
                     }
                     if (fO(read, false) < fO(bestPopulation2, false)) {
                         if (fO(read, false) < fO(bestPopulation1, false)) {
@@ -505,21 +495,28 @@ public class Functions {
                             for (Patient p : read) {
                                 bestPopulation1.add(p);
                             }
-                            writer4.append("Improved : " + fO(bestPopulation1, false) + "\r\n");
-                        }
-                        bestPopulation2 = new ArrayList();
-                        for (Patient p : read) {
-                            bestPopulation2.add(p);
+                        } else if (fO(read, false) != fO(bestPopulation1, false)) {
+                            bestPopulation2 = new ArrayList();
+                            for (Patient p : read) {
+                                bestPopulation2.add(p);
+                            }
                         }
                     }
-
                 }
+
+                if (fO(bestPopulation1, false) < fO(bestPositionImprovement, false)) {
+                    bestPositionImprovement = new ArrayList();
+                    for (Patient p : bestPopulation1) {
+                        bestPositionImprovement.add(p);
+                    }
+                }
+
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
-                for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)) {
+                for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, startPercentage, endPercentage, reverse)) {
                     child.add(p);
                 }
-//                //This offspring is added in the population 
+                //This offspring is added in the population 
                 population.add(child);
                 //The list fit parent in taken out of the population 
                 population.remove(population.indexOf(bestPopulation2));
@@ -527,24 +524,10 @@ public class Functions {
                 //A Generation pass
                 n++;
             }
-
-            //Find the best sequence at the end of the evolution
-            bestPosition = new ArrayList();
-            for (Patient p : population.get(0)) {
-                bestPosition.add(p);
-            }
-            for (int m = 1; m < sizePopulation; m++) {
-                if (fO(population.get(m), false) < fO(bestPosition, false)) {
-                    bestPosition = new ArrayList();
-                    for (Patient p : population.get(m)) {
-                        bestPosition.add(p);
-                    }
-                }
-            }
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        return bestPosition;
+        return bestPositionImprovement;
     }
 }

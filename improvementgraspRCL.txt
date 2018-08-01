@@ -8297,3 +8297,12 @@ Improved : 879.375
 >>>>>>> ExcelWriterResource
 Original position : 1.7976931348623157E308
 Improved : 248.33333333333331
+Original position : 588.9166666666666
+Improved : 583.9166666666666
+Improved : 582.25
+Improved : 580.5833333333333
+Improved : 578.9166666666666
+Original position : 588.9166666666666
+Improved : 578.9166666666666
+Original position : 588.9166666666666
+Improved : 578.9166666666666
