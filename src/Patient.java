@@ -16,19 +16,16 @@ public class Patient {
     private String patientID;
     private String schedule[];
     private String processID;
-    private int arrivalTime;
-    private int ageInformation;
     private double cancellationLikelihood;
     private ArrayList<Integer> diagramValues;
     private ArrayList<String> diagramResourceIdUsed;
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
     //Quentin I trust you on this one ;)
 
-    public Patient(String id, String processID, int arrivalTime, int ageInformation) {
+    public Patient(String id, String processID, int ageInformation) {
         this.patientID = id;
         schedule = new String[800];
         this.processID = processID;
-        this.ageInformation = ageInformation;
         if (ageInformation <= 7 || ageInformation > 112) {
             cancellationLikelihood = 1;
         } else if (ageInformation > 7 && ageInformation <= 15) {
@@ -40,7 +37,6 @@ public class Patient {
         } else {
             throw new IllegalArgumentException("Cancellation likelihood could not be calculated");
         }
-        this.arrivalTime = arrivalTime;
         diagramValues = new ArrayList<>();
         diagramResourceIdUsed = new ArrayList<>();
     }
@@ -66,7 +62,7 @@ public class Patient {
     }
 
     public int getNextAvailableTime() {
-        int time = arrivalTime;
+        int time = 1;
         if (!isEmptyStringArray(schedule)) {
             int i = schedule.length - 1;
             boolean found = false;

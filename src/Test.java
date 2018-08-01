@@ -215,12 +215,14 @@ public class Test {
                                 res.setTime(start, t.getAvTime(), t.getTaskID());
 
                                 pat.setSchedule(start, t.getAvTime(), t.getTaskID());
-                                
+
 //                                pat.addDiagramValues(start - endLastTask); //add the waiting time first
 //                                pat.addDiagramValues(t.getAvTime()); // then add the duration
 //                                pat.addDiagramResourceUsed(res.getResourceID());
 
-                                totalWaitingTime += (start - endLastTask);
+                                if (k != 0) {
+                                    totalWaitingTime += (start - endLastTask);
+                                }
 
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
@@ -242,8 +244,8 @@ public class Test {
                             }
 
                         } else {
-                                throw new IllegalArgumentException("Not enough ressources to create a full schedule");
-                            }
+                            throw new IllegalArgumentException("Not enough ressources to create a full schedule");
+                        }
 
                     }
                 } else {
@@ -308,7 +310,9 @@ public class Test {
 
                                 }
                                 k += tasksToSchedule.size() - 1;
-                                totalWaitingTime += (start - endLastTask);
+                                if (k != 0) { 
+                                    totalWaitingTime += (start - endLastTask);
+                                }
                                 endLastTask = start + avTimeTotal;
 
                             } else {
@@ -316,7 +320,7 @@ public class Test {
                             }
 
                         } else {
-                                throw new IllegalArgumentException("Not enough ressources to create a full schedule");
+                            throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                         }
 
                     }
@@ -324,7 +328,6 @@ public class Test {
                 }
 
             }
-
 
 //            for (int q = 0; q < listResource.size(); q++) {
 //                listResource.get(q).timeToDiagramValues();

@@ -1,5 +1,11 @@
-Value of the initial sequence: The initial sequence is not schedulable
+Value of the initial sequence: 832.7916666666666
 
-Best solution proposed by the algorithm : [P2, P1, P6, P4, P9, P0, P8, P3, P7, P5] Objective function value associed : 887.25
-Found in 3.001412908 s.
-This solution has been reached by generating 250 sequences (150 sequences from the initial pool + 100 children)
+==> New update of the optimum : 776.125
+Minimum number of generated sequences to get this optimum : 25 sequences (25 sequences from the initial pool + 0 children) Current runtime : 0.07776568 s.
+
+==> New update of the optimum : 774.7916666666666
+Minimum number of generated sequences to get this optimum : 33 sequences (25 sequences from the initial pool + 8 children) Current runtime : 0.229832455 s.
+
+Best solution proposed by the algorithm : [P0, P6, P4, P3, P2, P9, P5, P1, P7, P8] Objective function value associed : 774.7916666666666
+Found in 4.993492606 s.
+This solution has been reached by generating 525 sequences (25 sequences from the initial pool + 500 children)

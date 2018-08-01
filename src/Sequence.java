@@ -5,8 +5,8 @@
  */
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  *
@@ -52,7 +52,7 @@ public abstract class Sequence {
         return sequence;
     }
 
-    public static List<Patient> makeACrossingOver(List<Patient> mother, List<Patient> father, int percentage) {
+    public static List<Patient> makeACrossingOver(List<Patient> mother, List<Patient> father, int startPercentage, int endPercentage, boolean reverse) {
 
         if (mother == null || father == null) {
             throw new NullPointerException("Error: At least one of the parent has not been set");
@@ -62,42 +62,82 @@ public abstract class Sequence {
             throw new IllegalArgumentException("Error: Sequences of the parents differ in length");
         }
 
-        if (percentage < 0 || percentage > 100) {
-            throw new IllegalArgumentException("Error: The percentage of the mother sequence kept must be between 0 and 100");
+        if (startPercentage < 0 || endPercentage > 100) {
+            throw new IllegalArgumentException("Error: The percentage bounds of the father sequence kept must be between 0 and 100");
+        }
+        
+        if (startPercentage > endPercentage){
+            throw new IllegalArgumentException("Error: startPercentage must be lower than endPercentage");
         }
 
         List<Patient> child = new ArrayList();
         List<Patient> missing = new ArrayList();
         List<Integer> replica = new ArrayList();
-        int position = mother.size() * percentage / 100;
-        Random rd = new Random();
+        int start = father.size() * startPercentage / 100;
+        int end = father.size() * endPercentage / 100;
 
-        for (int i = 0; i < position; i++) {
+        for (int i = 0; i < start; i++) {
             child.add(mother.get(i));
         }
-        for (int i = position; i < father.size(); i++) {
+        for (int i = start; i < end; i++) {
             child.add(father.get(i));
         }
+        for (int i = end; i < mother.size(); i++) {
+            child.add(mother.get(i));
+        }
+
         for (Patient gene : mother) {
-            if (child.contains(gene)) {
-                int occur = 0;
-                for (int index = 0; index < child.size(); index++) {
-                    if (child.get(index).equals(gene)) {
-                        occur++;
-                        if (occur > 1) {
-                            replica.add(index);
-                        }
-                    }
-                }
-            } else {
+            if (!child.contains(gene)) {
                 missing.add(gene);
             }
         }
-        for (int index : replica) {
-            Patient mutation = missing.get(rd.nextInt(missing.size()));
-            child.set(index, mutation);
+
+        // Single point crossing over
+        if (end == father.size()) {
+            for (int index = start; index < child.size(); index++) {
+                int occur = 0;
+                for (int i = 0; i < child.size(); i++) {
+                    Patient gene = child.get(index);
+                    if (child.get(i).equals(gene)) {
+                        occur++;
+                    }
+                }
+                if (occur > 1) {
+                    replica.add(index);
+                }
+            }
+        } 
+        
+        // Two point crossing over
+        else {
+            for (int indexNewGene = start; indexNewGene < end; indexNewGene++) {
+                int occur = 0;
+                int indexReplica = -1;
+                for (int i = 0; i < child.size(); i++) {
+                    Patient newGene = child.get(indexNewGene);
+                    if (child.get(i).equals(newGene)) {
+                        occur++;
+                        if (!(i >= start && i < end)) {
+                            indexReplica = i;
+                        }
+                    }
+                }
+                if (occur > 1) {
+                    replica.add(indexReplica);
+                }
+            }
+        }
+
+        for (int indexReplica : replica) {
+            Patient mutation = missing.get(0);
+            child.set(indexReplica, mutation);
             missing.remove(missing.indexOf(mutation));
         }
+        
+        if(reverse == true){
+            Collections.reverse(child);
+        }
+        
         return child;
     }
 
@@ -126,7 +166,7 @@ public abstract class Sequence {
         for (Patient p : sortedCancellationLikelihoods.subList((int) Math.ceil(n / 2.0), n)) {
             highCancellationLikelihoods.add(p);
         }
-        
+
         output.add(lowCancellationLikelihoods);
         output.add(highCancellationLikelihoods);
 
@@ -140,7 +180,7 @@ public abstract class Sequence {
         List<List> sortedCancellationLikelihoods = Sequence.sortByCancellationLikelihood(arrivalSequence);
         List<Patient> lowCancellationLikelihoods = sortedCancellationLikelihoods.get(0);
         List<Patient> highCancellationLikelihoods = sortedCancellationLikelihoods.get(1);
-        
+
         for (int i = 0; i < n / 2; i++) {
             weightedInitialSequence.add(lowCancellationLikelihoods.get(i));
             weightedInitialSequence.add(highCancellationLikelihoods.get(i));

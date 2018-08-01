@@ -39,7 +39,6 @@ public class Schedule {
 //            List<Resource> allResources = new ArrayList<Resource>();
 //            List<Task> listTask = new ArrayList();
             this.getTaskData(pro);
-            List<Task> listTask = pro.getListTask();
             this.getPrevTask(pro.getListTask(), processID);
             this.getNextTask(pro.getListTask(), processID);
             this.getSkillData(pro.getListTask(), processID);

@@ -98,24 +98,34 @@ public class Functions {
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
-//        sold = Sequence.weightedInitialSequence(sold);
+//        List<Patient> restrictedSold = Sequence.weightedInitialSequence(sold);
+//        sold = new ArrayList();
+//        for (Patient p : restrictedSold) {
+//            sold.add(p);
+//        }
         for (Patient p : sold) {
             minb.add(p);
         }
 
-        try (Writer writerAnnealing = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementAnnealing.txt", false)))) {
-            if (fO(sold, false) == Double.MAX_VALUE) {
-                writerAnnealing.write("Initial value : The initial sequence is not schedulable" + System.getProperty("line.separator"));
-                writerAnnealing.write(System.getProperty("line.separator"));
-                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                writerAnnealing.write(System.getProperty("line.separator"));
-            } else {
-                writerAnnealing.write("Initial value : " + fO(sold, false) + System.getProperty("line.separator"));
-                writerAnnealing.write(System.getProperty("line.separator"));
-                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                writerAnnealing.write(System.getProperty("line.separator"));
-            }
+        try (/*Writer writerAnnealing = new BufferedWriter(new OutputStreamWriter(
+                new FileOutputStream("improvementAnnealing.txt", false)));*/
+                Writer writerAnnealingStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatTime.txt", false)));
+                Writer writerAnnealingStatSequence = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatSequence.txt", false)));
+                Writer writerAnnealingStatValue = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatValue.txt", false)))) {
+//            if (fO(sold, false) == Double.MAX_VALUE) {
+//                writerAnnealing.write("Initial value : The initial sequence is not schedulable" + System.getProperty("line.separator"));
+//                writerAnnealing.write(System.getProperty("line.separator"));
+//                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+//                writerAnnealing.write(System.getProperty("line.separator"));
+//            } else {
+//                writerAnnealing.write("Initial value : " + fO(sold, false) + System.getProperty("line.separator"));
+//                writerAnnealing.write(System.getProperty("line.separator"));
+//                writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+//                writerAnnealing.write(System.getProperty("line.separator"));
+//            }
 
             while (temperature >= tempmin) {
 
@@ -140,7 +150,7 @@ public class Functions {
                             }
                             numiterBest = itermax * numtemp + numiter;
                             currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
-                            writerAnnealing.write("Improved optimum found in the neighbourhood: " + fO(minb, false) + " Current total of generated sequences to get this optimum: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+//                            writerAnnealing.write("Improved optimum found in the neighbourhood: " + fO(minb, false) + " Current total of generated sequences to get this optimum: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                         }
 
                     } else if (dif < pow(10, 9)) {
@@ -160,10 +170,10 @@ public class Functions {
                     numiter = 0;
                     numtemp++;
                     if (temperature > tempmin) {
-                        writerAnnealing.write(System.getProperty("line.separator"));
-                        writerAnnealing.write(System.getProperty("line.separator"));
-                        writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
-                        writerAnnealing.write(System.getProperty("line.separator"));
+//                        writerAnnealing.write(System.getProperty("line.separator"));
+//                        writerAnnealing.write(System.getProperty("line.separator"));
+//                        writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
+//                        writerAnnealing.write(System.getProperty("line.separator"));
                     }
                 }
                 numiter++;
@@ -173,11 +183,18 @@ public class Functions {
             for (Patient p : minb) {
                 bestSolution.add(p.getPatientID());
             }
-            writerAnnealing.write(System.getProperty("line.separator"));
-            writerAnnealing.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(minb, false) + System.getProperty("line.separator"));
-            writerAnnealing.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerAnnealing.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
-            writerAnnealing.close();
+//            writerAnnealing.write(System.getProperty("line.separator"));
+//            writerAnnealing.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(minb, false) + System.getProperty("line.separator"));
+//            writerAnnealing.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+//            writerAnnealing.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
+//            writerAnnealing.close();
+
+            writerAnnealingStatTime.write(currentRuntime + System.getProperty("line.separator"));
+            writerAnnealingStatTime.close();
+            writerAnnealingStatSequence.write(numiterBest + System.getProperty("line.separator"));
+            writerAnnealingStatSequence.close();
+            writerAnnealingStatValue.write(fO(minb, false) + System.getProperty("line.separator"));
+            writerAnnealingStatValue.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -193,14 +210,24 @@ public class Functions {
         int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
-//        scur = Sequence.weightedInitialSequence(scur);
+        List<Patient> restrictedScur = Sequence.weightedInitialSequence(scur);
+        scur = new ArrayList();
+        for (Patient p : restrictedScur) {
+            scur.add(p);
+        }
         for (Patient p : scur) {
             bestPosition.add(p);
         }
         int i = 0;
         totaliterGrasp = 0;
         try (Writer writerGrasp = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementGrasp.txt", false)))) {
+                new FileOutputStream("improvementGrasp.txt", false)));
+                Writer writerGraspStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatTime.txt", false)));
+                Writer writerGraspStatSequence = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatSequence.txt", false)));
+                Writer writerGraspStatValue = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatValue.txt", false)))) {
             if (fO(bestPosition, false) == Double.MAX_VALUE) {
                 writerGrasp.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerGrasp.write(System.getProperty("line.separator"));
@@ -258,6 +285,14 @@ public class Functions {
             writerGrasp.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
             writerGrasp.write("This solution has been reached by generating " + totaliterBestGrasp + " sequences on a total generated sequences of " + totaliterGrasp + " sequences.");
             writerGrasp.close();
+
+            writerGraspStatTime.write(currentRuntime1 + System.getProperty("line.separator"));
+            writerGraspStatTime.close();
+            writerGraspStatSequence.write(totaliterBestGrasp + System.getProperty("line.separator"));
+            writerGraspStatSequence.close();
+            writerGraspStatValue.write(fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGraspStatValue.close();
+
         } catch (IOException e) {
             e.printStackTrace();
 
@@ -346,7 +381,11 @@ public class Functions {
         int totaliterBestGrasp = 0;
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
-//        scur = Sequence.weightedInitialSequence(scur);
+        List<Patient> restrictedScur = Sequence.weightedInitialSequence(scur);
+        scur = new ArrayList();
+        for (Patient p : restrictedScur) {
+            scur.add(p);
+        }
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -505,19 +544,22 @@ public class Functions {
      * sequence
      * @return the sequence with the best fitness
      */
-    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int percentage) {
+    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int startPercentage, int endPercentage, boolean reverse) {
         double startRuntime = System.nanoTime();
         double currentRuntime = System.nanoTime();
         double totalRuntime;
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
-        List<Patient> bestPosition = new ArrayList();
-//        scur = Sequence.weightedInitialSequence(scur);
+        List<Patient> bestPositionImprovement = new ArrayList();
+//        List<Patient> restrictedScur = Sequence.weightedInitialSequence(scur);
+//        scur = new ArrayList();
+//        for (Patient p : restrictedScur) {
+//            scur.add(p);
+//        }
         for (Patient p : scur) {
-            bestPosition.add(p);
+            bestPositionImprovement.add(p);
         }
-        double checkNewValue = fO(bestPosition, false);
         //Initialization of the two lists used for the parents
         List<Patient> bestPopulation1;
         List<Patient> bestPopulation2;
@@ -527,16 +569,15 @@ public class Functions {
         List<Patient> randomPatients;
         List<Patient> possiblePatient = new ArrayList();
         Patient randomPatient;
-        int iteratorCheck;
         population.add(scur);
 
         try (Writer writerGenetic = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGenetic.txt", false)))) {
-            if (fO(bestPosition, false) == Double.MAX_VALUE) {
+            if (fO(bestPositionImprovement, false) == Double.MAX_VALUE) {
                 writerGenetic.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerGenetic.write(System.getProperty("line.separator"));
             } else {
-                writerGenetic.write("Value of the initial sequence: " + fO(bestPosition, false) + System.getProperty("line.separator"));
+                writerGenetic.write("Value of the initial sequence: " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
                 writerGenetic.write(System.getProperty("line.separator"));
             }
             while (population.size() < sizePopulation) {
@@ -544,59 +585,49 @@ public class Functions {
                     possiblePatient.add(scur.get(i));
                 }
                 randomPatients = new ArrayList();
-                iteratorCheck = 0;
                 while (randomPatients.size() < scur.size()) {
                     randomPatient = possiblePatient.get(rd.nextInt(possiblePatient.size()));
                     randomPatients.add(randomPatient);
                     possiblePatient.remove(randomPatient);
 
                 }
-                while (iteratorCheck < population.size()) {
-                    if (population.contains(randomPatients)) {
-                        break;
-                    } else {
-                        iteratorCheck++;
-                    }
-                    if (iteratorCheck == population.size()) {
-                        population.add(randomPatients);
-                    }
+                if (!population.contains(randomPatients)) {
+                    population.add(randomPatients);
                 }
             }
 
-            //Comparison of fitness of the two first sequences of the population to set -the first two parents
-            if (fO(population.get(0), false) < fO(population.get(1), false)) {
-                bestPopulation1 = new ArrayList();
-                for (Patient p : population.get(0)) {
-                    bestPopulation1.add(p);
-                }
-                bestPopulation2 = new ArrayList();
-                for (Patient p : population.get(1)) {
-                    bestPopulation2.add(p);
-                }
-            } else {
-                bestPopulation1 = new ArrayList();
-                for (Patient p : population.get(1)) {
-                    bestPopulation1.add(p);
-                }
-                bestPopulation2 = new ArrayList();
-                for (Patient p : population.get(0)) {
-                    bestPopulation2.add(p);
-                }
-            }
 
             /*Evolution of the population to find the sequence with the best fitness
         after a fixed number of iterations*/
-            int n = 1;
-            while (n <= nbrGeneration) {
-                //Examination of the population to find the two fittest sequences
-                bestPopulation2 = new ArrayList();
-                for (Patient p : population.get(0)) {
-                    bestPopulation2.add(p);
+            int n = 0;
+            while (n < nbrGeneration) {
+
+                //Comparison of fitness of the two first sequences of the population to set -the first two parents
+                if (fO(population.get(0), false) < fO(population.get(1), false)) {
+                    bestPopulation1 = new ArrayList();
+                    for (Patient p : population.get(0)) {
+                        bestPopulation1.add(p);
+                    }
+                    bestPopulation2 = new ArrayList();
+                    for (Patient p : population.get(1)) {
+                        bestPopulation2.add(p);
+                    }
+                } else {
+                    bestPopulation1 = new ArrayList();
+                    for (Patient p : population.get(1)) {
+                        bestPopulation1.add(p);
+                    }
+                    bestPopulation2 = new ArrayList();
+                    for (Patient p : population.get(0)) {
+                        bestPopulation2.add(p);
+                    }
                 }
+
+                //Examination of the population to find the two fittest sequences
                 for (int j = 0; j < sizePopulation; j++) {
                     List<Patient> read = new ArrayList();
-                    for (Patient l : population.get(j)) {
-                        read.add(l);
+                    for (Patient p : population.get(j)) {
+                        read.add(p);
                     }
                     if (fO(read, false) < fO(bestPopulation2, false)) {
                         if (fO(read, false) < fO(bestPopulation1, false)) {
@@ -608,20 +639,32 @@ public class Functions {
                             for (Patient p : read) {
                                 bestPopulation1.add(p);
                             }
-
-                        }
-                        bestPopulation2 = new ArrayList();
-                        for (Patient p : read) {
-                            bestPopulation2.add(p);
+                        } else if (fO(read, false) != fO(bestPopulation1, false)) {
+                            bestPopulation2 = new ArrayList();
+                            for (Patient p : read) {
+                                bestPopulation2.add(p);
+                            }
                         }
                     }
                 }
+
+                if (fO(bestPopulation1, false) < fO(bestPositionImprovement, false)) {
+                    bestPositionImprovement = new ArrayList();
+                    for (Patient p : bestPopulation1) {
+                        bestPositionImprovement.add(p);
+                    }
+                    currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
+                    writerGenetic.write("==> New update of the optimum : " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
+                    writerGenetic.write("Minimum number of generated sequences to get this optimum : " + (sizePopulation + n) + " sequences (" + sizePopulation + " sequences from the initial pool + " + n + " children)" + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGenetic.write(System.getProperty("line.separator"));
+                }
+
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
                 List<Patient> child = new ArrayList();
-                for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, percentage)) {
+                for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, startPercentage, endPercentage, reverse)) {
                     child.add(p);
                 }
-//                //This offspring is added in the population 
+                //This offspring is added in the population 
                 population.add(child);
                 //The list fit parent in taken out of the population 
                 population.remove(population.indexOf(bestPopulation2));
@@ -630,32 +673,20 @@ public class Functions {
                 n++;
             }
 
-            //Find the best sequence at the end of the evolution
-            bestPosition = new ArrayList();
-            for (Patient p : population.get(0)) {
-                bestPosition.add(p);
-            }
-            for (int m = 1; m < sizePopulation; m++) {
-                if (fO(population.get(m), false) < fO(bestPosition, false)) {
-                    bestPosition = new ArrayList();
-                    for (Patient p : population.get(m)) {
-                        bestPosition.add(p);
-                    }
-                }
-            }
             totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
             List<String> bestSolution = new ArrayList();
-            for (Patient p : bestPosition) {
+            for (Patient p : bestPositionImprovement) {
                 bestSolution.add(p.getPatientID());
             }
-            writerGenetic.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGenetic.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
             writerGenetic.write("Found in " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerGenetic.write("This solution has been reached by generating " + (sizePopulation + (n - 1)) + " sequences (" + sizePopulation + " sequences from the initial pool + " + (n-1) + " children)");
+            writerGenetic.write("This solution has been reached by generating " + (sizePopulation + n) + " sequences (" + sizePopulation + " sequences from the initial pool + " + n + " children)");
             writerGenetic.close();
+
         } catch (IOException e) {
             e.printStackTrace();
 
         }
-        return bestPosition;
+        return bestPositionImprovement;
     }
 }
