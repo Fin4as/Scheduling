@@ -35,6 +35,18 @@ public class Main {
         Patient p7 = new Patient("P7", "PR1", 24);
         Patient p8 = new Patient("P8", "PR1", 93);
         Patient p9 = new Patient("P9", "PR1", 72);
+        Patient p10 = new Patient("P9", "PR1", 72);
+        Patient p11 = new Patient("P9", "PR1", 72);
+        Patient p12 = new Patient("P9", "PR1", 72);
+        Patient p13 = new Patient("P9", "PR1", 72);
+        Patient p14 = new Patient("P9", "PR1", 72);
+        Patient p15 = new Patient("P9", "PR1", 72);
+        Patient p16 = new Patient("P9", "PR1", 72);
+        Patient p17 = new Patient("P9", "PR1", 72);
+        Patient p18 = new Patient("P9", "PR1", 72);
+        Patient p19 = new Patient("P9", "PR1", 72);
+       
+        
         arrivalSequence.add(p6);
         arrivalSequence.add(p3);
         arrivalSequence.add(p9);
@@ -45,6 +57,16 @@ public class Main {
         arrivalSequence.add(p2);
         arrivalSequence.add(p1);
         arrivalSequence.add(p8);
+        arrivalSequence.add(p10);
+        arrivalSequence.add(p11);
+        arrivalSequence.add(p12);
+        arrivalSequence.add(p13);
+        arrivalSequence.add(p14);
+        arrivalSequence.add(p15);
+        arrivalSequence.add(p17);
+        arrivalSequence.add(p16);
+        arrivalSequence.add(p18);
+        arrivalSequence.add(p19);
 
         Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);

@@ -6,6 +6,8 @@ import java.io.OutputStreamWriter;
 import java.io.Writer;
 import static java.lang.Math.exp;
 import static java.lang.Math.pow;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -28,16 +30,29 @@ public class Functions {
     public Functions(Schedule s) {
         this.s = s;
     }
+    
+    public static double round(double value, int places) {
+    if (places < 0) throw new IllegalArgumentException();
+
+    BigDecimal bd = new BigDecimal(value);
+    bd = bd.setScale(places, RoundingMode.HALF_UP);
+    return bd.doubleValue();
+}
 
     public double wait(int w) {
         double result = 0.0;
-        result = ((double) 1 / 6) * w;
+        if (w<60){
+            result=(1/15)*w;
+        }
+        else {
+            result = (-40+w)/5;
+        }
         return result;
     }
 
     public double late(int l) {
         double result = 0.0;
-        result = 0.125 * l;
+        result =round(Math.exp(l/(240/Math.log(30))),4);
         return result;
     }
 
