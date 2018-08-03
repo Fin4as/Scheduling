@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,6 +19,7 @@ public class Task {
     private int avTime;
     private int stdDev;
     private int maxWait;
+    private Task parallelTask;
 
     private List<String> prevTaskID;
     private List<String> nextTaskID;
@@ -35,7 +34,16 @@ public class Task {
         this.maxWait = maxWait;
         nextTaskID = new ArrayList();
         prevTaskID = new ArrayList();
+        parallelTask = null;
 
+    }
+    
+       public Task getParallelTask() { 
+        return parallelTask;
+    }
+
+    public void setParallelTask(Task pt) { 
+        parallelTask = pt;
     }
     
     public String getProcessID(){

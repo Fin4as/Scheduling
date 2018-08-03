@@ -39,6 +39,7 @@ public class Schedule {
 //            List<Resource> allResources = new ArrayList<Resource>();
 //            List<Task> listTask = new ArrayList();
             this.getTaskData(pro);
+            List<Task> listTask = pro.getListTask();
             this.getPrevTask(pro.getListTask(), processID);
             this.getNextTask(pro.getListTask(), processID);
             this.getSkillData(pro.getListTask(), processID);
@@ -77,7 +78,7 @@ public class Schedule {
         try {
 
             Class.forName(driver);
-            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_test", "152416_sir", "projetsir2018");
+            conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_copy_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
             System.out.println("You are connected ! ");
@@ -252,6 +253,10 @@ public class Schedule {
                 for (int i = 0; i < listTask.size(); i++) {
                     if (listTask.get(i).getTaskID().equals(taskID)) {
                         listTask.get(i).addNextTask(nextTask);
+                    }
+                    if (listTask.get(i).getNextTaskIDList().size() > 1) { 
+                        listTask.get(i + 1).setParallelTask(listTask.get(i + 2)); 
+                        listTask.get(i + 2).setParallelTask(listTask.get(i + 1)); 
                     }
                 }
             }
