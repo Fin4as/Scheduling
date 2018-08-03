@@ -35,6 +35,18 @@ public class Main {
         Patient p7 = new Patient("P7", "PR1", 24);
         Patient p8 = new Patient("P8", "PR1", 93);
         Patient p9 = new Patient("P9", "PR1", 72);
+        Patient p10 = new Patient("P9", "PR1", 45);
+        Patient p11 = new Patient("P9", "PR1", 159);
+        Patient p12 = new Patient("P9", "PR1", 26);
+        Patient p13 = new Patient("P9", "PR1", 65);
+        Patient p14 = new Patient("P9", "PR1", 55);
+        Patient p15 = new Patient("P9", "PR1", 2);
+        Patient p16 = new Patient("P9", "PR1", 159);
+        Patient p17 = new Patient("P9", "PR1", 23);
+        Patient p18 = new Patient("P9", "PR1",52);
+        Patient p19 = new Patient("P9", "PR1", 1);
+       
+        
         arrivalSequence.add(p6);
         arrivalSequence.add(p3);
         arrivalSequence.add(p9);
@@ -45,6 +57,16 @@ public class Main {
         arrivalSequence.add(p2);
         arrivalSequence.add(p1);
         arrivalSequence.add(p8);
+        arrivalSequence.add(p10);
+        arrivalSequence.add(p11);
+        arrivalSequence.add(p12);
+        arrivalSequence.add(p13);
+        arrivalSequence.add(p14);
+        arrivalSequence.add(p15);
+        arrivalSequence.add(p17);
+        arrivalSequence.add(p16);
+        arrivalSequence.add(p18);
+        arrivalSequence.add(p19);
 
         Schedule s = new Schedule(arrivalSequence);
         Functions f = new Functions(s);
@@ -53,7 +75,7 @@ public class Main {
         try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("resultsAnnealing.txt", true), "utf-8"))) {
             long t_0A = System.nanoTime();
-            List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
+            List<Patient> best = f.annealingMin(200,120, 100, arrivalSequence);
             long t_1A = System.nanoTime();
             if (f.fO(best, false) != Double.MAX_VALUE) {
                 System.out.println(best + " " + f.fO(best, false));
@@ -72,7 +94,7 @@ public class Main {
         try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("resultsGenetic.txt", true), "utf-8"))) {
             long t_0G = System.nanoTime();
-            List<Patient> gene = f.genetic(25, 300, arrivalSequence, 20, 40, true);
+            List<Patient> gene = f.genetic(25, 30, arrivalSequence, 20, 40, true);
             long t_1G = System.nanoTime();
             if (f.fO(gene, false) != Double.MAX_VALUE) {
                 System.out.println(gene + " " + f.fO(gene, false));

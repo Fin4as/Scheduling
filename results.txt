@@ -1,1 +1,0 @@
-[Patient@6c589e, Patient@1d0a921, Patient@6cdf90, Patient@19f7e29, Patient@185612c, Patient@17050dc, Patient@1c29bfd, Patient@1aec35a, Patient@1424e82, Patient@110406] 910.625 0.463640281 s.
