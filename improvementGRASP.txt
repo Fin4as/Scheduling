@@ -22,3 +22,121 @@ Improvement : 1436.7795
 Improvement : 1416.7795
 Improvement : 1414.7795
 Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1398.7795
+Original position : 1448.3342
+Improvement : 1426.7795
+Improvement : 1422.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1416.7795
+Improvement : 1410.7795
+Improvement : 1406.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1418.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1408.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1412.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1410.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1412.7795
+Improvement : 1408.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1416.7795
+Improvement : 1410.7795
+Improvement : 1408.7795
+Improvement : 1400.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1410.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1426.7795
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1408.7795
+Improvement : 1406.7795
+Improvement : 1398.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1412.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1410.7795
+Improvement : 1406.7795
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 330.054
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 332.054
+Improvement : 330.054
+Improvement : 328.054
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 332.054
+Improvement : 330.054
+Original position : 1448.3342
+Improvement : 1406.7795
+Original position : 283.0622
+Improvement : 273.054
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1410.7795
+Improvement : 1402.7795
+Improvement : 1398.7795
+Original position : 1.7976931348623157E308
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1406.7795

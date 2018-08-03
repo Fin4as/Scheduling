@@ -20,3 +20,98 @@ Improved : 1418.7795
 Improved : 1416.7795
 Improved : 1412.7795
 Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1428.7795
+Improved : 1422.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1422.7795
+Improved : 1416.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1424.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1412.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1412.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1418.7795
+Improved : 1414.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1416.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1410.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1426.7795
+Improved : 1416.7795
+Improved : 1410.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1418.7795
+Improved : 1410.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1430.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 357.0622
+Improved : 334.054
+Improved : 332.054
+Original position : 357.0622
+Improved : 340.054
+Improved : 332.054
+Original position : 357.0622
+Improved : 340.054
+Improved : 332.054
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 283.0622
+Improved : 273.054
+Original position : 1448.3342
+Improved : 1422.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 1.7976931348623157E308
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1414.7795

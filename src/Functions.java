@@ -30,29 +30,30 @@ public class Functions {
     public Functions(Schedule s) {
         this.s = s;
     }
-    
+
     public static double round(double value, int places) {
-    if (places < 0) throw new IllegalArgumentException();
-
-    BigDecimal bd = new BigDecimal(value);
-    bd = bd.setScale(places, RoundingMode.HALF_UP);
-    return bd.doubleValue();
-}
-
-    public double wait(int w) {
-        double result = 0.0;
-        if (w<60){
-            result=(1/15)*w;
+        if (places < 0) {
+            throw new IllegalArgumentException();
         }
-        else {
-            result = (-40+w)/5;
+
+        BigDecimal bd = new BigDecimal(value);
+        bd = bd.setScale(places, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
+
+    public double waiting(int w) {
+        double result = 0.0;
+        if (w < 60) {
+            result = (1 / 15) * w;
+        } else {
+            result = (-40 + w) / 5;
         }
         return result;
     }
 
     public double late(int l) {
         double result = 0.0;
-        result =round(Math.exp(l/(240/Math.log(30))),4);
+        result = round(Math.exp(l / (240 / Math.log(30))), 4);
         return result;
     }
 
@@ -64,7 +65,7 @@ public class Functions {
 
             double result = t.calculateMakespan();
 
-            result += wait((t.getTotalWaitingTime()));
+            result += waiting(t.getTotalWaitingTime());
             result += late(t.getLateness());
 
 //        System.out.println(result);
@@ -82,9 +83,9 @@ public class Functions {
             if (giveDetails == true) {
                 for (int i = 0; i < sequence.size(); i++) {
                     System.out.print(sequence.get(i).getPatientID());
-                    for (String [] e : sequence.get(i).getParallelSchedules()) {
+                    for (String[] e : sequence.get(i).getParallelSchedules()) {
                         System.out.println(Arrays.toString(e));
-                       
+
                     }
                 }
                 System.out.println("");
@@ -95,10 +96,10 @@ public class Functions {
                 }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
-                for(int h =0; h <t.getListResource().size();h++){
+                for (int h = 0; h < t.getListResource().size(); h++) {
                     excelWriter.update(t.getListResource());
                 }
-                
+
             }
 
             return result;
@@ -426,9 +427,7 @@ public class Functions {
      * sequence
      * @return the sequence with the best fitness
      */
-    
-    
-     public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int startPercentage, int endPercentage, boolean reverse) {
+    public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int startPercentage, int endPercentage, boolean reverse) {
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
@@ -446,7 +445,6 @@ public class Functions {
         List<Patient> possiblePatient = new ArrayList();
         Patient randomPatient;
         population.add(scur);
-
 
         try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGenetic.txt", true)))) {
@@ -472,7 +470,7 @@ public class Functions {
         after a fixed number of iterations*/
             int n = 0;
             while (n < nbrGeneration) {
-                
+
                 //Comparison of fitness of the two first sequences of the population to set -the first two parents
                 if (fO(population.get(0), false) < fO(population.get(1), false)) {
                     bestPopulation1 = new ArrayList();
