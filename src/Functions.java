@@ -64,7 +64,7 @@ public class Functions {
 
             double result = t.calculateMakespan();
 
-            result += wait(t.getTotalWaitingTime());
+            result += wait((t.getTotalWaitingTime()));
             result += late(t.getLateness());
 
 //        System.out.println(result);
