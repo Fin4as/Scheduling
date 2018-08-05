@@ -207,18 +207,39 @@ public class Test {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
                 if (tasksToSchedule.size() == 0) {
-
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                        int start;
-                        Skill s = t.getSkill();
-                        int r = s.getFastestAvailable(time, t.getAvTime());
-                        if (r != -1) {
+                        int start = time;
+                        ArrayList<Resource> resourcesToUse = new ArrayList();
+                        for (int f = 0; f < t.getListSkill().size(); f++) {
+                            if (f == 0) {
+                                Skill s = t.getListSkill().get(f);
+                                int r = s.getFastestAvailable(time, t.getAvTime());
+                                if (r != -1) {
+                                    Resource res = s.getListResource().get(r);
+                                    start = res.getNextAvailableTime(time, t.getAvTime());
+                                    resourcesToUse.add(res);
+                                } else {
+                                    resourcesToUse.add(null);
+                                }
+                            } else {
+                                Skill s = t.getListSkill().get(f);
+                                int r = s.getStrictestAvailable(start, t.getAvTime());
+                                if (r != -1) {
+                                    Resource res = s.getListResource().get(r);
+                                    resourcesToUse.add(res);
+                                } else {
+                                    resourcesToUse.add(null);
+                                }
+                            }
+                        }
+                        if (!resourcesToUse.contains(null)) {
                             if (t.getParallelTask() == null) {
-                                Resource res = t.getSkill().getListResource().get(r);
-                                start = res.getNextAvailableTime(time, t.getAvTime());
+                                String displayResTask = "";
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-
-                                    res.setTime(start, t.getAvTime(), t.getTaskID());
+                                    for (int p = 0; p < resourcesToUse.size(); p++) {
+                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
+                                        displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                    }
                                     pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
                                     pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
                                     pat.addDiagramValues(0, t.getAvTime()); // then add the duration
@@ -242,23 +263,37 @@ public class Test {
                                     System.out.print("\t\t");
                                     System.out.print(start - endLastTask + "");
                                     System.out.print("\t\t");
-                                    System.out.println(res.getResourceID());
+                                    System.out.println(displayResTask);
                                 }
                                 endLastTask = start + t.getAvTime();
 
                             } else { //parallelism ****** start *********
 
                                 Task pT = t.getParallelTask();
-                                Skill sk = pT.getSkill();
-                                Resource res1 = t.getSkill().getListResource().get(r);
-                                start = res1.getNextAvailableTime(time, t.getAvTime());
-                                int re = sk.getStrictestAvailable(time, pT.getAvTime());
-                                if (re != -1) {
-                                    Resource res2 = pT.getSkill().getListResource().get(re);
-
+                                for (int m = 0; m < pT.getListSkill().size(); m++) {
+                                    Skill s = pT.getListSkill().get(m);
+                                    int re = s.getStrictestAvailable(start, t.getAvTime());
+                                    if (re != -1) {
+                                        Resource res = s.getListResource().get(re);
+                                        resourcesToUse.add(res);
+                                    } else {
+                                        resourcesToUse.add(null);
+                                    }
+                                }
+                                if (!resourcesToUse.contains(null)) {
+                                    String displayResTask = "";
+                                    String displayResParaTask = "";
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                        res1.setTime(start, t.getAvTime(), t.getTaskID());
-                                        res2.setTime(start, pT.getAvTime(), pT.getTaskID());
+
+                                        for (int p = 0; p < resourcesToUse.size(); p++) {
+                                            if (p <= t.getListSkill().size() - 1) {
+                                                resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
+                                                displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                            } else {
+                                                resourcesToUse.get(p).setTime(start, pT.getAvTime(), pT.getTaskID());
+                                                displayResParaTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                            }
+                                        }
 
                                         pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // 0 = indice du 1er tableau schedule dans parallelSchedules
                                         String[] schedule = new String[800];
@@ -292,7 +327,7 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(start - endLastTask + "");
                                         System.out.print("\t\t");
-                                        System.out.println(res1.getResourceID());
+                                        System.out.println(displayResTask);
 
                                         //parallel task values
                                         System.out.print(process.getID());
@@ -307,7 +342,7 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(start - endLastTask + "");
                                         System.out.print("\t\t");
-                                        System.out.println(res2.getResourceID());
+                                        System.out.println(displayResParaTask);
                                     }
                                     int avTime = Math.max(t.getAvTime(), pT.getAvTime());
                                     endLastTask = start + avTime;
@@ -315,6 +350,7 @@ public class Test {
                                 } else {
                                     throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                                 }
+
                             } //parallelism ****** end *********
 
                         } else {
@@ -325,41 +361,107 @@ public class Test {
 
                     tasksToSchedule.add(0, t);
                     int avTimeTotal = 0;
+                    int start = time;
                     for (int iv = 0; iv < tasksToSchedule.size(); iv++) {
                         avTimeTotal += tasksToSchedule.get(iv).getAvTime();
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
-                        Skill s = t.getSkill();
-                        int r = s.getFastestAvailable(time, t.getAvTime());
-                        if (r != -1) {
-                            Resource res = t.getSkill().getListResource().get(r);
-                            int start = res.getNextAvailableTime(time, t.getAvTime());
-                            ArrayList<Resource> resourcesToUse = new ArrayList();
-                            resourcesToUse.add(res);
-                            int currentStart = start;
-                            for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
-                                Skill sk = tasksToSchedule.get(iz).getSkill();
-                                int re = sk.getStrictestAvailable(currentStart + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
-                                if (re != -1) {
-                                    resourcesToUse.add(sk.getListResource().get(re));
+                        ArrayList<Resource> resourcesToUse = new ArrayList();
+                        ArrayList<String> tasksResourceToUse = new ArrayList();
+                        ArrayList<Integer> durationResourceToUse = new ArrayList();
+                        for (int d = 0; d < t.getListSkill().size(); d++) {
+                            if (d == 0) {
+                                Skill s = t.getListSkill().get(d);
+                                int r = s.getFastestAvailable(time, t.getAvTime());
+                                if (r != -1) {
+                                    Resource res = s.getListResource().get(r);
+                                    start = res.getNextAvailableTime(time, t.getAvTime());
+                                    resourcesToUse.add(res);
+                                    tasksResourceToUse.add(t.getTaskID());
+                                    durationResourceToUse.add(t.getAvTime());
                                 } else {
                                     resourcesToUse.add(null);
+                                    tasksResourceToUse.add(null);
+                                    durationResourceToUse.add(0);
+                                }
+                            } else {
+                                Skill s = t.getListSkill().get(d);
+                                int r = s.getStrictestAvailable(start, t.getAvTime());
+                                if (r != -1) {
+                                    Resource res = s.getListResource().get(r);
+                                    resourcesToUse.add(res);
+                                    tasksResourceToUse.add(t.getTaskID());
+                                    durationResourceToUse.add(t.getAvTime());
+                                } else {
+                                    resourcesToUse.add(null);
+                                    tasksResourceToUse.add(null);
+                                    durationResourceToUse.add(0);
+                                }
+                            }
+                        }
+                        if (!resourcesToUse.contains(null)) {
+                            int currentStart = start + t.getAvTime() + 1;
+                            for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
+                                for (int v = 0; v < tasksToSchedule.get(iz).getListSkill().size(); v++) {
+                                    Skill sk = tasksToSchedule.get(iz).getListSkill().get(v);
+                                    int re = sk.getStrictestAvailable(currentStart, tasksToSchedule.get(iz).getAvTime());
+                                    if (re != -1) {
+                                        resourcesToUse.add(sk.getListResource().get(re));
+                                        tasksResourceToUse.add(tasksToSchedule.get(iz).getTaskID());
+                                        durationResourceToUse.add(tasksToSchedule.get(iz).getAvTime());
+                                    } else {
+                                        resourcesToUse.add(null);
+                                        tasksResourceToUse.add(null);
+                                        durationResourceToUse.add(0);
+
+                                    }
                                 }
                                 currentStart += tasksToSchedule.get(iz).getAvTime() + 1;
                             }
                             if (!resourcesToUse.contains(null)) {
+
                                 currentStart = start;
-
-                                int currentEnd = endLastTask;
-
+                                ArrayList<String> displayRes = new ArrayList<>();
+                                String prevTask = t.getTaskID();
+                                String resourceId = "";
                                 for (int ip = 0; ip < resourcesToUse.size(); ip++) {
-                                    //order is important
-                                    int currentAvTime = tasksToSchedule.get(ip).getAvTime();
-                                    String taskID = tasksToSchedule.get(ip).getTaskID();
+
+                                    String taskID = tasksResourceToUse.get(ip);
+                                    int currentAvTime = durationResourceToUse.get(ip);
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
+
+                                    if (prevTask.equals(taskID)) {
+                                        resourceId += resourcesToUse.get(ip).getResourceID() + ", ";
+                                         if (ip == resourcesToUse.size() - 1) {
+                                            displayRes.add(resourceId);
+                                        }
+
+                                    } else {
+                                        displayRes.add(resourceId);
+                                        resourceId = resourcesToUse.get(ip).getResourceID() + ", ";
+                                        if (ip == resourcesToUse.size() - 1) {
+                                            displayRes.add(resourceId);
+                                        }
+                                    }
+
+                                    currentStart += currentAvTime + 1;
+                                    prevTask = taskID;
+                                }
+                                currentStart = start;
+                                int currentEnd = endLastTask;
+                                for (int x = 0; x < tasksToSchedule.size(); x++) {
+
+                                    String taskID = tasksToSchedule.get(x).getTaskID();
+                                    int currentAvTime = tasksToSchedule.get(x).getAvTime();
+
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    pat.addDiagramValues(0, currentStart - currentEnd);
-                                    pat.addDiagramValues(0, currentAvTime);
+                                    if (x == 0) {
+                                        pat.addDiagramValues(0, currentStart - endLastTask);
+                                        pat.addDiagramValues(0, currentAvTime);
+                                    } else {
+                                        pat.addDiagramValues(0, 0); // NON WAITING
+                                        pat.addDiagramValues(0, currentAvTime);
+                                    }
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
@@ -370,19 +472,19 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(currentStart + "");
                                         System.out.print("\t\t");
-                                        System.out.print(currentAvTime + currentStart + "");
+                                        System.out.print(currentStart + currentAvTime + "");
                                         System.out.print("\t\t");
                                         System.out.print(currentStart - currentEnd + "");
                                         System.out.print("\t\t");
-                                        System.out.println(resourcesToUse.get(ip).getResourceID());
+                                         System.out.println(displayRes.get(x));
                                     }
-
+                                    //order is important
                                     currentEnd = currentStart + currentAvTime;
-                                    currentStart += tasksToSchedule.get(ip).getAvTime() + 1;
-
+                                    currentStart += currentAvTime + 1;
                                 }
+
                                 k += tasksToSchedule.size() - 1;
-                                
+
                                 if (k != 0) {
                                     totalWaitingTime += (start - endLastTask);
                                 }

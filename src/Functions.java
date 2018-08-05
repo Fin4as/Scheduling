@@ -83,6 +83,7 @@ public class Functions {
                 for(int h =0; h <t.getListResource().size();h++){
                     excelWriter.update(t.getListResource());
                 }
+                System.out.println("Diagram created");
                 
             }
 

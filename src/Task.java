@@ -25,7 +25,7 @@ public class Task {
 
     private List<String> prevTaskID;
     private List<String> nextTaskID;
-    private Skill skill; 
+    private ArrayList<Skill> listSkill; 
 
     public Task(String processID, String taskID, int opMode, int avTime, int stdDev, int maxWait) {
         this.processID = processID;
@@ -37,6 +37,7 @@ public class Task {
         nextTaskID = new ArrayList();
         prevTaskID = new ArrayList();
         parallelTask = null;
+        listSkill = new ArrayList<>();
 
     }
     
@@ -52,12 +53,12 @@ public class Task {
         return processID;
     }
 
-    public Skill getSkill() {
-        return skill;
+    public ArrayList<Skill> getListSkill() {
+        return listSkill;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setListSkill(Skill skill) {
+        this.listSkill.add(skill);
     }
 
     public void addNextTask(String nextTask) {
