@@ -44,7 +44,7 @@ public class Functions {
     }
 
     public double waiting(int w) {
-        double result = 0.0;
+        double result;
         if (w < 60) {
             result = (1 / 15) * w;
         } else {
@@ -55,7 +55,7 @@ public class Functions {
 
     public double late(int l) {
         double result = 0.0;
-        result = round(Math.exp(l / (240 / Math.log(30))), 4);
+        result = round(Math.exp(l / (100 / Math.log(30))), 4);
         return result;
     }
 
@@ -133,12 +133,12 @@ public class Functions {
 
         try (Writer writerAnnealing = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementAnnealing.txt", false)));
-                /*Writer writerAnnealingStatTime = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatTime.txt", false)));
+                Writer writerAnnealingStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementAnnealingStatTime.txt", true)));
                 Writer writerAnnealingStatSequence = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatSequence.txt", false)));
+                        new FileOutputStream("improvementAnnealingStatSequence.txt", true)));
                 Writer writerAnnealingStatValue = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatValue.txt", false)))*/) {
+                        new FileOutputStream("improvementAnnealingStatValue.txt", true)))) {
             if (fO(sold, false) == Double.MAX_VALUE) {
                 writerAnnealing.write("Initial value : The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerAnnealing.write(System.getProperty("line.separator"));
@@ -185,7 +185,7 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-//                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + System.getProperty("line.separator"));
+                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd +System.getProperty("line.separator"));
                         }
                     }
 
@@ -208,17 +208,18 @@ public class Functions {
                 bestSolution.add(p.getPatientID());
             }
             writerAnnealing.write(System.getProperty("line.separator"));
-            writerAnnealing.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(minb, false) + System.getProperty("line.separator"));
+            writerAnnealing.write("Best solution proposed by the algorithm : " + bestSolution + System.getProperty("line.separator"));
+            writerAnnealing.write("Objective function value associed : " + fO(minb, false) + System.getProperty("line.separator"));
             writerAnnealing.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerAnnealing.write("This solution has been reached by generating " + numiterBest + " sequences on a fixed total generated sequences of " + numtemp * itermax + " sequences.");
+            writerAnnealing.write("This solution was reached by generating " + numiterBest + " sequences on a fixed total of " + numtemp * itermax + " generated sequences.");
             writerAnnealing.close();
 
-//            writerAnnealingStatTime.write(currentRuntime + System.getProperty("line.separator"));
-//            writerAnnealingStatTime.close();
-//            writerAnnealingStatSequence.write(numiterBest + System.getProperty("line.separator"));
-//            writerAnnealingStatSequence.close();
-//            writerAnnealingStatValue.write(fO(minb, false) + System.getProperty("line.separator"));
-//            writerAnnealingStatValue.close();
+            writerAnnealingStatTime.write(currentRuntime + System.getProperty("line.separator"));
+            writerAnnealingStatTime.close();
+            writerAnnealingStatSequence.write(numiterBest + System.getProperty("line.separator"));
+            writerAnnealingStatSequence.close();
+            writerAnnealingStatValue.write(fO(minb, false) + System.getProperty("line.separator"));
+            writerAnnealingStatValue.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -246,12 +247,12 @@ public class Functions {
         totaliterGrasp = 0;
         try (Writer writerGrasp = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("improvementGrasp.txt", false)));
-                /*Writer writerGraspStatTime = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatTime.txt", false)));
+                Writer writerGraspStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGraspStatTime.txt", true)));
                 Writer writerGraspStatSequence = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatSequence.txt", false)));
+                        new FileOutputStream("improvementGraspStatSequence.txt", true)));
                 Writer writerGraspStatValue = new BufferedWriter(new OutputStreamWriter(
-                        new FileOutputStream("improvementAnnealingStatValue.txt", false)))*/) {
+                        new FileOutputStream("improvementGraspStatValue.txt", true)))) {
             if (fO(bestPosition, false) == Double.MAX_VALUE) {
                 writerGrasp.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerGrasp.write(System.getProperty("line.separator"));
@@ -305,17 +306,18 @@ public class Functions {
                 bestSolution.add(p.getPatientID());
             }
             writerGrasp.write(System.getProperty("line.separator"));
-            writerGrasp.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGrasp.write("Best solution proposed by the algorithm : " + bestSolution + System.getProperty("line.separator"));
+            writerGrasp.write("Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
             writerGrasp.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerGrasp.write("This solution has been reached by generating " + totaliterBestGrasp + " sequences on a total generated sequences of " + totaliterGrasp + " sequences.");
+            writerGrasp.write("This solution was reached by generating " + totaliterBestGrasp + " sequences on a total of " + totaliterGrasp + " generated sequences.");
             writerGrasp.close();
 
-//            writerGraspStatTime.write(currentRuntime1 + System.getProperty("line.separator"));
-//            writerGraspStatTime.close();
-//            writerGraspStatSequence.write(totaliterBestGrasp + System.getProperty("line.separator"));
-//            writerGraspStatSequence.close();
-//            writerGraspStatValue.write(fO(bestPosition, false) + System.getProperty("line.separator"));
-//            writerGraspStatValue.close();
+            writerGraspStatTime.write(currentRuntime1 + System.getProperty("line.separator"));
+            writerGraspStatTime.close();
+            writerGraspStatSequence.write(totaliterBestGrasp + System.getProperty("line.separator"));
+            writerGraspStatSequence.close();
+            writerGraspStatValue.write(fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGraspStatValue.close();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -416,7 +418,13 @@ public class Functions {
         int i = 0;
         totaliterGrasp = 0;
         try (Writer writerGraspRCL = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementGraspRCL.txt", false)))) {
+                new FileOutputStream("improvementGraspRCL.txt", false)));
+                Writer writerGraspRCLStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGraspRCLStatTime.txt", true)));
+                Writer writerGraspRCLStatSequence = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGraspRCLStatSequence.txt", true)));
+                Writer writerGraspRCLStatValue = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGraspRCLStatValue.txt", true)))) {
             if (fO(bestPosition, false) == Double.MAX_VALUE) {
                 writerGraspRCL.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerGraspRCL.write(System.getProperty("line.separator"));
@@ -469,10 +477,19 @@ public class Functions {
                 bestSolution.add(p.getPatientID());
             }
             writerGraspRCL.write(System.getProperty("line.separator"));
-            writerGraspRCL.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGraspRCL.write("Best solution proposed by the algorithm : " + bestSolution + System.getProperty("line.separator"));
+            writerGraspRCL.write("Objective function value associed : " + fO(bestPosition, false) + System.getProperty("line.separator"));
             writerGraspRCL.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerGraspRCL.write("This solution has been reached by generating " + totaliterBestGrasp + " sequences on a total generated sequences of " + totaliterGrasp + " sequences.");
+            writerGraspRCL.write("This solution was reached by generating " + totaliterBestGrasp + " sequences on a total of " + totaliterGrasp + " generated sequences.");
             writerGraspRCL.close();
+            
+            writerGraspRCLStatTime.write(currentRuntime1 + System.getProperty("line.separator"));
+            writerGraspRCLStatTime.close();
+            writerGraspRCLStatSequence.write(totaliterBestGrasp + System.getProperty("line.separator"));
+            writerGraspRCLStatSequence.close();
+            writerGraspRCLStatValue.write(fO(bestPosition, false) + System.getProperty("line.separator"));
+            writerGraspRCLStatValue.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -572,6 +589,7 @@ public class Functions {
         double startRuntime = System.nanoTime();
         double currentRuntime = System.nanoTime();
         double totalRuntime;
+        int numiterBest = 0;
         // List of Sequences considered as a population
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
@@ -596,7 +614,13 @@ public class Functions {
         population.add(scur);
 
         try (Writer writerGenetic = new BufferedWriter(new OutputStreamWriter(
-                new FileOutputStream("improvementGenetic.txt", false)))) {
+                new FileOutputStream("improvementGenetic.txt", false)));
+                Writer writerGeneticStatTime = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGeneticStatTime.txt", true)));
+                Writer writerGeneticStatSequence = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGeneticStatSequence.txt", true)));
+                Writer writerGeneticStatValue = new BufferedWriter(new OutputStreamWriter(
+                        new FileOutputStream("improvementGeneticStatValue.txt", true)))) {
             if (fO(bestPositionImprovement, false) == Double.MAX_VALUE) {
                 writerGenetic.write("Value of the initial sequence: The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerGenetic.write(System.getProperty("line.separator"));
@@ -677,9 +701,10 @@ public class Functions {
                     for (Patient p : bestPopulation1) {
                         bestPositionImprovement.add(p);
                     }
+                    numiterBest = n;
                     currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
                     writerGenetic.write("==> New update of the optimum : " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
-                    writerGenetic.write("Minimum number of generated sequences to get this optimum : " + (sizePopulation + n) + " sequences (" + sizePopulation + " sequences from the initial pool + " + n + " children)" + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
+                    writerGenetic.write("Minimum number of generated sequences to get this optimum : " + (sizePopulation + numiterBest) + " sequences (" + sizePopulation + " sequences from the initial pool + " + numiterBest + " children)" + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                     writerGenetic.write(System.getProperty("line.separator"));
                 }
 
@@ -696,17 +721,25 @@ public class Functions {
                 //A Generation pass
                 n++;
             }
-
             totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
             List<String> bestSolution = new ArrayList();
             for (Patient p : bestPositionImprovement) {
                 bestSolution.add(p.getPatientID());
             }
-            writerGenetic.write("Best solution proposed by the algorithm : " + bestSolution + " Objective function value associed : " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
-            writerGenetic.write("Found in " + totalRuntime + " s." + System.getProperty("line.separator"));
-            writerGenetic.write("This solution has been reached by generating " + (sizePopulation + n) + " sequences (" + sizePopulation + " sequences from the initial pool + " + n + " children)");
+            writerGenetic.write("Best solution proposed by the algorithm : " + bestSolution + System.getProperty("line.separator"));
+            writerGenetic.write("Objective function value associed : " + fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
+            writerGenetic.write("Found in " + currentRuntime + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
+            writerGenetic.write("This solution was reached by generating " + (sizePopulation + numiterBest) + " sequences (" + sizePopulation + " sequences from the initial pool + " + numiterBest + " children)," + System.getProperty("line.separator"));
+            writerGenetic.write("on a total of " + (sizePopulation + nbrGeneration) + " generated sequences (" + sizePopulation + " sequences from the initial pool + " + nbrGeneration + " children).");
             writerGenetic.close();
 
+            writerGeneticStatTime.write(currentRuntime + System.getProperty("line.separator"));
+            writerGeneticStatTime.close();
+            writerGeneticStatSequence.write((sizePopulation + numiterBest) + System.getProperty("line.separator"));
+            writerGeneticStatSequence.close();
+            writerGeneticStatValue.write(fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
+            writerGeneticStatValue.close();
+            
         } catch (IOException e) {
             e.printStackTrace();
 
