@@ -17,13 +17,13 @@ public class Patient {
     private ArrayList<String[]> parallelSchedules;
     private String schedule[];
     private String processID;
-       private int ageInformation;
+    private int ageInformation;
     private double cancellationLikelihood;
     private ArrayList<ArrayList<Integer>> diagramValues;
     private ArrayList<Integer> diagram;
 
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
-    public Patient(String id, String processID, int ageInformation) {
+    public Patient(String id, String processID, int ageInformation, String typeSurgery) {
         this.patientID = id;
         schedule = new String[800];
         parallelSchedules = new ArrayList<>();
@@ -41,14 +41,51 @@ public class Patient {
         } else {
             throw new IllegalArgumentException("Cancellation likelihood could not be calculated");
         }
-        
+        switch (typeSurgery) {
+            case "Gastroenterology":
+                cancellationLikelihood += ((Double) (151.0 / (780 * 129)));
+                break;
+            case "Ear/Nose/Throat":
+                cancellationLikelihood += ((Double) (91.0 / (780 * 129)));
+                break;
+            case "Urology/Endocrinology":
+                cancellationLikelihood += ((Double) (88.0 / (780 * 129)));
+                break;
+            case "Orthopedics":
+                cancellationLikelihood += ((Double) (82.0 / (780 * 129)));
+                break;
+            case "Women's clinic":
+                cancellationLikelihood += ((Double) (80.0 / (780 * 129)));
+                break;
+            case "Anesthesiology Procedures":
+                cancellationLikelihood += ((Double) (75.0 / (780 * 129)));
+                break;
+            case "Ophthalmology":
+                cancellationLikelihood += ((Double) (69.0 / (780 * 129)));
+                break;
+            case "Neurosurgery":
+                cancellationLikelihood += ((Double) (58.0 / (780 * 129)));
+                break;
+            case "Plastic/Hand":
+                cancellationLikelihood += ((Double) (51.0 / (780 * 129)));
+                break;
+            case "Cardio/Lung/Vascular":
+                cancellationLikelihood += ((Double) (26.0 / (780 * 129)));
+                break;
+            case "Common Procedures":
+                cancellationLikelihood += ((Double) (5.0 / (780 * 129)));
+                break;
+            case "Pediatrics":
+                cancellationLikelihood += ((Double) (4.0 / (780 * 129)));
+            default:
+                break;
+        }
+
         diagramValues = new ArrayList<>();
         diagram = new ArrayList<>();
         diagramValues.add(diagram);
-        
 
     }
-    
 
     public void addParallelSchedule(String[] s) {
         parallelSchedules.add(s);
@@ -57,8 +94,8 @@ public class Patient {
     public int getAgeInformation() {
         return ageInformation;
     }
-    
-    public void addArrayDiagram(int i){
+
+    public void addArrayDiagram(int i) {
         diagramValues.add(new ArrayList<>());
     }
 
@@ -118,9 +155,9 @@ public class Patient {
     }
 
     public void setZeroSchedule() {
-       parallelSchedules = new ArrayList<>();
-       parallelSchedules.add(new String[800]);
-               
+        parallelSchedules = new ArrayList<>();
+        parallelSchedules.add(new String[800]);
+
     }
 
     public double getCancellationLikelihood() {
