@@ -25,26 +25,26 @@ public class Main {
     public static void main(String[] args) {
 
         List<Patient> arrivalSequence = new ArrayList();
-        Patient p0 = new Patient("P0", "PR2", 98);
-        Patient p1 = new Patient("P1", "PR1", 38);
-        Patient p2 = new Patient("P2", "PR1", 105);
-        Patient p3 = new Patient("P3", "PR1", 13);
-        Patient p4 = new Patient("P4", "PR2", 5);
-        Patient p5 = new Patient("P5", "PR2", 56);
-        Patient p6 = new Patient("P6", "PR2", 118);
-        Patient p7 = new Patient("P7", "PR1", 24);
-        Patient p8 = new Patient("P8", "PR1", 93);
-        Patient p9 = new Patient("P9", "PR1", 72);
-        Patient p10 = new Patient("P10", "PR2", 56);
-        Patient p11 = new Patient("P11", "PR1", 67);
-        Patient p12 = new Patient("P12", "PR2", 104);
-        Patient p13 = new Patient("P13", "PR1", 71);
-        Patient p14 = new Patient("P14", "PR2", 60);
-        Patient p15 = new Patient("P15", "PR1", 45);
-        Patient p16 = new Patient("P16", "PR1", 5);
-        Patient p17 = new Patient("P17", "PR2", 29);
-        Patient p18 = new Patient("P18", "PR2", 11);
-        Patient p19 = new Patient("P19", "PR1", 122);
+        Patient p0 = new Patient("P0", "PR2", 98, "Gastroenterology");
+        Patient p1 = new Patient("P1", "PR1", 38, "Ear/Nose/Throat");
+        Patient p2 = new Patient("P2", "PR1", 105, "Urology/Endocrinology");
+        Patient p3 = new Patient("P3", "PR1", 13, "Orthopedics");
+        Patient p4 = new Patient("P4", "PR2", 5, "Women's clinic");
+        Patient p5 = new Patient("P5", "PR2", 56, "Anesthesiology Procedures");
+        Patient p6 = new Patient("P6", "PR2", 118, "Ophthalmology");
+        Patient p7 = new Patient("P7", "PR1", 24, "Neurosurgery");
+        Patient p8 = new Patient("P8", "PR1", 93, "Plastic/Hand");
+        Patient p9 = new Patient("P9", "PR1", 72, "Cardio/Lung/Vascular");
+        Patient p10 = new Patient("P10", "PR2", 56, "Common Procedures");
+        Patient p11 = new Patient("P11", "PR1", 67, "Pediatrics");
+        Patient p12 = new Patient("P12", "PR2", 104, "Ophthalmology");
+        Patient p13 = new Patient("P13", "PR1", 71, "Women's clinic");
+        Patient p14 = new Patient("P14", "PR2", 60, "Ear/Nose/Throat");
+        Patient p15 = new Patient("P15", "PR1", 45, "Neurosurgery");
+        Patient p16 = new Patient("P16", "PR1", 5, "Pediatrics");
+        Patient p17 = new Patient("P17", "PR2", 29, "Cardio/Lung/Vascular");
+        Patient p18 = new Patient("P18", "PR2", 11, "Neurosurgery");
+        Patient p19 = new Patient("P19", "PR1", 122, "Gastroenterology");
 
         arrivalSequence.add(p7);
         arrivalSequence.add(p10);

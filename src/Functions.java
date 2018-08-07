@@ -53,7 +53,7 @@ public class Functions {
 
     public double late(int l) {
         double result = 0.0;
-        result = round(Math.exp(l / (240 / Math.log(30))), 4);
+        result = round(Math.exp(l / (100 / Math.log(30))), 4);
         return result;
     }
 
