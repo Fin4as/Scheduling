@@ -439,12 +439,13 @@ public class Test {
                                     } else {
                                         displayRes.add(resourceId);
                                         resourceId = resourcesToUse.get(ip).getResourceID() + ", ";
+                                         currentStart += currentAvTime + 1;
                                         if (ip == resourcesToUse.size() - 1) {
                                             displayRes.add(resourceId);
                                         }
                                     }
 
-                                    currentStart += currentAvTime + 1;
+                                   
                                     prevTask = taskID;
                                 }
                                 currentStart = start;

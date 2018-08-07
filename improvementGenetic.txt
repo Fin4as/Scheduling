@@ -1,269 +1,58 @@
-Original position : 439.79166666666663
-Improved : 168.375
-Original position : 950.5
-Improved : 934.7083333333333
-Improved : 888.3333333333333
-Improved : 844.75
-Improved : 822.8333333333333
-Original position : 950.5
-Improved : 937.0416666666666
-Improved : 920.3333333333333
-Improved : 877.8333333333333
-Improved : 866.25
-Improved : 810.0
-Original position : 950.5
-Improved : 812.75
-Original position : 950.5
-Improved : 821.2916666666666
-Improved : 819.125
-Improved : 810.5833333333333
-Improved : 745.4166666666666
-Original position : 950.5
-Improved : 873.5833333333333
-Improved : 854.5833333333333
-Improved : 807.2916666666666
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 357.0622
+Original position : 357.0622
+Original position : 357.0622
+Original position : 1448.3342
+Original position : 283.0622
+Original position : 1448.3342
 Original position : 1.7976931348623157E308
-Improved : 981.375
-Improved : 890.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 993.4583333333333
-Improved : 915.4166666666666
-Improved : 914.9583333333333
-Improved : 900.375
-Original position : 1.7976931348623157E308
-Improved : 988.875
-Improved : 890.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 893.2083333333333
-Improved : 879.375
-Original position : 1.7976931348623157E308
-Improved : 991.7916666666666
-Improved : 983.2083333333333
-Improved : 970.25
-Improved : 965.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 994.0416666666666
-Improved : 991.25
-Improved : 984.7083333333333
-Improved : 982.7083333333333
-Improved : 953.4583333333333
-Improved : 944.9583333333333
-Original position : 1.7976931348623157E308
-Improved : 979.4166666666666
-Improved : 974.0416666666666
-Improved : 966.9166666666666
-Improved : 961.9583333333333
-Improved : 934.7083333333333
-Improved : 913.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 1003.5416666666666
-Improved : 945.5833333333333
-Improved : 927.4583333333333
-Improved : 919.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 940.4166666666666
-Improved : 893.2083333333333
-Original position : 1.7976931348623157E308
-Improved : 1016.875
-Improved : 979.0833333333333
-Improved : 890.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 972.4166666666666
-Improved : 929.9166666666666
-Improved : 918.75
-Improved : 915.0416666666666
-Original position : 1.7976931348623157E308
-Original position : 1.7976931348623157E308
-Improved : 994.0416666666666
-Improved : 993.9166666666666
-Improved : 983.2083333333333
-Improved : 973.7083333333333
-Improved : 919.75
-Improved : 890.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 1000.125
-Improved : 990.9166666666666
-Improved : 948.7916666666666
-Improved : 906.5416666666666
-Improved : 900.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 940.4166666666666
-Improved : 903.2083333333333
-Improved : 882.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 1003.4583333333333
-Improved : 951.75
-Improved : 928.7916666666666
-Improved : 927.7916666666666
-Improved : 922.875
-Original position : 1.7976931348623157E308
-Improved : 982.2083333333333
-Improved : 969.0833333333333
-Improved : 965.7083333333333
-Improved : 887.25
-Original position : 1.7976931348623157E308
-Improved : 934.9166666666666
-Original position : 1.7976931348623157E308
-Improved : 984.0416666666666
-Improved : 978.875
-Improved : 970.375
-Improved : 948.9166666666666
-Improved : 931.75
-Improved : 927.25
-Improved : 887.25
-Original position : 1.7976931348623157E308
-Improved : 935.7083333333333
-Improved : 930.125
-Improved : 900.375
-Original position : 1.7976931348623157E308
-Improved : 920.7916666666666
-Improved : 914.9583333333333
-Improved : 879.375
-Original position : 1.7976931348623157E308
-Improved : 940.625
-Improved : 900.375
-Original position : 1.7976931348623157E308
-Improved : 908.9583333333333
-Original position : 1.7976931348623157E308
-Improved : 929.2916666666666
-Improved : 914.9583333333333
-Improved : 899.875
-Original position : 1.7976931348623157E308
-Improved : 979.875
-Improved : 930.125
-Improved : 915.4166666666666
-Original position : 1.7976931348623157E308
-Improved : 918.75
-Original position : 1.7976931348623157E308
-Improved : 913.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 931.625
-Improved : 910.625
-Original position : 1.7976931348623157E308
-Improved : 989.5416666666666
-Improved : 988.875
-Improved : 950.625
-Improved : 931.625
-Improved : 913.9583333333333
-Original position : 1.7976931348623157E308
-Improved : 1016.8333333333333
-Improved : 1005.2916666666666
-Improved : 940.4166666666666
-Improved : 910.5833333333333
-Improved : 905.625
-Original position : 1.7976931348623157E308
-Improved : 994.25
-Improved : 953.4583333333333
-Improved : 947.0833333333333
-Improved : 936.5833333333333
-Original position : 1.7976931348623157E308
-Improved : 1010.625
-Improved : 984.25
-Improved : 974.0416666666666
-Improved : 938.7916666666666
-Original position : 1.7976931348623157E308
-Improved : 975.75
-Improved : 968.625
-Improved : 913.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 993.9166666666666
-Improved : 987.5833333333333
-Improved : 935.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 905.625
-Improved : 882.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 987.875
-Improved : 916.2083333333333
-Improved : 913.9583333333333
-Original position : 1.7976931348623157E308
-Improved : 1020.0416666666666
-Improved : 935.4583333333333
-Improved : 933.9166666666666
-Improved : 916.2083333333333
-Original position : 1.7976931348623157E308
-Improved : 890.5833333333333
-Improved : 882.7083333333333
-Original position : 1.7976931348623157E308
-Improved : 995.5833333333333
-Improved : 988.2916666666666
-Improved : 976.625
-Improved : 905.625
-Original position : 1.7976931348623157E308
-Improved : 1034.0
-Improved : 984.7083333333333
-Improved : 912.0833333333333
-Original position : 1.7976931348623157E308
-Improved : 979.2083333333333
-Improved : 935.7083333333333
-Improved : 922.875
-Original position : 1.7976931348623157E308
-Improved : 996.5416666666666
-Improved : 946.5833333333333
-Improved : 933.4583333333333
-Original position : 1.7976931348623157E308
-Improved : 963.5833333333333
-Improved : 948.625
-Improved : 900.5833333333333
+Original position : 1448.3342
+Original position : 1448.3342
 Original position : 1.7976931348623157E308
 Original position : 1.7976931348623157E308
 Original position : 1.7976931348623157E308
-Improved : 963.5833333333333
-Improved : 906.5416666666666
-Improved : 887.25
-<<<<<<< HEAD
-Original position : 988.8333333333333
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 966.6666666666666
-Improved : 948.1666666666666
-Improved : 939.6666666666666
-Improved : 927.8333333333333
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 929.6666666666666
-Original position : 988.8333333333333
-Improved : 951.5
-Improved : 933.0
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 966.6666666666666
-Improved : 939.6666666666666
-Improved : 924.5
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 933.0
-Improved : 924.5
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 970.0
-Improved : 954.8333333333333
-Improved : 944.8333333333333
-Improved : 933.0
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 924.5
-Improved : 921.1666666666666
-Original position : 988.8333333333333
-Improved : 944.8333333333333
-Improved : 927.8333333333333
-Improved : 921.1666666666666
-=======
 Original position : 1.7976931348623157E308
 Original position : 1.7976931348623157E308
-Improved : 970.375
-Improved : 919.0833333333333
-Improved : 905.625
 Original position : 1.7976931348623157E308
-Improved : 976.2083333333333
-Improved : 940.625
-Improved : 903.7083333333333
-Improved : 887.25
 Original position : 1.7976931348623157E308
-Improved : 982.4166666666666
-Improved : 950.75
-Improved : 911.625
-Improved : 893.2083333333333
->>>>>>> ExcelWriterResource
 Original position : 1.7976931348623157E308
-Improved : 248.33333333333331
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
