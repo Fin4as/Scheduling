@@ -31,10 +31,11 @@ public class ExcelWriter {
             // Create a Sheet
             Sheet sheet = workbook.createSheet("Patient Scheduling");
 
-            int nbr = getMaxNumberOfTasks(lp) ;
+            int nbr = getMaxNumberOfTasks(lp);
             for (int i = 4; i <= nbr; i += 2) {
-                fullColumns.add(i, "WaitingTime");
+                fullColumns.add(i , "WaitingTime");
                 fullColumns.add(i + 1, "Duration");
+                
             }
             // Create a Row
             Row headerRow = sheet.createRow(0);
@@ -95,8 +96,8 @@ public class ExcelWriter {
 
             int nbr = getMaxNumberOfTasksForResources(lr);
             for (int i = 1; i <= nbr; i += 2) {
-                columns.add(i, "WaitingTime");
-                columns.add(i + 1, "Duration");
+                columns.add(i , "WaitingTime");
+                columns.add(i+ 1, "Duration");
             }
 
             // Get Row at index 1
@@ -128,7 +129,9 @@ public class ExcelWriter {
             }
 
             // Write the output to a file
+//            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram_Resource.xlsx");
             FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram_Resource.xlsx");
+
             workbook.write(fileOut);
             fileOut.close();
 
@@ -136,13 +139,12 @@ public class ExcelWriter {
             workbook.close();
 
         } catch (Exception e) {
-            System.out.println("CoucouSalma");
             System.out.println("Error :" + e);
         }
     }
 
     public int getMaxNumberOfTasks(List<Patient> lp) {
-        int nbr = lp.get(0).getDiagramValues().get(0).size() ;
+        int nbr = lp.get(0).getDiagramValues().get(0).size();
         for (int i = 1; i < lp.size(); i++) {
             int currentNbr = lp.get(i).getDiagramValues().get(0).size();
             if (currentNbr > nbr) {
@@ -153,7 +155,7 @@ public class ExcelWriter {
     }
 
     public int getMaxNumberOfTasksForResources(List<Resource> lr) {
-        int nbr = lr.get(0).getDiagramValues().size() ;
+        int nbr = lr.get(0).getDiagramValues().size();
         for (int i = 1; i < lr.size(); i++) {
             int currentNbr = lr.get(i).getDiagramValues().size();
             if (currentNbr > nbr) {

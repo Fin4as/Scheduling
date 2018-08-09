@@ -140,3 +140,97 @@ Original position : 1448.3342
 Improvement : 1420.7795
 Improvement : 1418.7795
 Improvement : 1406.7795
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 217.0157
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 223.0147
+Improvement : 212.0157
+Original position : 1.7976931348623157E308
+Improvement : 191.0137
+Improvement : 176.011
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 191.0127
+Improvement : 159.0083
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 176.0103
+Improvement : 159.0083
+Original position : 1.7976931348623157E308
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 209.0147
+Improvement : 191.0127
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 212.0157
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Original position : 1.7976931348623157E308
+Improvement : 188.0118
+Original position : 1.7976931348623157E308
+Improvement : 207.0157
+Improvement : 192.011
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 192.0127
+Improvement : 176.011
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 213.0147
+Improvement : 211.0147
+Improvement : 201.0137
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 128.0
+Improvement : 127.0
+Original position : 128.0
+Improvement : 127.0
+Original position : 127.0
+Original position : 128.0
+Improvement : 127.0
+Original position : 115.0
+Original position : 33138.147
+Improvement : 821.765
+Improvement : 680.3041
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308

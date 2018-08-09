@@ -24,54 +24,75 @@ public class Schedule {
     private List<Process> listProcess;
     private List<Resource> allResources;
     private List<String> nameResource;
+    private List<Patient> listPatients; //patientData
 
-
-    public Schedule(List<Patient> listPatient) {
+    public Schedule(List<String> listPatientID) { //PatientData
+        listPatients = new ArrayList<>(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
-        List<String> listP = this.getProcess(listPatient);
-        listProcess = new ArrayList();
         getConnectDB(); // connect to DataBAase
+        this.getPatientData(listPatientID);
+        List<String> listP = this.getProcess(listPatients); //PatientData
+        listProcess = new ArrayList();
+
         for (int i = 0; i < listP.size(); i++) {
+            
             String processID = listP.get(i);
             Process pro = new Process(processID);
             listProcess.add(pro);
-//            List<Resource> allResources = new ArrayList<Resource>();
-//            List<Task> listTask = new ArrayList();
             this.getTaskData(pro);
-            List<Task> listTask = pro.getListTask();
             this.getPrevTask(pro.getListTask(), processID);
             this.getNextTask(pro.getListTask(), processID);
             this.getSkillData(pro.getListTask(), processID);
             this.getResourceData(pro.getListTask());
-           
-//            this.getResourceData(listTask, allResources);
-//              Process pro = new Process(namePro, listTask, allResources);
-//            listPro.add(pro);
-        }
-//        this.listProcess = listPro;
 
+        }
     }
 
-    public List<String> getProcess(List<Patient> listPatient) {
+    public List<String> getProcess(List<Patient> listPatient) { //PatientData
         List<String> idProcess = new ArrayList();
 
-        for (int k = 0; k < listPatient.size(); k++) {
-
-            if (!idProcess.contains(listPatient.get(k).getProcessID())) {
-                idProcess.add(listPatient.get(k).getProcessID());
-
+        for (Patient e : listPatient) {
+            if (!idProcess.contains(e.getProcessID())) {
+                idProcess.add(e.getProcessID());
             }
-
         }
         return idProcess;
     }
 
-    public List<Resource> getAllResources(){
+    public void getPatientData(List<String> listPatientID) { //PatientData
+
+        try {
+            String query = "SELECT * FROM Patient";
+            rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                String patient_id = rs.getString("PatientID");
+                String process_id = rs.getString("ProcessID");
+                int ageInformation = rs.getInt("ageInformation");
+                String typeSurgery = rs.getString("typeSurgery");
+                if (listPatientID.contains(patient_id)) { //PatientData
+                    Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
+                    listPatients.add(patient);
+                } //PatientData
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    } //PatientData
+
+    public List<Resource> getAllResources() {
         return allResources;
     }
+
     public List<Process> getListProcess() {
         return listProcess;
+    }
+
+    public List<Patient> getListPatients() { //PatientData
+        return listPatients;
     }
 
     public void getConnectDB() {
@@ -84,36 +105,35 @@ public class Schedule {
             System.out.println("You are connected ! ");
 
         } catch (Exception ex) {
-            
+
             System.out.println("Error : " + ex);
 
         }
     }
 
     public void getTaskData(Process pro) {
-        
+
         try {
-            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID()+"'";
+            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'";
             rs = st.executeQuery(query);
 
             while (rs.next()) {
                 String process_id = rs.getString("ProcessID");
                 String task_id = rs.getString("TaskID");
-
+                int patient = rs.getInt("patient");
                 int opMode = rs.getInt("OpMode");
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
 
-                Task task = new Task(process_id, task_id, opMode, avTime, stdDev, maxWait);
+                Task task = new Task(process_id, task_id, patient, opMode, avTime, stdDev, maxWait);
                 pro.addListTask(task);
             }
 
         } catch (Exception ex) {
-            System.out.println("Hey 1");
             System.out.println(ex);
         }
-        
+
     }
 
     public void getSkillData(List<Task> listTask, String processID) {
@@ -121,14 +141,14 @@ public class Schedule {
         for (int i = 0; i < listTask.size(); i++) {
             try {
 
-                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND Task.ProcessID = '" + processID+"'";
+                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND Task.ProcessID = '" + processID + "'";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
 
                     String skillID = rs.getString("SkillID");
                     String description = rs.getString("Description");
                     String prevTask = rs.getString("PrevTask");
-                    listTask.get(i).setSkill(new Skill(skillID, description, prevTask));
+                    listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
 
                 }
 
@@ -140,39 +160,39 @@ public class Schedule {
     }
 
     public void getResourceData(List<Task> listTask) {
-        
-        for (int i = 0; i < listTask.size(); i++) {
-            try {
-                String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getSkill().getSkillID() + "'";
-                rs = st.executeQuery(query);
-                while (rs.next()) {
 
-                    String resourceID = rs.getString("ResourceID");
-                    int capacity = rs.getInt("Capacity");
-                    String name = rs.getString("Name");
-                    if (!nameResource.contains(resourceID)) {
-                        Resource res = new Resource(resourceID, capacity, name);
-                        listTask.get(i).getSkill().addResource(res);
-                        allResources.add(res);
-                        nameResource.add(resourceID);
-                    } else {
-                        int index = nameResource.indexOf(resourceID);
-                        Resource res = allResources.get(index);
-                        listTask.get(i).getSkill().addResource(res);
+        for (int i = 0; i < listTask.size(); i++) {
+            for (int j = 0; j < listTask.get(i).getListSkill().size(); j++) {
+                try {
+                    String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getListSkill().get(j).getSkillID() + "'";
+                    rs = st.executeQuery(query);
+                    while (rs.next()) {
+
+                        String resourceID = rs.getString("ResourceID");
+                        int capacity = rs.getInt("Capacity");
+                        String name = rs.getString("Name");
+                        if (!nameResource.contains(resourceID)) {
+                            Resource res = new Resource(resourceID, capacity, name);
+
+                            listTask.get(i).getListSkill().get(j).addResource(res);
+                            allResources.add(res);
+                            nameResource.add(resourceID);
+                        } else {
+                            int index = nameResource.indexOf(resourceID);
+                            Resource res = allResources.get(index);
+                            listTask.get(i).getListSkill().get(j).addResource(res);
+                        }
+
                     }
 
-                }
-               
-            } catch (Exception ex) {
-               
-                System.out.println(ex);
+                } catch (Exception ex) {
 
+                    System.out.println(ex);
+                }
             }
         }
 
-
     }
-
 
 //    public void getResourceData(List<Task> listTask, List<Resource> allResources) {
 //
@@ -220,11 +240,10 @@ public class Schedule {
 //        return allResources;
 //    }
 //
-
     public void getPrevTask(List<Task> listTask, String processID) {
 
         try {
-            String query = "SELECT TaskID, PrevTaskID FROM PreviousTask JOIN Task ON Task.ID = PreviousTask.IDcouple WHERE Task.ProcessID ='" + processID + "'"+ "ORDER BY `PreviousTask`.`IDchar` ASC";
+            String query = "SELECT TaskID, PrevTaskID FROM PreviousTask JOIN Task ON Task.ID = PreviousTask.IDcouple WHERE Task.ProcessID ='" + processID + "'" + "ORDER BY `PreviousTask`.`IDchar` ASC";
             rs = st.executeQuery(query);
             while (rs.next()) {
 
@@ -254,9 +273,9 @@ public class Schedule {
                     if (listTask.get(i).getTaskID().equals(taskID)) {
                         listTask.get(i).addNextTask(nextTask);
                     }
-                    if (listTask.get(i).getNextTaskIDList().size() > 1) { 
-                        listTask.get(i + 1).setParallelTask(listTask.get(i + 2)); 
-                        listTask.get(i + 2).setParallelTask(listTask.get(i + 1)); 
+                    if (listTask.get(i).getNextTaskIDList().size() > 1) {
+                        listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
+                        listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
                     }
                 }
             }
@@ -274,5 +293,4 @@ public class Schedule {
 //    public ResultSet getResultSet() {
 //        return rs;
 //    }
-    
 }

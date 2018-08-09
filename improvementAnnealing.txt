@@ -1,9 +1,7 @@
-Original value: 1448.3342
+Original value: 117.0
 
 Temperature : 1.0
 
-Improved value: 1398.7795
-Improved value: 1396.7795
 
 
 Temperature : 0.7

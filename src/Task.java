@@ -4,8 +4,6 @@
  * and open the template in the editor.
  */
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,19 +15,21 @@ public class Task {
 
     private String processID;
     private String taskID;
-    private int opMode;
+    private int opMode; // the opertaion Mode decribes if a task is waiting or non waiting
     private int avTime;
     private int stdDev;
     private int maxWait;
-    private Task parallelTask;
+    private Task parallelTask; // this object is for task which as parallel task otherwise it's null
+    private int patient; // this variable aims to indicate if a patient is implied in the task
 
     private List<String> prevTaskID;
     private List<String> nextTaskID;
-    private Skill skill; 
+    private ArrayList<Skill> listSkill;
 
-    public Task(String processID, String taskID, int opMode, int avTime, int stdDev, int maxWait) {
+    public Task(String processID, String taskID, int patient, int opMode, int avTime, int stdDev, int maxWait) {
         this.processID = processID;
         this.taskID = taskID;
+        this.patient = patient;
         this.opMode = opMode;
         this.avTime = avTime;
         this.stdDev = stdDev;
@@ -37,27 +37,32 @@ public class Task {
         nextTaskID = new ArrayList();
         prevTaskID = new ArrayList();
         parallelTask = null;
+        listSkill = new ArrayList<>();
 
     }
-    
-       public Task getParallelTask() { 
+
+    public Task getParallelTask() {
         return parallelTask;
     }
 
-    public void setParallelTask(Task pt) { 
+    public int getPatientPresence() {
+        return this.patient;
+    }
+
+    public void setParallelTask(Task pt) {
         parallelTask = pt;
     }
-    
-    public String getProcessID(){
+
+    public String getProcessID() {
         return processID;
     }
 
-    public Skill getSkill() {
-        return skill;
+    public ArrayList<Skill> getListSkill() {
+        return listSkill;
     }
 
-    public void setSkill(Skill skill) {
-        this.skill = skill;
+    public void setListSkill(Skill skill) {
+        this.listSkill.add(skill);
     }
 
     public void addNextTask(String nextTask) {
