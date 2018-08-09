@@ -27,12 +27,12 @@ public class Main {
         List<String> arrivalSequence = new ArrayList();
         arrivalSequence.add("P0");
         arrivalSequence.add("P1");
-//        arrivalSequence.add("P2");
-//        arrivalSequence.add("P3");
-//        arrivalSequence.add("P4");
+        arrivalSequence.add("P2");
+        arrivalSequence.add("P3");
+        arrivalSequence.add("P4");
 //        arrivalSequence.add("P7");
-        arrivalSequence.add("P10");
-//        arrivalSequence.add("P12");
+//        arrivalSequence.add("P10");
+        arrivalSequence.add("P12");
 
         Schedule s = new Schedule(arrivalSequence);
         List <Patient> arrivalSeq = s.getListPatients();

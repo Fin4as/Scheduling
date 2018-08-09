@@ -258,6 +258,14 @@ public class Test {
                                             pat.addDiagramValues(0, 0); // add the waiting time first
                                             pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
                                         }
+                                    } else { //PATIENT NOT PRESENT
+                                        if (start != 0) {
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1 + t.getAvTime()); // add the waiting time first
+                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                        } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
+                                            pat.addDiagramValues(0, t.getAvTime()); // add the waiting time first
+                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                        }
                                     }
                                 }
 
@@ -317,6 +325,9 @@ public class Test {
 
                                             pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
                                             pat.addDiagramValues(0, t.getAvTime()); // then add the duration
+                                        } else { //PATIENT NOT PRESENT
+                                            pat.addDiagramValues(0, start - endLastTask + t.getAvTime()); //add the waiting time first
+                                            pat.addDiagramValues(0, 0); // then add the duration
                                         }
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
@@ -327,6 +338,10 @@ public class Test {
                                             pat.addArrayDiagram(1);
                                             pat.addDiagramValues(1, start); //add the waiting time first
                                             pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
+                                        } else { //PATIENT NOT PRESENT
+                                            pat.addArrayDiagram(1);
+                                            pat.addDiagramValues(1, start + pT.getAvTime()); //add the waiting time first
+                                            pat.addDiagramValues(1, 0); // then add the duration
                                         }
                                         k++;
                                     }
@@ -488,6 +503,14 @@ public class Test {
                                         } else {
                                             pat.addDiagramValues(0, 0); // NON WAITING
                                             pat.addDiagramValues(0, currentAvTime);
+                                        }
+                                    } else { //PATIENT NOT PRESENT
+                                        if (x == 0) {
+                                            pat.addDiagramValues(0, (currentStart - endLastTask) + currentAvTime);
+                                            pat.addDiagramValues(0, 0);
+                                        } else {
+                                            pat.addDiagramValues(0, currentAvTime); // NON WAITING
+                                            pat.addDiagramValues(0, 0);
                                         }
                                     }
 
