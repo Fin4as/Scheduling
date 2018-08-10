@@ -495,6 +495,7 @@ public class Test {
                                     int currentAvTime = tasksToSchedule.get(x).getAvTime();
 
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
+                                    
                                     if (tasksToSchedule.get(x).getPatientPresence() == 1) {  // PATIENT PRESENCE TEST
 
                                         if (x == 0) {
