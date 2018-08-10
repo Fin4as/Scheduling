@@ -30,8 +30,8 @@ public class Main {
         arrivalSequence.add("P2");
         arrivalSequence.add("P3");
         arrivalSequence.add("P4");
-//        arrivalSequence.add("P7");
-//        arrivalSequence.add("P10");
+        arrivalSequence.add("P7");
+        arrivalSequence.add("P10");
         arrivalSequence.add("P12");
 
         Schedule s = new Schedule(arrivalSequence);

@@ -148,6 +148,43 @@ public class Test {
         return mksp;
     }
 
+    public ArrayList<Resource> researchResources(int time, Task t) { // BETTER RESOURCE MANAGEMENT
+        int start = time;
+        ArrayList<Resource> resourcesToUse = new ArrayList();
+        for (int f = 0; f < t.getListSkill().size(); f++) {
+            if (f == 0) {
+                Skill s = t.getListSkill().get(f);
+                int r = s.getFastestAvailable(time, t.getAvTime());
+                if (r != -1) {
+                    Resource res = s.getListResource().get(r);
+                    start = res.getNextAvailableTime(time, t.getAvTime());
+                    resourcesToUse.add(res);
+                } else {
+                    resourcesToUse.add(null);
+                }
+            } else {
+                Skill s = t.getListSkill().get(f);
+                int r = s.getStrictestAvailable(start, t.getAvTime());
+                if (r != -1) {
+                    Resource res = s.getListResource().get(r);
+                    resourcesToUse.add(res);
+                } else {
+                    r = s.getFastestAvailable(start, t.getAvTime());
+                    if (r != -1) {
+                        Resource res = s.getListResource().get(r);
+                        int newStart = res.getNextAvailableTime(start, t.getAvTime());
+                        resourcesToUse = researchResources(newStart, t); // recursive call
+                        return resourcesToUse;
+                    } else {
+                        resourcesToUse.add(null);
+                    }
+                }
+            }
+        }
+        return resourcesToUse;
+    } // BETTER RESOURCE MANAGEMENT
+
+
     public void addTask(boolean giveDetails) {
 
         //Empty the table of time of each patient 
@@ -217,29 +254,8 @@ public class Test {
                 if (tasksToSchedule.size() == 0) {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
-                        ArrayList<Resource> resourcesToUse = new ArrayList();
-                        for (int f = 0; f < t.getListSkill().size(); f++) {
-                            if (f == 0) {
-                                Skill s = t.getListSkill().get(f);
-                                int r = s.getFastestAvailable(time, t.getAvTime());
-                                if (r != -1) {
-                                    Resource res = s.getListResource().get(r);
-                                    start = res.getNextAvailableTime(time, t.getAvTime());
-                                    resourcesToUse.add(res);
-                                } else {
-                                    resourcesToUse.add(null);
-                                }
-                            } else {
-                                Skill s = t.getListSkill().get(f);
-                                int r = s.getStrictestAvailable(start, t.getAvTime());
-                                if (r != -1) {
-                                    Resource res = s.getListResource().get(r);
-                                    resourcesToUse.add(res);
-                                } else {
-                                    resourcesToUse.add(null);
-                                }
-                            }
-                        }
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+
                         if (!resourcesToUse.contains(null)) {
                             if (t.getParallelTask() == null) {
                                 String displayResTask = "";
@@ -252,7 +268,7 @@ public class Test {
                                     pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
                                     if (t.getPatientPresence() == 1) { // PATIENT PRESENCE TEST            
                                         if (start != 0) {
-                                            pat.addDiagramValues(0, (start - endLastTask) - 1); // add the waiting time first
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1); // add the waiting time first in the diagram
                                             pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
                                         } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
                                             pat.addDiagramValues(0, 0); // add the waiting time first
@@ -406,40 +422,17 @@ public class Test {
                         avTimeTotal += tasksToSchedule.get(iv).getAvTime();
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
-                        ArrayList<Resource> resourcesToUse = new ArrayList();
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
                         ArrayList<String> tasksResourceToUse = new ArrayList();
                         ArrayList<Integer> durationResourceToUse = new ArrayList();
-                        for (int d = 0; d < t.getListSkill().size(); d++) {
-                            if (d == 0) {
-                                Skill s = t.getListSkill().get(d);
-                                int r = s.getFastestAvailable(time, t.getAvTime());
-                                if (r != -1) {
-                                    Resource res = s.getListResource().get(r);
-                                    start = res.getNextAvailableTime(time, t.getAvTime());
-                                    resourcesToUse.add(res);
-                                    tasksResourceToUse.add(t.getTaskID());
-                                    durationResourceToUse.add(t.getAvTime());
-                                } else {
-                                    resourcesToUse.add(null);
-                                    tasksResourceToUse.add(null);
-                                    durationResourceToUse.add(0);
-                                }
-                            } else {
-                                Skill s = t.getListSkill().get(d);
-                                int r = s.getStrictestAvailable(start, t.getAvTime());
-                                if (r != -1) {
-                                    Resource res = s.getListResource().get(r);
-                                    resourcesToUse.add(res);
-                                    tasksResourceToUse.add(t.getTaskID());
-                                    durationResourceToUse.add(t.getAvTime());
-                                } else {
-                                    resourcesToUse.add(null);
-                                    tasksResourceToUse.add(null);
-                                    durationResourceToUse.add(0);
-                                }
-                            }
-                        }
+                        
                         if (!resourcesToUse.contains(null)) {
+                            
+                            for(int v=0; v<resourcesToUse.size(); v++){ // BETTER RESOURCE MANAGEMENT
+                                tasksResourceToUse.add(t.getTaskID());
+                                durationResourceToUse.add(t.getAvTime());
+                            }// BETTER RESOURCE MANAGEMENT
+                            
                             int currentStart = start + t.getAvTime() + 1;
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
                                 for (int v = 0; v < tasksToSchedule.get(iz).getListSkill().size(); v++) {
@@ -495,7 +488,6 @@ public class Test {
                                     int currentAvTime = tasksToSchedule.get(x).getAvTime();
 
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    
                                     if (tasksToSchedule.get(x).getPatientPresence() == 1) {  // PATIENT PRESENCE TEST
 
                                         if (x == 0) {
@@ -545,11 +537,12 @@ public class Test {
                                 endLastTask = start + avTimeTotal;
 
                             } else {
+                               
                                 throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                             }
 
                         } else {
-                            throw new IllegalArgumentException("Not enough ressources to create a full schedule");
+                              throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                         }
 
                     }
