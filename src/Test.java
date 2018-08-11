@@ -147,9 +147,11 @@ public class Test {
         mksp = max - min;
         return mksp;
     }
-
+    int updateStart;
+     
     public ArrayList<Resource> researchResources(int time, Task t) { // BETTER RESOURCE MANAGEMENT
         int start = time;
+        updateStart = time;
         ArrayList<Resource> resourcesToUse = new ArrayList();
         for (int f = 0; f < t.getListSkill().size(); f++) {
             if (f == 0) {
@@ -158,6 +160,7 @@ public class Test {
                 if (r != -1) {
                     Resource res = s.getListResource().get(r);
                     start = res.getNextAvailableTime(time, t.getAvTime());
+                    updateStart = start;
                     resourcesToUse.add(res);
                 } else {
                     resourcesToUse.add(null);
@@ -174,6 +177,7 @@ public class Test {
                         Resource res = s.getListResource().get(r);
                         int newStart = res.getNextAvailableTime(start, t.getAvTime());
                         resourcesToUse = researchResources(newStart, t); // recursive call
+                        updateStart = newStart;
                         return resourcesToUse;
                     } else {
                         resourcesToUse.add(null);
@@ -182,7 +186,7 @@ public class Test {
             }
         }
         return resourcesToUse;
-    } // BETTER RESOURCE MANAGEMENT
+    } 
 
 
     public void addTask(boolean giveDetails) {
@@ -255,7 +259,7 @@ public class Test {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
                         ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
-
+start = updateStart;
                         if (!resourcesToUse.contains(null)) {
                             if (t.getParallelTask() == null) {
                                 String displayResTask = "";
@@ -423,6 +427,7 @@ public class Test {
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
                         ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+                        start = updateStart;
                         ArrayList<String> tasksResourceToUse = new ArrayList();
                         ArrayList<Integer> durationResourceToUse = new ArrayList();
                         

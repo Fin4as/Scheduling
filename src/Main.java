@@ -25,14 +25,14 @@ public class Main {
     public static void main(String[] args) {
 
         Schedule s = new Schedule();
-        List <Patient> arrivalSeq = s.getListPatients();
+        List <Patient> arrivalSequence = s.getListPatients();
         Functions f = new Functions(s);
 
 //        for (int i = 0; i < 1000; i++) {
         try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("resultsAnnealing.txt", true), "utf-8"))) {
             long t_0A = System.nanoTime();
-            List<Patient> best = f.annealingMin(1, 0.5, 20, arrivalSeq);
+            List<Patient> best = f.annealingMin(1, 0.5, 20, arrivalSequence);
             long t_1A = System.nanoTime();
             if (f.fO(best, true) != Double.MAX_VALUE) {
                 System.out.println(best + " " + f.fO(best, false));
@@ -51,7 +51,7 @@ public class Main {
 //        try (Writer writer2 = new BufferedWriter(new OutputStreamWriter(
 //                new FileOutputStream("resultsGenetic.txt", true), "utf-8"))) {
 //            long t_0G = System.nanoTime();
-//            List<Patient> gene = f.genetic(25, 30, arrivalSeq, 20, 40, true);
+//            List<Patient> gene = f.genetic(25, 30, arrivalSequence, 20, 40, true);
 //            long t_1G = System.nanoTime();
 //            if (f.fO(gene, false) != Double.MAX_VALUE) {
 //                System.out.println(gene + " " + f.fO(gene, false));
@@ -70,7 +70,7 @@ public class Main {
 //        try (Writer writer3 = new BufferedWriter(new OutputStreamWriter(
 //                new FileOutputStream("resultsGRASP_RCL.txt", true), "utf-8"))) {
 //            long t_0GRCL = System.nanoTime();
-//            List<Patient> graspRCL = f.graspRCL(0.4, 20, 45, arrivalSeq);
+//            List<Patient> graspRCL = f.graspRCL(0.4, 20, 45, arrivalSequence);
 //            long t_1GRCL = System.nanoTime();
 //            if (f.fO(graspRCL, false) != Double.MAX_VALUE) {
 //                System.out.println(graspRCL + " " + f.fO(graspRCL, false));
@@ -89,7 +89,7 @@ public class Main {
 //        try (Writer writer4 = new BufferedWriter(new OutputStreamWriter(
 //                new FileOutputStream("resultsGRASP.txt", true), "utf-8"))) {
 //            long t_0GR = System.nanoTime();
-//            List<Patient> grasp = f.grasp(20, 45, arrivalSeq);
+//            List<Patient> grasp = f.grasp(20, 45, arrivalSequence);
 //            long t_1GR = System.nanoTime();
 //            if (f.fO(grasp, false) != Double.MAX_VALUE) {
 //                System.out.println(grasp + " " + f.fO(grasp, false));
