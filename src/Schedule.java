@@ -26,12 +26,12 @@ public class Schedule {
     private List<String> nameResource;
     private List<Patient> listPatients; //patientData
 
-    public Schedule(List<String> listPatientID) { //PatientData
-        listPatients = new ArrayList<>(); //PatientData
+    public Schedule() { //PatientData
+        listPatients = new ArrayList(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
         getConnectDB(); // connect to DataBAase
-        this.getPatientData(listPatientID);
+        this.getPatientData();
         List<String> listP = this.getProcess(listPatients); //PatientData
         listProcess = new ArrayList();
 
@@ -60,7 +60,7 @@ public class Schedule {
         return idProcess;
     }
 
-    public void getPatientData(List<String> listPatientID) { //PatientData
+    public void getPatientData() { //PatientData
 
         try {
             String query = "SELECT * FROM Patient";
@@ -71,10 +71,10 @@ public class Schedule {
                 String process_id = rs.getString("ProcessID");
                 int ageInformation = rs.getInt("ageInformation");
                 String typeSurgery = rs.getString("typeSurgery");
-                if (listPatientID.contains(patient_id)) { //PatientData
+                
                     Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
                     listPatients.add(patient);
-                } //PatientData
+               
             }
 
         } catch (Exception ex) {
