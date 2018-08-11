@@ -25,6 +25,7 @@ public class Schedule {
     private List<Resource> allResources;
     private List<String> nameResource;
     private List<Patient> listPatients; //patientData
+    int presenceP;
 
     public Schedule() { //PatientData
         listPatients = new ArrayList(); //PatientData
@@ -36,7 +37,7 @@ public class Schedule {
         listProcess = new ArrayList();
 
         for (int i = 0; i < listP.size(); i++) {
-            
+
             String processID = listP.get(i);
             Process pro = new Process(processID);
             listProcess.add(pro);
@@ -54,7 +55,7 @@ public class Schedule {
 
         for (Patient e : listPatient) {
 //            if (!idProcess.contains(e.getProcessID())) {
-                idProcess.add(e.getProcessID());
+            idProcess.add(e.getProcessID());
 //            }
         }
         return idProcess;
@@ -71,10 +72,10 @@ public class Schedule {
                 String process_id = rs.getString("ProcessID");
                 int ageInformation = rs.getInt("ageInformation");
                 String typeSurgery = rs.getString("typeSurgery");
-                
-                    Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
-                    listPatients.add(patient);
-               
+
+                Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
+                listPatients.add(patient);
+
             }
 
         } catch (Exception ex) {
@@ -120,16 +121,16 @@ public class Schedule {
             while (rs.next()) {
                 String process_id = rs.getString("ProcessID");
                 String task_id = rs.getString("TaskID");
-                int patient = rs.getInt("patient");
+//                int patient = rs.getInt("patient");
                 int opMode = rs.getInt("OpMode");
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
-                
+
                 int stochasticDuration;
-                stochasticDuration = (avTime - stdDev )+ (int)(Math.random()*((avTime - stdDev)+ 1));
-                
-                Task task = new Task(process_id, task_id, patient, opMode, stochasticDuration, stdDev, maxWait);
+                stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+
+                Task task = new Task(process_id, task_id, this.presenceP, opMode, stochasticDuration, stdDev, maxWait);
                 pro.addListTask(task);
             }
 
@@ -151,12 +152,17 @@ public class Schedule {
                     String skillID = rs.getString("SkillID");
                     String description = rs.getString("Description");
                     String prevTask = rs.getString("PrevTask");
-                    listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
+
+                    if (skillID.equals("SP")) {
+                        listTask.get(i).setPatientPresence(1);
+                    }
+                    if (!skillID.equals("SP")) {
+                        listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
+                    }
 
                 }
 
             } catch (Exception ex) {
-                System.out.println("Hey 2");
                 System.out.println(ex);
             }
         }
@@ -174,16 +180,19 @@ public class Schedule {
                         String resourceID = rs.getString("ResourceID");
                         int capacity = rs.getInt("Capacity");
                         String name = rs.getString("Name");
-                        if (!nameResource.contains(resourceID)) {
-                            Resource res = new Resource(resourceID, capacity, name);
 
-                            listTask.get(i).getListSkill().get(j).addResource(res);
-                            allResources.add(res);
-                            nameResource.add(resourceID);
-                        } else {
-                            int index = nameResource.indexOf(resourceID);
-                            Resource res = allResources.get(index);
-                            listTask.get(i).getListSkill().get(j).addResource(res);
+                        if (!name.equals("P")) {
+                            if (!nameResource.contains(resourceID)) {
+                                Resource res = new Resource(resourceID, capacity, name);
+
+                                listTask.get(i).getListSkill().get(j).addResource(res);
+                                allResources.add(res);
+                                nameResource.add(resourceID);
+                            } else {
+                                int index = nameResource.indexOf(resourceID);
+                                Resource res = allResources.get(index);
+                                listTask.get(i).getListSkill().get(j).addResource(res);
+                            }
                         }
 
                     }

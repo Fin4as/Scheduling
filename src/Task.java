@@ -20,16 +20,16 @@ public class Task {
     private int stdDev;
     private int maxWait;
     private Task parallelTask; // this object is for task which as parallel task otherwise it's null
-    private int patient; // this variable aims to indicate if a patient is implied in the task
+    private int patientPresence; // this variable aims to indicate if a patient is implied in the task
 
     private List<String> prevTaskID;
     private List<String> nextTaskID;
     private ArrayList<Skill> listSkill;
 
-    public Task(String processID, String taskID, int patient, int opMode, int avTime, int stdDev, int maxWait) {
+    public Task(String processID, String taskID, int patientP, int opMode, int avTime, int stdDev, int maxWait) {
         this.processID = processID;
         this.taskID = taskID;
-        this.patient = patient;
+        this.patientPresence = patientP;
         this.opMode = opMode;
         this.avTime = avTime;
         this.stdDev = stdDev;
@@ -46,7 +46,11 @@ public class Task {
     }
 
     public int getPatientPresence() {
-        return this.patient;
+        return this.patientPresence;
+    }
+    
+    public void setPatientPresence(int p){
+        this.patientPresence =p;
     }
 
     public void setParallelTask(Task pt) {
