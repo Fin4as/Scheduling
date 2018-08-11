@@ -25,6 +25,7 @@ public class Schedule {
     private List<Resource> allResources;
     private List<String> nameResource;
     private List<Patient> listPatients; //patientData
+    int stochasticDuration;
     int presenceP;
 
     public Schedule() { //PatientData
@@ -127,7 +128,7 @@ public class Schedule {
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
 
-                int stochasticDuration;
+                
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
 
                 Task task = new Task(process_id, task_id, this.presenceP, opMode, stochasticDuration, stdDev, maxWait);
@@ -156,7 +157,7 @@ public class Schedule {
                     if (skillID.equals("SP")) {
                         listTask.get(i).setPatientPresence(1);
                     }
-                    if (!skillID.equals("SP")) {
+                    else if (!skillID.equals("SP")) {
                         listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
                     }
 
@@ -288,6 +289,8 @@ public class Schedule {
                     if (listTask.get(i).getNextTaskIDList().size() > 1) {
                         listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
                         listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
+                        listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime());
+                        
                     }
                 }
             }
