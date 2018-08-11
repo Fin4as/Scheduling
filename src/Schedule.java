@@ -53,9 +53,9 @@ public class Schedule {
         List<String> idProcess = new ArrayList();
 
         for (Patient e : listPatient) {
-            if (!idProcess.contains(e.getProcessID())) {
+//            if (!idProcess.contains(e.getProcessID())) {
                 idProcess.add(e.getProcessID());
-            }
+//            }
         }
         return idProcess;
     }
@@ -125,8 +125,11 @@ public class Schedule {
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
-
-                Task task = new Task(process_id, task_id, patient, opMode, avTime, stdDev, maxWait);
+                
+                int stochasticDuration;
+                stochasticDuration = (avTime - stdDev )+ (int)(Math.random()*((avTime - stdDev)+ 1));
+                
+                Task task = new Task(process_id, task_id, patient, opMode, stochasticDuration, stdDev, maxWait);
                 pro.addListTask(task);
             }
 
