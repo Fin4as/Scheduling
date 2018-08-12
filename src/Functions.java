@@ -25,9 +25,9 @@ import java.util.Random;
  */
 public class Functions {
 
-    Schedule s;
+    Data s;
 
-    public Functions(Schedule s) {
+    public Functions(Data s) {
         this.s = s;
     }
 

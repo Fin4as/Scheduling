@@ -22,7 +22,7 @@ public class Test {
     int totalWaitingTime;
     int lateness;
 
-    public Test(List<Patient> sequence, Schedule s) {
+    public Test(List<Patient> sequence, Data s) {
         listPatient = sequence;
         listResource = s.getAllResources();
         totalWaitingTime = 0;
@@ -148,7 +148,7 @@ public class Test {
         return mksp;
     }
     int updateStart;
-     
+
     public ArrayList<Resource> researchResources(int time, Task t) { // BETTER RESOURCE MANAGEMENT
         int start = time;
         updateStart = time;
@@ -186,8 +186,7 @@ public class Test {
             }
         }
         return resourcesToUse;
-    } 
-
+    }
 
     public void addTask(boolean giveDetails) {
 
@@ -259,7 +258,7 @@ public class Test {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
                         ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
-start = updateStart;
+                        start = updateStart;
                         if (!resourcesToUse.contains(null)) {
                             if (t.getParallelTask() == null) {
                                 String displayResTask = "";
@@ -430,14 +429,14 @@ start = updateStart;
                         start = updateStart;
                         ArrayList<String> tasksResourceToUse = new ArrayList();
                         ArrayList<Integer> durationResourceToUse = new ArrayList();
-                        
+
                         if (!resourcesToUse.contains(null)) {
-                            
-                            for(int v=0; v<resourcesToUse.size(); v++){ // BETTER RESOURCE MANAGEMENT
+
+                            for (int v = 0; v < resourcesToUse.size(); v++) { // BETTER RESOURCE MANAGEMENT
                                 tasksResourceToUse.add(t.getTaskID());
                                 durationResourceToUse.add(t.getAvTime());
                             }// BETTER RESOURCE MANAGEMENT
-                            
+
                             int currentStart = start + t.getAvTime() + 1;
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
                                 for (int v = 0; v < tasksToSchedule.get(iz).getListSkill().size(); v++) {
@@ -542,12 +541,12 @@ start = updateStart;
                                 endLastTask = start + avTimeTotal;
 
                             } else {
-                               
+
                                 throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                             }
 
                         } else {
-                              throw new IllegalArgumentException("Not enough ressources to create a full schedule");
+                            throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                         }
 
                     }

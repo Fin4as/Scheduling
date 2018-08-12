@@ -24,7 +24,7 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Schedule s = new Schedule();
+        Data s = new Data();
         List <Patient> arrivalSequence = s.getListPatients();
         Functions f = new Functions(s);
 

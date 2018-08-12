@@ -15,7 +15,7 @@ import java.util.List;
  *
  * @author Hayat
  */
-public class Schedule {
+public class Data {
 
     ResultSet rs;
     String driver = "com.mysql.jdbc.Driver";
@@ -28,7 +28,7 @@ public class Schedule {
     int stochasticDuration;
     int presenceP;
 
-    public Schedule() { //PatientData
+    public Data() { 
         listPatients = new ArrayList(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
