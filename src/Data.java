@@ -25,15 +25,19 @@ public class Data {
     private List<Resource> allResources;
     private List<String> nameResource;
     private List<Patient> listPatients; //patientData
+    private List<Integer> numberPatientsPerSurgery;
     int stochasticDuration;
     int presenceP;
 
-    public Data() { 
+    public Data() {
         listPatients = new ArrayList(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
-        getConnectDB(); // connect to DataBAase
+        getConnectDB(); // connect to DataBase
+        numberPatientsPerSurgery = new ArrayList();
+        this.getNumberPatientsPerSurgery();
         this.getPatientData();
+
         List<String> listP = this.getProcess(listPatients); //PatientData
         listProcess = new ArrayList();
 
@@ -62,6 +66,7 @@ public class Data {
         return idProcess;
     }
 
+    
     public void getPatientData() { //PatientData
 
         try {
@@ -74,8 +79,25 @@ public class Data {
                 int ageInformation = rs.getInt("ageInformation");
                 String typeSurgery = rs.getString("typeSurgery");
 
-                Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
+                Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery, numberPatientsPerSurgery);
                 listPatients.add(patient);
+            }
+            
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    } //PatientData
+
+    public void getNumberPatientsPerSurgery() {
+
+        try {
+            String query = "SELECT IDchar, typeSurgery, COUNT(*) FROM (SELECT * FROM Patient NATURAL JOIN SurgeryTypes ORDER BY SurgeryTypes.IDchar) AS `numberPatientsPerSurgery` GROUP BY typeSurgery ORDER BY numberPatientsPerSurgery.IDchar";
+            rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int numberOfPatientPersurgery = rs.getInt("COUNT(*)");
+                numberPatientsPerSurgery.add(numberOfPatientPersurgery);
 
             }
 
@@ -83,7 +105,7 @@ public class Data {
             System.out.println(ex);
         }
 
-    } //PatientData
+    }
 
     public List<Resource> getAllResources() {
         return allResources;
@@ -128,7 +150,6 @@ public class Data {
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
 
-                
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
 
                 Task task = new Task(process_id, task_id, this.presenceP, opMode, stochasticDuration, stdDev, maxWait);
@@ -138,7 +159,7 @@ public class Data {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-  
+
     }
 
     public void getSkillData(List<Task> listTask, String processID) {
@@ -156,8 +177,7 @@ public class Data {
 
                     if (skillID.equals("SP")) {
                         listTask.get(i).setPatientPresence(1);
-                    }
-                    else if (!skillID.equals("SP")) {
+                    } else if (!skillID.equals("SP")) {
                         listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
                     }
 
@@ -290,7 +310,7 @@ public class Data {
                         listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
                         listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
                         listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime());
-                        
+
                     }
                 }
             }
