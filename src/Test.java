@@ -285,6 +285,9 @@ public class Test {
                                             pat.addDiagramValues(0, t.getAvTime()); // add the waiting time first
                                             pat.addDiagramValues(0, 0); //  then add the duration
                                         }
+                                        if (k != 0) {
+                                            totalWaitingTime += t.getAvTime();
+                                        }
                                     }
                                 }
 
@@ -312,7 +315,7 @@ public class Test {
                                 endLastTask = start + t.getAvTime();
 
                             } else { //parallelism ****** start *********
-
+                                int nbrResFirstTask = resourcesToUse.size();
                                 Task pT = t.getParallelTask();
                                 for (int m = 0; m < pT.getListSkill().size(); m++) {
                                     Skill s = pT.getListSkill().get(m);
@@ -330,7 +333,7 @@ public class Test {
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
 
                                         for (int p = 0; p < resourcesToUse.size(); p++) {
-                                            if (p <= t.getListSkill().size() - 1) {
+                                            if (p <= nbrResFirstTask - 1) {
                                                 resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
                                                 displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
                                             } else {
@@ -347,6 +350,9 @@ public class Test {
                                         } else { //PATIENT NOT PRESENT
                                             pat.addDiagramValues(0, start - endLastTask + t.getAvTime()); //add the waiting time first
                                             pat.addDiagramValues(0, 0); // then add the duration
+                                            if (k != 0) {
+                                                totalWaitingTime += t.getAvTime();
+                                            }
                                         }
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
@@ -361,6 +367,9 @@ public class Test {
                                             pat.addArrayDiagram(1);
                                             pat.addDiagramValues(1, start + pT.getAvTime()); //add the waiting time first
                                             pat.addDiagramValues(1, 0); // then add the duration
+                                            if (k != 0) {
+                                                totalWaitingTime += pT.getAvTime();
+                                            }
                                         }
                                         k++;
                                     }
@@ -508,6 +517,9 @@ public class Test {
                                         } else {
                                             pat.addDiagramValues(0, currentAvTime); // NON WAITING
                                             pat.addDiagramValues(0, 0);
+                                        }
+                                        if (k != 0) {
+                                            totalWaitingTime += tasksToSchedule.get(x).getAvTime();
                                         }
                                     }
 
