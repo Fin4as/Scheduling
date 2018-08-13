@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Value of the initial sequence: 860.3658
 
 ==> New update of the optimum : 779.1854
@@ -8,3 +9,79 @@ Objective function value associed : 779.1854
 Found in 0.036835808 s. on a total runtime of 3.191756258 s.
 This solution has been reached by generating 25 sequences (25 sequences from the initial pool + 0 children),
 on a total generated sequences of 125 sequences (25 sequences from the initial pool + 100 children).
+=======
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1164.1348
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 357.0622
+Original position : 357.0622
+Original position : 357.0622
+Original position : 1448.3342
+Original position : 283.0622
+Original position : 1448.3342
+Original position : 1.7976931348623157E308
+Original position : 1448.3342
+Original position : 1448.3342
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 128.0
+Original position : 128.0
+Original position : 127.0
+Original position : 128.0
+Original position : 115.0
+Original position : 33138.147
+Original position : 145.0
+Original position : 145.0
+Original position : 145.0
+Original position : 145.0
+Original position : 145.0
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+>>>>>>> PatientINDB

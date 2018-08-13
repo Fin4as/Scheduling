@@ -144,6 +144,7 @@ public class Resource {
                     }
                     duration++;
                 } else {
+                    diagramValues.add(0);
                     diagramValues.add(duration);
                     duration = 0;
                     duration++;

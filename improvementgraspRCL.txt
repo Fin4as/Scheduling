@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Value of the initial sequence: 849.1854
 
 -------------------------------------------------------------------------------------------------------------------------------
@@ -229,3 +230,218 @@ Best solution proposed by the algorithm : [P1, P15, P12, P0, P14, P7, P2, P8, P3
 Objective function value associed : 769.1854
 Found in 1.294764664 s. on a total runtime of 1.861100984 s.
 This solution has been reached by generating 1095 sequences on a total generated sequences of 1618 sequences.
+=======
+Original position : 1164.1348
+Improved : 1140.3242
+Improved : 1136.3242
+Improved : 1134.3242
+Original position : 1164.1348
+Improved : 1140.3242
+Improved : 1134.3242
+Original position : 1164.1348
+Improved : 1154.3242
+Improved : 1136.3242
+Improved : 1134.3242
+Original position : 1164.1348
+Improved : 1136.3242
+Improved : 1134.3242
+Original position : 1164.1348
+Improved : 1140.3242
+Improved : 1134.3242
+Original position : 1448.3342
+Improved : 1418.7795
+Improved : 1416.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1428.7795
+Improved : 1422.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1422.7795
+Improved : 1416.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1424.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1412.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1412.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1418.7795
+Improved : 1414.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1416.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1410.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1426.7795
+Improved : 1416.7795
+Improved : 1410.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1410.7795
+Original position : 1448.3342
+Improved : 1418.7795
+Improved : 1410.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1430.7795
+Improved : 1406.7795
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1408.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 357.0622
+Improved : 334.054
+Improved : 332.054
+Original position : 357.0622
+Improved : 340.054
+Improved : 332.054
+Original position : 357.0622
+Improved : 340.054
+Improved : 332.054
+Original position : 1448.3342
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 283.0622
+Improved : 273.054
+Original position : 1448.3342
+Improved : 1422.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Improved : 1410.7795
+Original position : 1.7976931348623157E308
+Original position : 1448.3342
+Improved : 1420.7795
+Improved : 1416.7795
+Improved : 1414.7795
+Improved : 1412.7795
+Original position : 1448.3342
+Improved : 1414.7795
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improved : 223.0147
+Improved : 217.0157
+Improved : 206.0147
+Original position : 1.7976931348623157E308
+Improved : 206.0147
+Original position : 1.7976931348623157E308
+Improved : 223.0147
+Improved : 217.0157
+Improved : 212.0157
+Improved : 206.0147
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.011
+Improved : 176.0096
+Original position : 1.7976931348623157E308
+Improved : 195.0137
+Improved : 191.0127
+Improved : 153.0077
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.011
+Improved : 176.0096
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.0103
+Improved : 176.0096
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 153.0077
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.011
+Improved : 153.0077
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.011
+Improved : 153.0077
+Original position : 1.7976931348623157E308
+Improved : 206.0147
+Original position : 1.7976931348623157E308
+Improved : 191.0127
+Improved : 176.0096
+Original position : 1.7976931348623157E308
+Improved : 209.0147
+Improved : 192.011
+Original position : 1.7976931348623157E308
+Improved : 209.0147
+Improved : 192.011
+Original position : 1.7976931348623157E308
+Improved : 274.0224
+Original position : 1.7976931348623157E308
+Improved : 209.0147
+Improved : 205.0147
+Improved : 191.0127
+Improved : 176.0096
+Improved : 153.0077
+Original position : 1.7976931348623157E308
+Improved : 274.0224
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improved : 274.0224
+Original position : 1.7976931348623157E308
+Improved : 274.0224
+Original position : 1.7976931348623157E308
+Improved : 274.0224
+Original position : 1.7976931348623157E308
+Improved : 211.0147
+Improved : 201.0137
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 128.0
+Improved : 127.0
+Original position : 128.0
+Improved : 127.0
+Original position : 127.0
+Original position : 128.0
+Improved : 127.0
+Original position : 115.0
+Original position : 33138.147
+Improved : 821.765
+Original position : 145.0
+Improved : 139.0
+Original position : 145.0
+Improved : 139.0
+Original position : 145.0
+Improved : 139.0
+Original position : 145.0
+Improved : 139.0
+Original position : 145.0
+Improved : 139.0
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+>>>>>>> PatientINDB

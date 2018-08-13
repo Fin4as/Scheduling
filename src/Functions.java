@@ -25,11 +25,9 @@ import java.util.Random;
  */
 public class Functions {
 
-    Schedule s;
-    private int totaliterGrasp;
-    private int totaliterBest;
+    Data s;
 
-    public Functions(Schedule s) {
+    public Functions(Data s) {
         this.s = s;
     }
 
@@ -87,7 +85,6 @@ public class Functions {
                     System.out.print(sequence.get(i).getPatientID());
                     for (String[] e : sequence.get(i).getParallelSchedules()) {
                         System.out.println(Arrays.toString(e));
-
                     }
                 }
                 System.out.println("");
@@ -101,7 +98,7 @@ public class Functions {
                 for (int h = 0; h < t.getListResource().size(); h++) {
                     excelWriter.update(t.getListResource());
                 }
-
+                System.out.println("Excel files created");
             }
 
             return result;

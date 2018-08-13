@@ -22,7 +22,7 @@ public class Test {
     int totalWaitingTime;
     int lateness;
 
-    public Test(List<Patient> sequence, Schedule s) {
+    public Test(List<Patient> sequence, Data s) {
         listPatient = sequence;
         listResource = s.getAllResources();
         totalWaitingTime = 0;
@@ -147,6 +147,46 @@ public class Test {
         mksp = max - min;
         return mksp;
     }
+    int updateStart;
+
+    public ArrayList<Resource> researchResources(int time, Task t) { // BETTER RESOURCE MANAGEMENT
+        int start = time;
+        updateStart = time;
+        ArrayList<Resource> resourcesToUse = new ArrayList();
+        for (int f = 0; f < t.getListSkill().size(); f++) {
+            if (f == 0) {
+                Skill s = t.getListSkill().get(f);
+                int r = s.getFastestAvailable(time, t.getAvTime());
+                if (r != -1) {
+                    Resource res = s.getListResource().get(r);
+                    start = res.getNextAvailableTime(time, t.getAvTime());
+                    updateStart = start;
+                    resourcesToUse.add(res);
+                } else {
+                    resourcesToUse.add(null);
+                }
+            } else {
+                Skill s = t.getListSkill().get(f);
+                int r = s.getStrictestAvailable(start, t.getAvTime());
+                if (r != -1) {
+                    Resource res = s.getListResource().get(r);
+                    resourcesToUse.add(res);
+                } else {
+                    r = s.getFastestAvailable(start, t.getAvTime());
+                    if (r != -1) {
+                        Resource res = s.getListResource().get(r);
+                        int newStart = res.getNextAvailableTime(start, t.getAvTime());
+                        resourcesToUse = researchResources(newStart, t); // recursive call
+                        updateStart = newStart;
+                        return resourcesToUse;
+                    } else {
+                        resourcesToUse.add(null);
+                    }
+                }
+            }
+        }
+        return resourcesToUse;
+    }
 
     public void addTask(boolean giveDetails) {
 
@@ -172,6 +212,8 @@ public class Test {
             System.out.print("Patient ID");
             System.out.print("\t");
             System.out.print("Task ID");
+            System.out.print("\t");
+            System.out.print("Presence patient");
             System.out.print("\t");
             System.out.print("Starting Time");
             System.out.print("\t");
@@ -206,23 +248,44 @@ public class Test {
 
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
+
+                if (k == 0) {
+                    time = time - 1;
+                } else {
+                    time = time + 1;
+                }
                 if (tasksToSchedule.size() == 0) {
-
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
-                        int start;
-                        Skill s = t.getSkill();
-                        int r = s.getFastestAvailable(time, t.getAvTime());
-                        if (r != -1) {
+                        int start = time;
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+                        start = updateStart;
+                        if (!resourcesToUse.contains(null)) {
                             if (t.getParallelTask() == null) {
-                                Resource res = t.getSkill().getListResource().get(r);
-                                start = res.getNextAvailableTime(time, t.getAvTime());
+                                String displayResTask = "";
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
+                                    for (int p = 0; p < resourcesToUse.size(); p++) {
+                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
+                                        displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                    }
 
-                                    res.setTime(start, t.getAvTime(), t.getTaskID());
                                     pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
-                                    pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
-                                    pat.addDiagramValues(0, t.getAvTime()); // then add the duration
-//                               
+                                    if (t.getPatientPresence() == 1) { // PATIENT PRESENCE TEST            
+                                        if (start != 0) {
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1); // add the waiting time first in the diagram
+                                            pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
+                                        } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
+                                            pat.addDiagramValues(0, 0); // add the waiting time first
+                                            pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
+                                        }
+                                    } else { //PATIENT NOT PRESENT
+                                        if (start != 0) {
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1 + t.getAvTime()); // add the waiting time first
+                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                        } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
+                                            pat.addDiagramValues(0, t.getAvTime()); // add the waiting time first
+                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                        }
+                                    }
                                 }
 
                                 if (k != 0) {
@@ -236,42 +299,69 @@ public class Test {
                                     System.out.print("\t\t");
                                     System.out.print(t.getTaskID());
                                     System.out.print("\t\t");
+                                    System.out.print(t.getPatientPresence());
+                                    System.out.print("\t\t");
                                     System.out.print(start + "");
                                     System.out.print("\t\t");
                                     System.out.print(t.getAvTime() + start + "");
                                     System.out.print("\t\t");
                                     System.out.print(start - endLastTask + "");
                                     System.out.print("\t\t");
-                                    System.out.println(res.getResourceID());
+                                    System.out.println(displayResTask);
                                 }
                                 endLastTask = start + t.getAvTime();
 
                             } else { //parallelism ****** start *********
 
                                 Task pT = t.getParallelTask();
-                                Skill sk = pT.getSkill();
-                                Resource res1 = t.getSkill().getListResource().get(r);
-                                start = res1.getNextAvailableTime(time, t.getAvTime());
-                                int re = sk.getStrictestAvailable(time, pT.getAvTime());
-                                if (re != -1) {
-                                    Resource res2 = pT.getSkill().getListResource().get(re);
-
+                                for (int m = 0; m < pT.getListSkill().size(); m++) {
+                                    Skill s = pT.getListSkill().get(m);
+                                    int re = s.getStrictestAvailable(start, t.getAvTime());
+                                    if (re != -1) {
+                                        Resource res = s.getListResource().get(re);
+                                        resourcesToUse.add(res);
+                                    } else {
+                                        resourcesToUse.add(null);
+                                    }
+                                }
+                                if (!resourcesToUse.contains(null)) {
+                                    String displayResTask = "";
+                                    String displayResParaTask = "";
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-                                        res1.setTime(start, t.getAvTime(), t.getTaskID());
-                                        res2.setTime(start, pT.getAvTime(), pT.getTaskID());
 
+                                        for (int p = 0; p < resourcesToUse.size(); p++) {
+                                            if (p <= t.getListSkill().size() - 1) {
+                                                resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
+                                                displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                            } else {
+                                                resourcesToUse.get(p).setTime(start, pT.getAvTime(), pT.getTaskID());
+                                                displayResParaTask += resourcesToUse.get(p).getResourceID() + ", ";
+                                            }
+                                        }
                                         pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // 0 = indice du 1er tableau schedule dans parallelSchedules
+
+                                        if (t.getPatientPresence() == 1) { // PATIENT PRESENCE TEST
+
+                                            pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
+                                            pat.addDiagramValues(0, t.getAvTime()); // then add the duration
+                                        } else { //PATIENT NOT PRESENT
+                                            pat.addDiagramValues(0, start - endLastTask + t.getAvTime()); //add the waiting time first
+                                            pat.addDiagramValues(0, 0); // then add the duration
+                                        }
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
                                         pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = indice du 2e tableau schedule dans parallelSchedules
 
-                                        pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
-                                        pat.addDiagramValues(0, t.getAvTime()); // then add the duration
+                                        if (pT.getPatientPresence() == 1) { // PATIENT PRESENCE TEST
 
-                                        pat.addArrayDiagram(1);
-                                        pat.addDiagramValues(1, start); //add the waiting time first
-                                        pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
-
+                                            pat.addArrayDiagram(1);
+                                            pat.addDiagramValues(1, start); //add the waiting time first
+                                            pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
+                                        } else { //PATIENT NOT PRESENT
+                                            pat.addArrayDiagram(1);
+                                            pat.addDiagramValues(1, start + pT.getAvTime()); //add the waiting time first
+                                            pat.addDiagramValues(1, 0); // then add the duration
+                                        }
                                         k++;
                                     }
 
@@ -286,13 +376,15 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(t.getTaskID());
                                         System.out.print("\t\t");
+                                        System.out.print(t.getPatientPresence());
+                                        System.out.print("\t\t");
                                         System.out.print(start + "");
                                         System.out.print("\t\t");
                                         System.out.print(t.getAvTime() + start + "");
                                         System.out.print("\t\t");
                                         System.out.print(start - endLastTask + "");
                                         System.out.print("\t\t");
-                                        System.out.println(res1.getResourceID());
+                                        System.out.println(displayResTask);
 
                                         //parallel task values
                                         System.out.print(process.getID());
@@ -301,13 +393,15 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(pT.getTaskID());
                                         System.out.print("\t\t");
+                                        System.out.print(pT.getPatientPresence());
+                                        System.out.print("\t\t");
                                         System.out.print(start + "");
                                         System.out.print("\t\t");
                                         System.out.print(pT.getAvTime() + start + "");
                                         System.out.print("\t\t");
                                         System.out.print(start - endLastTask + "");
                                         System.out.print("\t\t");
-                                        System.out.println(res2.getResourceID());
+                                        System.out.println(displayResParaTask);
                                     }
                                     int avTime = Math.max(t.getAvTime(), pT.getAvTime());
                                     endLastTask = start + avTime;
@@ -315,6 +409,7 @@ public class Test {
                                 } else {
                                     throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                                 }
+
                             } //parallelism ****** end *********
 
                         } else {
@@ -325,41 +420,96 @@ public class Test {
 
                     tasksToSchedule.add(0, t);
                     int avTimeTotal = 0;
+                    int start = time;
                     for (int iv = 0; iv < tasksToSchedule.size(); iv++) {
                         avTimeTotal += tasksToSchedule.get(iv).getAvTime();
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
-                        Skill s = t.getSkill();
-                        int r = s.getFastestAvailable(time, t.getAvTime());
-                        if (r != -1) {
-                            Resource res = t.getSkill().getListResource().get(r);
-                            int start = res.getNextAvailableTime(time, t.getAvTime());
-                            ArrayList<Resource> resourcesToUse = new ArrayList();
-                            resourcesToUse.add(res);
-                            int currentStart = start;
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+                        start = updateStart;
+                        ArrayList<String> tasksResourceToUse = new ArrayList();
+                        ArrayList<Integer> durationResourceToUse = new ArrayList();
+
+                        if (!resourcesToUse.contains(null)) {
+
+                            for (int v = 0; v < resourcesToUse.size(); v++) { // BETTER RESOURCE MANAGEMENT
+                                tasksResourceToUse.add(t.getTaskID());
+                                durationResourceToUse.add(t.getAvTime());
+                            }// BETTER RESOURCE MANAGEMENT
+
+                            int currentStart = start + t.getAvTime() + 1;
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
-                                Skill sk = tasksToSchedule.get(iz).getSkill();
-                                int re = sk.getStrictestAvailable(currentStart + t.getAvTime() + 1, tasksToSchedule.get(iz).getAvTime());
-                                if (re != -1) {
-                                    resourcesToUse.add(sk.getListResource().get(re));
-                                } else {
-                                    resourcesToUse.add(null);
+                                for (int v = 0; v < tasksToSchedule.get(iz).getListSkill().size(); v++) {
+                                    Skill sk = tasksToSchedule.get(iz).getListSkill().get(v);
+                                    int re = sk.getStrictestAvailable(currentStart, tasksToSchedule.get(iz).getAvTime());
+                                    if (re != -1) {
+                                        resourcesToUse.add(sk.getListResource().get(re));
+                                        tasksResourceToUse.add(tasksToSchedule.get(iz).getTaskID());
+                                        durationResourceToUse.add(tasksToSchedule.get(iz).getAvTime());
+                                    } else {
+                                        resourcesToUse.add(null);
+                                        tasksResourceToUse.add(null);
+                                        durationResourceToUse.add(0);
+
+                                    }
                                 }
                                 currentStart += tasksToSchedule.get(iz).getAvTime() + 1;
                             }
                             if (!resourcesToUse.contains(null)) {
+
                                 currentStart = start;
-
-                                int currentEnd = endLastTask;
-
+                                ArrayList<String> displayRes = new ArrayList<>();
+                                String prevTask = t.getTaskID();
+                                String resourceId = "";
                                 for (int ip = 0; ip < resourcesToUse.size(); ip++) {
-                                    //order is important
-                                    int currentAvTime = tasksToSchedule.get(ip).getAvTime();
-                                    String taskID = tasksToSchedule.get(ip).getTaskID();
+
+                                    String taskID = tasksResourceToUse.get(ip);
+                                    int currentAvTime = durationResourceToUse.get(ip);
                                     resourcesToUse.get(ip).setTime(currentStart, currentAvTime, taskID);
+
+                                    if (prevTask.equals(taskID)) {
+                                        resourceId += resourcesToUse.get(ip).getResourceID() + ", ";
+                                        if (ip == resourcesToUse.size() - 1) {
+                                            displayRes.add(resourceId);
+                                        }
+
+                                    } else {
+                                        displayRes.add(resourceId);
+                                        resourceId = resourcesToUse.get(ip).getResourceID() + ", ";
+                                        currentStart += currentAvTime + 1;
+                                        if (ip == resourcesToUse.size() - 1) {
+                                            displayRes.add(resourceId);
+                                        }
+                                    }
+
+                                    prevTask = taskID;
+                                }
+                                currentStart = start;
+                                int currentEnd = endLastTask;
+                                for (int x = 0; x < tasksToSchedule.size(); x++) {
+
+                                    String taskID = tasksToSchedule.get(x).getTaskID();
+                                    int currentAvTime = tasksToSchedule.get(x).getAvTime();
+
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    pat.addDiagramValues(0, currentStart - currentEnd);
-                                    pat.addDiagramValues(0, currentAvTime);
+                                    if (tasksToSchedule.get(x).getPatientPresence() == 1) {  // PATIENT PRESENCE TEST
+
+                                        if (x == 0) {
+                                            pat.addDiagramValues(0, currentStart - endLastTask);
+                                            pat.addDiagramValues(0, currentAvTime);
+                                        } else {
+                                            pat.addDiagramValues(0, 0); // NON WAITING
+                                            pat.addDiagramValues(0, currentAvTime);
+                                        }
+                                    } else { //PATIENT NOT PRESENT
+                                        if (x == 0) {
+                                            pat.addDiagramValues(0, (currentStart - endLastTask) + currentAvTime);
+                                            pat.addDiagramValues(0, 0);
+                                        } else {
+                                            pat.addDiagramValues(0, currentAvTime); // NON WAITING
+                                            pat.addDiagramValues(0, 0);
+                                        }
+                                    }
 
                                     if (giveDetails == true) {
                                         System.out.print(process.getID());
@@ -368,27 +518,30 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(taskID);
                                         System.out.print("\t\t");
+                                        System.out.print(tasksToSchedule.get(x).getPatientPresence());
+                                        System.out.print("\t\t");
                                         System.out.print(currentStart + "");
                                         System.out.print("\t\t");
-                                        System.out.print(currentAvTime + currentStart + "");
+                                        System.out.print(currentStart + currentAvTime + "");
                                         System.out.print("\t\t");
                                         System.out.print(currentStart - currentEnd + "");
                                         System.out.print("\t\t");
-                                        System.out.println(resourcesToUse.get(ip).getResourceID());
+                                        System.out.println(displayRes.get(x));
                                     }
-
+                                    //order is important
                                     currentEnd = currentStart + currentAvTime;
-                                    currentStart += tasksToSchedule.get(ip).getAvTime() + 1;
-
+                                    currentStart += currentAvTime + 1;
                                 }
+
                                 k += tasksToSchedule.size() - 1;
-                                
+
                                 if (k != 0) {
                                     totalWaitingTime += (start - endLastTask);
                                 }
                                 endLastTask = start + avTimeTotal;
 
                             } else {
+
                                 throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                             }
 

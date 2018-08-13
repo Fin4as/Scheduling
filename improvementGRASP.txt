@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Value of the initial sequence: 849.1854
 
 -------------------------------------------------------------------------------------------------------------------------------
@@ -226,3 +227,241 @@ Best solution proposed by the algorithm : [P13, P9, P6, P12, P19, P8, P14, P18, 
 Objective function value associed : 785.1854
 Found in 0.972181196 s. on a total runtime of 1.559785429 s.
 This solution has been reached by generating 945 sequences on a total generated sequences of 1514 sequences.
+=======
+Original position : 1164.1348
+Improvement : 1130.3242
+Improvement : 1128.3242
+Original position : 1164.1348
+Improvement : 1134.3242
+Improvement : 1130.3242
+Improvement : 1124.3242
+Improvement : 1122.3242
+Original position : 1164.1348
+Improvement : 1134.3242
+Improvement : 1130.3242
+Original position : 1164.1348
+Improvement : 1136.3242
+Improvement : 1130.3242
+Improvement : 1128.3242
+Improvement : 1124.3242
+Original position : 1164.1348
+Improvement : 1146.3242
+Improvement : 1118.3242
+Original position : 1448.3342
+Improvement : 1436.7795
+Improvement : 1416.7795
+Improvement : 1414.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1398.7795
+Original position : 1448.3342
+Improvement : 1426.7795
+Improvement : 1422.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1416.7795
+Improvement : 1410.7795
+Improvement : 1406.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1418.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1408.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1412.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1410.7795
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1412.7795
+Improvement : 1408.7795
+Improvement : 1404.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1416.7795
+Improvement : 1410.7795
+Improvement : 1408.7795
+Improvement : 1400.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1414.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1410.7795
+Improvement : 1408.7795
+Original position : 1448.3342
+Improvement : 1426.7795
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1408.7795
+Improvement : 1406.7795
+Improvement : 1398.7795
+Original position : 1448.3342
+Improvement : 1414.7795
+Improvement : 1412.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1414.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1406.7795
+Original position : 1448.3342
+Improvement : 1410.7795
+Improvement : 1406.7795
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 330.054
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 332.054
+Improvement : 330.054
+Improvement : 328.054
+Original position : 357.0622
+Improvement : 334.054
+Improvement : 332.054
+Improvement : 330.054
+Original position : 1448.3342
+Improvement : 1406.7795
+Original position : 283.0622
+Improvement : 273.054
+Original position : 1448.3342
+Improvement : 1424.7795
+Improvement : 1410.7795
+Improvement : 1402.7795
+Improvement : 1398.7795
+Original position : 1.7976931348623157E308
+Original position : 1448.3342
+Improvement : 1422.7795
+Improvement : 1414.7795
+Improvement : 1412.7795
+Improvement : 1402.7795
+Original position : 1448.3342
+Improvement : 1420.7795
+Improvement : 1418.7795
+Improvement : 1406.7795
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 217.0157
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 223.0147
+Improvement : 212.0157
+Original position : 1.7976931348623157E308
+Improvement : 191.0137
+Improvement : 176.011
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 191.0127
+Improvement : 159.0083
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 176.0103
+Improvement : 159.0083
+Original position : 1.7976931348623157E308
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 176.0096
+Original position : 1.7976931348623157E308
+Improvement : 209.0147
+Improvement : 191.0127
+Improvement : 176.011
+Improvement : 176.0103
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 212.0157
+Improvement : 206.0147
+Original position : 1.7976931348623157E308
+Improvement : 176.011
+Improvement : 176.0103
+Original position : 1.7976931348623157E308
+Improvement : 188.0118
+Original position : 1.7976931348623157E308
+Improvement : 207.0157
+Improvement : 192.011
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 192.0127
+Improvement : 176.011
+Improvement : 153.0077
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 274.0224
+Original position : 1.7976931348623157E308
+Improvement : 213.0147
+Improvement : 211.0147
+Improvement : 201.0137
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+Original position : 128.0
+Improvement : 127.0
+Original position : 128.0
+Improvement : 127.0
+Original position : 127.0
+Original position : 128.0
+Improvement : 127.0
+Original position : 115.0
+Original position : 33138.147
+Improvement : 821.765
+Improvement : 680.3041
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 145.0
+Improvement : 139.0
+Original position : 1.7976931348623157E308
+Original position : 1.7976931348623157E308
+>>>>>>> PatientINDB

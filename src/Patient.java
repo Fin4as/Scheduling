@@ -41,43 +41,44 @@ public class Patient {
         }
         switch (typeSurgery) {
             case "Gastroenterology":
-                cancellationLikelihood += ((Double) (151.0 / (780*129)));
+                cancellationLikelihood += ((Double) (151.0 / (780 * 129)));
                 break;
             case "Ear/Nose/Throat":
-                cancellationLikelihood += ((Double) (91.0 / (780*129)));
+                cancellationLikelihood += ((Double) (91.0 / (780 * 129)));
                 break;
             case "Urology/Endocrinology":
-                cancellationLikelihood += ((Double) (88.0 / (780*129)));
+                cancellationLikelihood += ((Double) (88.0 / (780 * 129)));
                 break;
             case "Orthopedics":
-                cancellationLikelihood += ((Double) (82.0 / (780*129)));
+                cancellationLikelihood += ((Double) (82.0 / (780 * 129)));
                 break;
             case "Women's clinic":
-                cancellationLikelihood += ((Double) (80.0 / (780*129)));
+                cancellationLikelihood += ((Double) (80.0 / (780 * 129)));
                 break;
             case "Anesthesiology Procedures":
-                cancellationLikelihood += ((Double) (75.0 / (780*129)));
+                cancellationLikelihood += ((Double) (75.0 / (780 * 129)));
                 break;
             case "Ophthalmology":
-                cancellationLikelihood += ((Double) (69.0 / (780*129)));
+                cancellationLikelihood += ((Double) (69.0 / (780 * 129)));
                 break;
             case "Neurosurgery":
-                cancellationLikelihood += ((Double) (58.0 / (780*129)));
+                cancellationLikelihood += ((Double) (58.0 / (780 * 129)));
                 break;
             case "Plastic/Hand":
-                cancellationLikelihood += ((Double) (51.0 / (780*129)));
+                cancellationLikelihood += ((Double) (51.0 / (780 * 129)));
                 break;
             case "Cardio/Lung/Vascular":
-                cancellationLikelihood += ((Double) (26.0 / (780*129)));
+                cancellationLikelihood += ((Double) (26.0 / (780 * 129)));
                 break;
             case "Common Procedures":
-                cancellationLikelihood += ((Double) (5.0 / (780*129)));
+                cancellationLikelihood += ((Double) (5.0 / (780 * 129)));
                 break;
             case "Pediatrics":
-                cancellationLikelihood += ((Double) (4.0 / (780*129)));
+                cancellationLikelihood += ((Double) (4.0 / (780 * 129)));
             default:
                 break;
         }
+
         diagramValues = new ArrayList<>();
         diagram = new ArrayList<>();
         diagramValues.add(diagram);
