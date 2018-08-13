@@ -33,8 +33,9 @@ public class Data {
         listPatients = new ArrayList(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
-        getConnectDB(); // connect to DataBAase
+        getConnectDB(); // connect to DataBase
         numberPatientsPerSurgery = new ArrayList();
+        this.getNumberPatientsPerSurgery();
         this.getPatientData();
 
         List<String> listP = this.getProcess(listPatients); //PatientData
@@ -78,7 +79,7 @@ public class Data {
                 int ageInformation = rs.getInt("ageInformation");
                 String typeSurgery = rs.getString("typeSurgery");
 
-                Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery);
+                Patient patient = new Patient(patient_id, process_id, ageInformation, typeSurgery, numberPatientsPerSurgery);
                 listPatients.add(patient);
 
             }
@@ -89,7 +90,7 @@ public class Data {
 
     } //PatientData
 
-    public void getnumberPatientsPerSurgery() {
+    public void getNumberPatientsPerSurgery() {
 
         try {
             String query = "SELECT IDchar, typeSurgery, COUNT(*) FROM (SELECT * FROM Patient NATURAL JOIN SurgeryTypes ORDER BY SurgeryTypes.IDchar) AS `numberPatientsPerSurgery` GROUP BY typeSurgery ORDER BY numberPatientsPerSurgery.IDchar";
@@ -105,10 +106,6 @@ public class Data {
             System.out.println(ex);
         }
 
-    }
-
-    public List<Integer> getNumberPatientsPerSurgery() {
-        return numberPatientsPerSurgery;
     }
 
     public List<Resource> getAllResources() {
