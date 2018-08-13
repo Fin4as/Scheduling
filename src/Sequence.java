@@ -166,7 +166,6 @@ public abstract class Sequence {
         for (Patient p : sortedCancellationLikelihoods.subList((int) Math.ceil(n / 2.0), n)) {
             highCancellationLikelihoods.add(p);
         }
-
         output.add(lowCancellationLikelihoods);
         output.add(highCancellationLikelihoods);
 

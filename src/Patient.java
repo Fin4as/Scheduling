@@ -1,5 +1,6 @@
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -21,63 +22,83 @@ public class Patient {
     private ArrayList<ArrayList<Integer>> diagramValues;
     private ArrayList<Integer> diagram;
 
-    public Patient(String id, String processID, int ageInformation, String typeSurgery) {
+    public Patient(String id, String processID, int ageInformation, String typeSurgery, List<Integer> numberPatientsPerSurgery) {
         this.patientID = id;
         schedule = new String[800];
         parallelSchedules = new ArrayList<>();
         parallelSchedules.add(schedule);
         this.processID = processID;
         this.ageInformation = ageInformation;
-        if (ageInformation <= 7 || ageInformation > 112) {
-            cancellationLikelihood = 1;
-        } else if (ageInformation > 7 && ageInformation <= 15) {
-            cancellationLikelihood = (- 1 / (1 + Math.exp(-2 * (ageInformation - 11)))) + 1;
-        } else if (ageInformation > 15 && ageInformation <= 105) {
-            cancellationLikelihood = 0;
-        } else if (ageInformation > 105 && ageInformation <= 112) {
-            cancellationLikelihood = (- 1 / (1 + Math.exp(-2 * (ageInformation - 109))));
+        double validationLikelihoodInfo;
+        if (ageInformation <= 7 || ageInformation > 97) {
+            validationLikelihoodInfo = 0;
+        } else if (ageInformation > 7 && ageInformation <= 14) {
+            validationLikelihoodInfo = (ageInformation - 7) * ((double) 1 / 7);
+        } else if (ageInformation > 14 && ageInformation <= 90) {
+            validationLikelihoodInfo = 1;
+        } else if (ageInformation > 90 && ageInformation <= 97) {
+            validationLikelihoodInfo = ((90 - ageInformation) * ((double) 1 / 7) + 1);
         } else {
-            throw new IllegalArgumentException("Cancellation likelihood could not be calculated");
+            throw new IllegalArgumentException("Validation likelihood could not be calculated");
         }
+        double observedFrequency;
+        double validationLikelihoodTypeSurg = 1;
         switch (typeSurgery) {
             case "Gastroenterology":
-                cancellationLikelihood += ((Double) (151.0 / (780 * 129)));
+                observedFrequency = ((double) (151.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(0));
                 break;
             case "Ear/Nose/Throat":
-                cancellationLikelihood += ((Double) (91.0 / (780 * 129)));
+                observedFrequency = ((double) (92.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(1));
                 break;
             case "Urology/Endocrinology":
-                cancellationLikelihood += ((Double) (88.0 / (780 * 129)));
+                observedFrequency = ((double) (87.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(2));
                 break;
             case "Orthopedics":
-                cancellationLikelihood += ((Double) (82.0 / (780 * 129)));
+                observedFrequency = ((double) (83.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(3));
                 break;
             case "Women's clinic":
-                cancellationLikelihood += ((Double) (80.0 / (780 * 129)));
+                observedFrequency = ((double) (81.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(4));
                 break;
             case "Anesthesiology Procedures":
-                cancellationLikelihood += ((Double) (75.0 / (780 * 129)));
+                observedFrequency = ((double) (75.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(5));
                 break;
             case "Ophthalmology":
-                cancellationLikelihood += ((Double) (69.0 / (780 * 129)));
+                observedFrequency = ((double) (69.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(6));
                 break;
             case "Neurosurgery":
-                cancellationLikelihood += ((Double) (58.0 / (780 * 129)));
+                observedFrequency = ((double) (57.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(7));
                 break;
             case "Plastic/Hand":
-                cancellationLikelihood += ((Double) (51.0 / (780 * 129)));
+                observedFrequency = ((double) (51.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(8));
                 break;
             case "Cardio/Lung/Vascular":
-                cancellationLikelihood += ((Double) (26.0 / (780 * 129)));
+                observedFrequency = ((double) (27.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(9));
                 break;
             case "Common Procedures":
-                cancellationLikelihood += ((Double) (5.0 / (780 * 129)));
+                observedFrequency = ((double) (6.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(10));
                 break;
             case "Pediatrics":
-                cancellationLikelihood += ((Double) (4.0 / (780 * 129)));
+                observedFrequency = ((double) (4.0 / 129));
+                validationLikelihoodTypeSurg = 1 - ((double) observedFrequency / numberPatientsPerSurgery.get(11));
             default:
                 break;
         }
+        if (validationLikelihoodTypeSurg < 0) {
+            validationLikelihoodTypeSurg = 0;
+        }
+        double validationLikelihood = validationLikelihoodInfo * validationLikelihoodTypeSurg;
+        cancellationLikelihood = 1 - validationLikelihood;
 
         diagramValues = new ArrayList<>();
         diagram = new ArrayList<>();

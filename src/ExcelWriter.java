@@ -71,7 +71,7 @@ public class ExcelWriter {
             }
 
             // Write the output to a file
-            FileOutputStream fileOut = new FileOutputStream(System.getProperty("user.home") + "\\Scheduling_Diagram.xlsx");
+            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram.xlsx");
             workbook.write(fileOut);
             fileOut.close();
 

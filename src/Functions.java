@@ -25,6 +25,8 @@ import java.util.Random;
  */
 public class Functions {
 
+    private int totaliterGrasp;
+    private int totaliterBest;
     Data s;
 
     public Functions(Data s) {
@@ -64,7 +66,6 @@ public class Functions {
             t.addTask(giveDetails);
 
             double result = t.calculateMakespan();
-
             result += waiting(t.getTotalWaitingTime());
             result += late(t.getLateness());
 
@@ -182,7 +183,7 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd +System.getProperty("line.separator"));
+                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd + System.getProperty("line.separator"));
                         }
                     }
 
@@ -479,14 +480,14 @@ public class Functions {
             writerGraspRCL.write("Found in " + currentRuntime1 + " s. on a total runtime of " + totalRuntime + " s." + System.getProperty("line.separator"));
             writerGraspRCL.write("This solution was reached by generating " + totaliterBestGrasp + " sequences on a total of " + totaliterGrasp + " generated sequences.");
             writerGraspRCL.close();
-            
+
             writerGraspRCLStatTime.write(currentRuntime1 + System.getProperty("line.separator"));
             writerGraspRCLStatTime.close();
             writerGraspRCLStatSequence.write(totaliterBestGrasp + System.getProperty("line.separator"));
             writerGraspRCLStatSequence.close();
             writerGraspRCLStatValue.write(fO(bestPosition, false) + System.getProperty("line.separator"));
             writerGraspRCLStatValue.close();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -736,7 +737,7 @@ public class Functions {
             writerGeneticStatSequence.close();
             writerGeneticStatValue.write(fO(bestPositionImprovement, false) + System.getProperty("line.separator"));
             writerGeneticStatValue.close();
-            
+
         } catch (IOException e) {
             e.printStackTrace();
 
