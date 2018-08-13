@@ -25,6 +25,7 @@ public class Data {
     private List<Resource> allResources;
     private List<String> nameResource;
     private List<Patient> listPatients; //patientData
+    private List<Integer> numberPatientsPerSurgery;
     int stochasticDuration;
     int presenceP;
     int numberPatient;
@@ -35,6 +36,7 @@ public class Data {
         nameResource = new ArrayList();
         getConnectDB(); // connect to DataBAase
         numberPatient = this.numberPatient();
+        numberPatientsPerSurgery = new ArrayList();
         this.getPatientData();
 
         List<String> listP = this.getProcess(listPatients); //PatientData
@@ -85,6 +87,7 @@ public class Data {
         return numberPatient;
     }
 
+    //
     public void getPatientData() { //PatientData
 
         try {
@@ -107,6 +110,28 @@ public class Data {
         }
 
     } //PatientData
+
+    public void getnumberPatientsPerSurgery() { 
+
+        try {
+            String query = "SELECT IDchar, typeSurgery, COUNT(*) FROM (SELECT * FROM Patient NATURAL JOIN SurgeryTypes ORDER BY SurgeryTypes.IDchar) AS `numberPatientsPerSurgery` GROUP BY typeSurgery ORDER BY numberPatientsPerSurgery.IDchar";
+            rs = st.executeQuery(query);
+
+            while (rs.next()) {
+                int numberOfPatientPersurgery = rs.getInt("COUNT(*)");
+                numberPatientsPerSurgery.add(numberOfPatientPersurgery);
+
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+
+    }
+    
+    public List<Integer> getNumberPatientsPerSurgery(){
+        return numberPatientsPerSurgery;
+    }
 
     public List<Resource> getAllResources() {
         return allResources;
