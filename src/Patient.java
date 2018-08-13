@@ -1,6 +1,7 @@
 //package Scheduling_First_Try;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -23,7 +24,7 @@ public class Patient {
     private ArrayList<Integer> diagram;
 
     //Create the notion of Distance for the Greedy Algorithm this distance is used in the function getDistance()
-    public Patient(String id, String processID, int ageInformation, String typeSurgery) {
+    public Patient(String id, String processID, int ageInformation, String typeSurgery, List<Integer> numberPatientsPerSurgery) {
         this.patientID = id;
         schedule = new String[800];
         parallelSchedules = new ArrayList<>();
@@ -41,44 +42,60 @@ public class Patient {
         } else {
             throw new IllegalArgumentException("Cancellation likelihood could not be calculated");
         }
+        Double observedFrequency;
         switch (typeSurgery) {
             case "Gastroenterology":
-                cancellationLikelihood += ((Double) (151.0 / (780 * 129)));
+                observedFrequency = ((Double) (151.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(0)));
                 break;
             case "Ear/Nose/Throat":
-                cancellationLikelihood += ((Double) (91.0 / (780 * 129)));
+                observedFrequency = ((Double) (92.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(1)));
                 break;
             case "Urology/Endocrinology":
-                cancellationLikelihood += ((Double) (88.0 / (780 * 129)));
+                observedFrequency = ((Double) (87.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(2)));
                 break;
             case "Orthopedics":
-                cancellationLikelihood += ((Double) (82.0 / (780 * 129)));
+                observedFrequency = ((Double) (83.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(3)));
                 break;
             case "Women's clinic":
-                cancellationLikelihood += ((Double) (80.0 / (780 * 129)));
+                observedFrequency = ((Double) (81.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(4)));
                 break;
             case "Anesthesiology Procedures":
-                cancellationLikelihood += ((Double) (75.0 / (780 * 129)));
+                observedFrequency = ((Double) (75.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(5)));
                 break;
             case "Ophthalmology":
-                cancellationLikelihood += ((Double) (69.0 / (780 * 129)));
+                observedFrequency = ((Double) (69.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(6)));
                 break;
             case "Neurosurgery":
-                cancellationLikelihood += ((Double) (58.0 / (780 * 129)));
+                observedFrequency = ((Double) (57.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(7)));
                 break;
             case "Plastic/Hand":
-                cancellationLikelihood += ((Double) (51.0 / (780 * 129)));
+                observedFrequency = ((Double) (51.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(8)));
                 break;
             case "Cardio/Lung/Vascular":
-                cancellationLikelihood += ((Double) (26.0 / (780 * 129)));
+                observedFrequency = ((Double) (27.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(9)));
                 break;
             case "Common Procedures":
-                cancellationLikelihood += ((Double) (5.0 / (780 * 129)));
+                observedFrequency = ((Double) (6.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(10)));
                 break;
             case "Pediatrics":
-                cancellationLikelihood += ((Double) (4.0 / (780 * 129)));
+                observedFrequency = ((Double) (4.0 / 129));
+                cancellationLikelihood += ((Double) (observedFrequency / numberPatientsPerSurgery.get(11)));
             default:
                 break;
+        }
+        if (cancellationLikelihood > 1){
+            cancellationLikelihood = 1;
         }
 
         diagramValues = new ArrayList<>();
