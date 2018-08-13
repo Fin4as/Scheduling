@@ -32,7 +32,7 @@ public class Main {
         try (Writer writer1 = new BufferedWriter(new OutputStreamWriter(
                 new FileOutputStream("resultsAnnealing.txt", true), "utf-8"))) {
             long t_0A = System.nanoTime();
-            List<Patient> best = f.annealingMin(1, 0.5, 20, arrivalSequence);
+            List<Patient> best = f.annealingMin(100, 20, 100, arrivalSequence);
             long t_1A = System.nanoTime();
             if (f.fO(best, true) != Double.MAX_VALUE) {
                 System.out.println(best + " " + f.fO(best, false));

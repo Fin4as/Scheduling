@@ -27,13 +27,16 @@ public class Data {
     private List<Patient> listPatients; //patientData
     int stochasticDuration;
     int presenceP;
+    int numberPatient;
 
-    public Data() { 
+    public Data() {
         listPatients = new ArrayList(); //PatientData
         allResources = new ArrayList();
         nameResource = new ArrayList();
         getConnectDB(); // connect to DataBAase
+        numberPatient = this.numberPatient();
         this.getPatientData();
+
         List<String> listP = this.getProcess(listPatients); //PatientData
         listProcess = new ArrayList();
 
@@ -60,6 +63,26 @@ public class Data {
 //            }
         }
         return idProcess;
+    }
+
+    public int numberPatient() {
+        int nbPatient = 0;
+
+        try {
+            String query = "SELECT COUNT(*)FROM Patient";
+            rs = st.executeQuery(query);
+            while (rs.next()) {
+                nbPatient = rs.getInt("COUNT(*)");
+            }
+
+        } catch (Exception ex) {
+            System.out.println(ex);
+        }
+        return nbPatient;
+    }
+
+    public int getNumberPatient() {
+        return numberPatient;
     }
 
     public void getPatientData() { //PatientData
@@ -128,7 +151,6 @@ public class Data {
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
 
-                
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
 
                 Task task = new Task(process_id, task_id, this.presenceP, opMode, stochasticDuration, stdDev, maxWait);
@@ -138,7 +160,7 @@ public class Data {
         } catch (Exception ex) {
             System.out.println(ex);
         }
-  
+
     }
 
     public void getSkillData(List<Task> listTask, String processID) {
@@ -156,8 +178,7 @@ public class Data {
 
                     if (skillID.equals("SP")) {
                         listTask.get(i).setPatientPresence(1);
-                    }
-                    else if (!skillID.equals("SP")) {
+                    } else if (!skillID.equals("SP")) {
                         listTask.get(i).setListSkill(new Skill(skillID, description, prevTask));
                     }
 
@@ -290,7 +311,7 @@ public class Data {
                         listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
                         listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
                         listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime());
-                        
+
                     }
                 }
             }
