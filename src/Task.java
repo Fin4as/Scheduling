@@ -48,17 +48,21 @@ public class Task {
     public int getPatientPresence() {
         return this.patientPresence;
     }
-    
-    public void setPatientPresence(int p){
-        this.patientPresence =p;
+
+    public void setPatientPresence(int p) {
+        this.patientPresence = p;
     }
 
-    public void setAvTime(int avT){
+    public void setAvTime(int avT) {
         this.avTime = avT;
     }
-    
+
     public void setParallelTask(Task pt) {
         parallelTask = pt;
+    }
+
+    public void setStdDev(int std) {
+        this.stdDev = std;
     }
 
     public String getProcessID() {

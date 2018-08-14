@@ -47,6 +47,7 @@ public class Data {
             Process pro = new Process(processID);
             listProcess.add(pro);
             this.getTaskData(pro);
+            this.getSurgeryDuration(pro.getListTask(), this.listPatients.get(i));
             this.getPrevTask(pro.getListTask(), processID);
             this.getNextTask(pro.getListTask(), processID);
             this.getSkillData(pro.getListTask(), processID);
@@ -66,7 +67,6 @@ public class Data {
         return idProcess;
     }
 
-    
     public void getPatientData() { //PatientData
 
         try {
@@ -139,7 +139,7 @@ public class Data {
     public void getTaskData(Process pro) {
 
         try {
-            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'";
+            String query = "SELECT * FROM Task WHERE ProcessID ='" + pro.getID() + "'" + "ORDER BY `Task`.`ID` ASC";
             rs = st.executeQuery(query);
 
             while (rs.next()) {
@@ -152,9 +152,12 @@ public class Data {
                 int maxWait = rs.getInt("MaxWait");
 
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
-
+                if (stochasticDuration < 0) {
+                    stochasticDuration = Math.abs(stochasticDuration);
+                }
                 Task task = new Task(process_id, task_id, this.presenceP, opMode, stochasticDuration, stdDev, maxWait);
                 pro.addListTask(task);
+
             }
 
         } catch (Exception ex) {
@@ -163,12 +166,39 @@ public class Data {
 
     }
 
+    public void getSurgeryDuration(List<Task> listTask, Patient p) {
+        for (int i = 0; i < listTask.size(); i++) {
+            if (listTask.get(i).getTaskID().equals("Surgery")) {
+
+                try {
+                    String query = "SELECT Patient.typeSurgery, SurgeryTypes.avTime, SurgeryTypes.stdDev FROM SurgeryTypes JOIN Patient ON Patient.typeSurgery = SurgeryTypes.typeSurgery where Patient.PatientID = '" + p.getPatientID() + "'";
+                    rs = st.executeQuery(query);
+                    while (rs.next()) {
+                        int stdDev = rs.getInt("stdDev");
+                        int avTime = rs.getInt("AvTime");
+                        listTask.get(i).setStdDev(stdDev);
+                        stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+                        if (stochasticDuration < 0) {
+                            stochasticDuration = Math.abs(stochasticDuration);
+                        }
+                        listTask.get(i).setAvTime(stochasticDuration);
+
+                    }
+
+                } catch (Exception ex) {
+                    System.out.println(ex);
+                }
+            }
+
+        }
+    }
+
     public void getSkillData(List<Task> listTask, String processID) {
 
         for (int i = 0; i < listTask.size(); i++) {
             try {
 
-                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND Task.ProcessID = '" + processID + "'";
+                String query = "SELECT SkillID, Description, PrevTask FROM Skill NATURAL JOIN TaskSkill JOIN Task ON TaskSkill.IDcouple=Task.ID WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND Task.ProcessID = '" + processID + "'" + " ORDER BY `TaskSkill`.`IDchar` ASC";
                 rs = st.executeQuery(query);
                 while (rs.next()) {
 
@@ -195,7 +225,7 @@ public class Data {
         for (int i = 0; i < listTask.size(); i++) {
             for (int j = 0; j < listTask.get(i).getListSkill().size(); j++) {
                 try {
-                    String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getListSkill().get(j).getSkillID() + "'";
+                    String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill WHERE SkillID =" + "'" + listTask.get(i).getListSkill().get(j).getSkillID() + "'" + "ORDER BY `ResourceSkill`.`IDchar` ASC";
                     rs = st.executeQuery(query);
                     while (rs.next()) {
 
