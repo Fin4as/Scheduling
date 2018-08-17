@@ -1,8 +1,10 @@
+import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import javax.swing.filechooser.FileSystemView;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -71,7 +73,8 @@ public class ExcelWriter {
             }
 
             // Write the output to a file
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram.xlsx");
+            File home = FileSystemView.getFileSystemView().getHomeDirectory();
+            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Diagram.xlsx");
             workbook.write(fileOut);
             fileOut.close();
 
@@ -128,8 +131,8 @@ public class ExcelWriter {
             }
 
             // Write the output to a file
-//            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram_Resource.xlsx");
-            FileOutputStream fileOut = new FileOutputStream("C:\\Users\\Hayat\\Desktop\\Scheduling_Diagram_Resource.xlsx");
+            File home = FileSystemView.getFileSystemView().getHomeDirectory();
+            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Diagram_Resource.xlsx");
 
             workbook.write(fileOut);
             fileOut.close();

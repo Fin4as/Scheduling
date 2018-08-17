@@ -1,100 +1,32 @@
-Initial value : 533.007
+Initial value : 465.1391
 
 Temperature : 100.0
 
-Improved optimum found in the neighbourhood: 509.0065 Current total of generated sequences to get this optimum: 1 Current runtime : 0.07352022 s.
-Improved optimum found in the neighbourhood: 482.0033 Current total of generated sequences to get this optimum: 2 Current runtime : 0.091309403 s.
-Accepted value: 505.005 3choice :0.7945200955469012random :0.7579146318108397
-Accepted value: 534.0061 6choice :0.748255336724592random :0.4211240156359859
-Improved optimum found in the neighbourhood: 475.0026 Current total of generated sequences to get this optimum: 20 Current runtime : 0.26407449 s.
-Improved optimum found in the neighbourhood: 441.0019 Current total of generated sequences to get this optimum: 23 Current runtime : 0.287612573 s.
-Accepted value: 460.0025 24choice :0.8269541722034437random :0.6059378989363686
-Accepted value: 453.0019 36choice :0.9231163463866358random :0.6884448632290232
-Accepted value: 506.0038 40choice :0.5827371802623798random :0.2169229707595408
-Accepted value: 496.0055 62choice :0.6838415775190496random :0.4335663915036747
-Accepted value: 542.0088 64choice :0.6312628134903546random :0.38561387509768963
-Accepted value: 548.0088 65choice :0.9417645335842487random :0.7642505410868868
-Accepted value: 558.0133 66choice :0.904796701268282random :0.5728443534054691
-Accepted value: 559.0133 69choice :0.9900498337491681random :0.9315794469363369
-Accepted value: 560.0133 75choice :0.9900498337491681random :0.31455879679663423
-Accepted value: 561.0133 76choice :0.9900498337491681random :0.982854018369092
-Accepted value: 496.0025 84choice :0.9704455335485082random :0.4911099079439023
-Accepted value: 473.0023 93choice :0.9607894391523232random :0.7913772890908983
-Accepted value: 477.0023 94choice :0.9607894391523232random :0.9416002156117137
-Accepted value: 494.0038 100choice :0.7408071084917491random :0.09742322863490127
+Improved optimum found in the neighbourhood: 458.1344 Current total of generated sequences to get this optimum: 62 Current runtime : 0.402900197 s.
+Improved optimum found in the neighbourhood: 456.1826 Current total of generated sequences to get this optimum: 82 Current runtime : 0.467735543 s.
+Improved optimum found in the neighbourhood: 441.0409 Current total of generated sequences to get this optimum: 88 Current runtime : 0.48416846 s.
 
 
 Temperature : 70.0
 
-Accepted value: 521.0057 6choice :0.6799463176426566random :0.6786640062505866
-Accepted value: 518.005 13choice :0.9178564384568926random :0.0203511620172121
-Accepted value: 519.005 16choice :0.879350749407306random :0.6048884195398369
-Accepted value: 544.0077 22choice :0.6996455505262955random :0.31073571266647637
-Accepted value: 498.0046 44choice :0.6152364758968892random :0.5158496713375029
-Accepted value: 484.0046 47choice :0.9580208719104529random :0.21587280231426798
-Accepted value: 496.0046 56choice :0.8424604416167714random :0.5619307926202337
-Accepted value: 501.0046 58choice :0.9310627797040227random :0.8728133487651253
-Accepted value: 478.0025 64choice :0.9580482443263975random :0.20410224956317202
-Accepted value: 470.0023 72choice :0.9048374180359595random :0.2104496758638763
-Accepted value: 479.0023 74choice :0.879350749407306random :0.26562071989203073
-Accepted value: 494.0023 78choice :0.7956694616416928random :0.23803931480091878
-Accepted value: 483.0033 85choice :0.7199412163339483random :0.28962038980192184
 
 
 Temperature : 49.0
 
-Accepted value: 473.0023 13choice :0.6514350691408721random :0.03629000818807315
-Accepted value: 461.0023 19choice :0.9797986738537043random :0.17627101491938324
-Accepted value: 477.0026 22choice :0.7214178734971121random :0.6790256242683081
-Accepted value: 476.0026 26choice :0.9797986738537043random :0.10518647477791354
-Accepted value: 462.0026 44choice :0.9600054412854777random :0.19180546315041214
-Accepted value: 463.0026 49choice :0.9797986738537043random :0.7173200648296453
-Accepted value: 454.0023 57choice :0.815389149282341random :0.4100047728770593
-Accepted value: 461.0026 69choice :0.8493606163853548random :0.6329005587996548
-Accepted value: 454.0026 75choice :0.9216048048020555random :0.47527434159725535
-Accepted value: 460.0022 80choice :0.8847582666383408random :0.5652574957091606
-Accepted value: 464.0033 89choice :0.902972423035002random :0.5014656987170649
+Improved optimum found in the neighbourhood: 440.0704 Current total of generated sequences to get this optimum: 215 Current runtime : 0.748908798 s.
 
 
 Temperature : 34.3
 
-Accepted value: 448.0022 8choice :0.8643466796105793random :0.10830456582719894
-Accepted value: 449.0022 10choice :0.9712663738103019random :0.8880691939081244
-Accepted value: 467.0032 24choice :0.468576738955845random :0.4433170341934842
-Accepted value: 468.0032 26choice :0.9712663738103019random :0.22444865083697785
-Improved optimum found in the neighbourhood: 434.0019 Current total of generated sequences to get this optimum: 344 Current runtime : 2.620539448 s.
-Accepted value: 435.0019 47choice :0.9712663738103019random :0.45762510008624324
-Accepted value: 446.0022 50choice :0.7256347754822969random :0.2786404244717354
-Accepted value: 447.0022 59choice :0.9712663738103019random :0.676135962862011
-Accepted value: 450.0022 71choice :0.7919596004835673random :0.2716460366246056
-Accepted value: 457.0026 84choice :0.7919572915668169random :0.3735928906254894
-Accepted value: 458.0026 86choice :0.9712663738103019random :0.01394567629329757
-Accepted value: 470.0039 87choice :0.704764109735228random :0.26953499706605355
-Accepted value: 484.0039 94choice :0.6648703197043959random :0.43051050220045106
-Accepted value: 468.0039 99choice :0.9162522621598719random :0.3864798238869297
 
 
 Temperature : 24.009999999999998
 
-Accepted value: 470.0025 2choice :0.920129998195594random :0.49967197797441143
-Accepted value: 469.0023 12choice :0.6593550439578061random :0.3384873533615149
-Accepted value: 472.0025 26choice :0.7166248248571011random :0.65937127305004
-Accepted value: 466.0023 34choice :0.747108251388534random :0.26978924334690246
-Accepted value: 468.0023 37choice :0.9200763478648207random :0.6070522820750588
-Accepted value: 466.0025 44choice :0.49259728397870134random :0.06226216212287339
-Accepted value: 470.0023 48choice :0.846547537495533random :0.1180476666738719
-Accepted value: 471.0023 49choice :0.9592061029126226random :0.8116235891041979
-Accepted value: 463.0019 54choice :0.5581707392928328random :0.409113148272944
-Accepted value: 459.0019 58choice :0.8465404859002666random :0.5406402248621013
-Accepted value: 471.0025 66choice :0.6066418208725587random :0.12359553445006599
-Accepted value: 470.0025 72choice :0.9200763478648207random :0.5892679550233282
-Accepted value: 471.0025 73choice :0.9592061029126226random :0.4824926916963381
-Accepted value: 459.0022 87choice :0.9592061029126226random :0.25796447198772
-Accepted value: 460.0022 88choice :0.9592061029126226random :0.07518649811227751
-Accepted value: 461.0022 99choice :0.9592061029126226random :0.6173669718789189
-Accepted value: 476.0033 100choice :0.5353762511768262random :0.48446206421401605
+Improved optimum found in the neighbourhood: 439.0574 Current total of generated sequences to get this optimum: 444 Current runtime : 1.208124872 s.
+Improved optimum found in the neighbourhood: 438.0807 Current total of generated sequences to get this optimum: 468 Current runtime : 1.289762123 s.
+Improved optimum found in the neighbourhood: 426.0453 Current total of generated sequences to get this optimum: 473 Current runtime : 1.306431095 s.
 
-Best solution proposed by the algorithm : [P8, P12, P1, P0, P19, P11, P10, P13, P14, P4, P16, P3, P9, P18, P2, P7, P5, P15, P6, P17]
-Objective function value associed : 434.0019
-Found in 2.620539448 s. on a total runtime of 3.656026912 s.
-This solution was reached by generating 344 sequences on a fixed total of 500 generated sequences.
+Best solution proposed by the algorithm : [P8, P12, P13, P15, P3, P7, P10, P19, P9, P1, P2, P5, P4, P14, P18, P11, P6, P0, P16, P17]
+Objective function value associed : 426.0453
+Found in 1.306431095 s. on a total runtime of 1.394055237 s.
+This solution was reached by generating 473 sequences on a fixed total of 500 generated sequences.

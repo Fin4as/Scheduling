@@ -69,31 +69,19 @@ public class Functions {
             result += waiting(t.getTotalWaitingTime());
             result += late(t.getLateness());
 
-//        System.out.println(result);
-//        System.out.println(wait(t.totalWaitingTime));
-//        for(int i =0; i<sequence.size(); i++){
-//            System.out.print(sequence.get(i).getPatientID());
-//            System.out.println(Arrays.toString(sequence.get(i).getSchedule()));
-//        }
-//        System.out.println("");
-//        
-//        for(int j =0; j<t.getListResource().size(); j++){
-//            System.out.print(t.getListResource().get(j).getResourceID());
-//            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
-//        }
             if (giveDetails == true) {
-                for (int i = 0; i < sequence.size(); i++) {
-                    System.out.print(sequence.get(i).getPatientID());
-                    for (String[] e : sequence.get(i).getParallelSchedules()) {
-                        System.out.println(Arrays.toString(e));
-                    }
-                }
-                System.out.println("");
+//                for (int i = 0; i < sequence.size(); i++) {
+//                    System.out.print(sequence.get(i).getPatientID());
+//                    for (String[] e : sequence.get(i).getParallelSchedules()) {
+//                        System.out.println(Arrays.toString(e));
+//                    }
+////                }
+//                System.out.println("");
 
-                for (int j = 0; j < t.getListResource().size(); j++) {
-                    System.out.print(t.getListResource().get(j).getResourceID());
-                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
-                }
+//                for (int j = 0; j < t.getListResource().size(); j++) {
+//                    System.out.print(t.getListResource().get(j).getResourceID());
+//                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+//                }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
                 for (int h = 0; h < t.getListResource().size(); h++) {
@@ -183,7 +171,7 @@ public class Functions {
                             for (Patient p : scur) {
                                 sold.add(p);
                             }
-                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd + System.getProperty("line.separator"));
+//                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd + System.getProperty("line.separator"));
                         }
                     }
 

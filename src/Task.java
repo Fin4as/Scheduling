@@ -68,6 +68,10 @@ public class Task {
     public ArrayList<Skill> getListSkill() {
         return listSkill;
     }
+    
+    public void setStdDev(int s){
+        this.stdDev =s;
+    }
 
     public void setListSkill(Skill skill) {
         this.listSkill.add(skill);
