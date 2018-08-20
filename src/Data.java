@@ -13,7 +13,8 @@ import java.util.List;
 
 /**
  *
- * @author Hayat
+ * @author Hayat This class aims to get data from Database : process and
+ * patients
  */
 public class Data {
 
@@ -21,24 +22,24 @@ public class Data {
     String driver = "com.mysql.jdbc.Driver";
     Statement st;
     Connection conn;
-    private List<Process> listProcess;
-    private List<Resource> allResources;
-    private List<String> nameResource;
-    private List<Patient> listPatients; //patientData
-    private List<Integer> numberPatientsPerSurgery;
-    int stochasticDuration;
-    int presenceP;
+    private List<Process> listProcess; // list of process assigned to patients
+    private List<Resource> allResources; // list of resources needed for all process 
+    private List<String> nameResource; // list of Resources' ID
+    private List<Patient> listPatients; // list of Patients
+    private List<Integer> numberPatientsPerSurgery; // list of nulber of patients per surgery in data base
+    int stochasticDuration; // variable to generate stochastic values of tasks and surgery task
+    int presenceP; // value indicating if a patient is involved in a task or not 
 
     public Data() {
-        listPatients = new ArrayList(); //PatientData
+        listPatients = new ArrayList();
         allResources = new ArrayList();
         nameResource = new ArrayList();
-        getConnectDB(); // connect to DataBase
+        getConnectDB();
         numberPatientsPerSurgery = new ArrayList();
         this.getNumberPatientsPerSurgery();
         this.getPatientData();
 
-        List<String> listP = this.getProcess(listPatients); //PatientData
+        List<String> listP = this.getProcess(listPatients);
         listProcess = new ArrayList();
 
         for (int i = 0; i < listP.size(); i++) {
@@ -56,18 +57,25 @@ public class Data {
         }
     }
 
-    public List<String> getProcess(List<Patient> listPatient) { //PatientData
+    /**
+     *
+     * method to get Process ID that patients have
+     */
+    public List<String> getProcess(List<Patient> listPatient) {
         List<String> idProcess = new ArrayList();
 
         for (Patient e : listPatient) {
-//            if (!idProcess.contains(e.getProcessID())) {
+
             idProcess.add(e.getProcessID());
-//            }
         }
         return idProcess;
     }
 
-    public void getPatientData() { //PatientData
+    /**
+     *
+     * method to get patient data
+     */
+    public void getPatientData() {
 
         try {
             String query = "SELECT * FROM Patient";
@@ -88,8 +96,12 @@ public class Data {
             System.out.println(ex);
         }
 
-    } //PatientData
+    }
 
+    /**
+     *
+     * method to get number of patients per surgery
+     */
     public void getNumberPatientsPerSurgery() {
 
         try {
@@ -108,18 +120,34 @@ public class Data {
 
     }
 
+    /**
+     *
+     * method to list of resources
+     */
     public List<Resource> getAllResources() {
         return allResources;
     }
 
+    /**
+     *
+     * method to get list of process
+     */
     public List<Process> getListProcess() {
         return listProcess;
     }
 
-    public List<Patient> getListPatients() { //PatientData
+    /**
+     *
+     * method to get list of patients
+     */
+    public List<Patient> getListPatients() {
         return listPatients;
     }
 
+    /**
+     *
+     * method to connect to data base
+     */
     public void getConnectDB() {
         try {
 
@@ -127,7 +155,7 @@ public class Data {
             conn = DriverManager.getConnection("jdbc:mysql://mysql-healthview.alwaysdata.net/healthview_copy_test", "152416_sir", "projetsir2018");
 
             st = conn.createStatement();
-            System.out.println("You are connected ! ");
+            System.out.println("You are connected !");
 
         } catch (Exception ex) {
 
@@ -136,6 +164,10 @@ public class Data {
         }
     }
 
+    /**
+     *
+     * method to get tasks's data of a specific process
+     */
     public void getTaskData(Process pro) {
 
         try {
@@ -152,6 +184,7 @@ public class Data {
                 int maxWait = rs.getInt("MaxWait");
 
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+//                the comment below had to make sure the stochastic value generated is different from zero 
 //                boolean zero = false;
 //                while (!zero && stochasticDuration == 0) {
 //                    stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
@@ -173,6 +206,11 @@ public class Data {
 
     }
 
+    /**
+     *
+     * method to generate stochastic values of surgeries according to surgery
+     * type and standard deviation
+     */
     public void getSurgeryDuration(List<Task> listTask, Patient p) {
         for (int i = 0; i < listTask.size(); i++) {
             if (listTask.get(i).getTaskID().equals("Surgery")) {
@@ -186,6 +224,7 @@ public class Data {
                         listTask.get(i).setStdDev(stdDev);
 
                         stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+//                        the comment below had to make sure the stochastic value generated is different from zero 
 //                        boolean zero = false;
 //                        while (!zero && stochasticDuration == 0) {
 //                            stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
@@ -209,6 +248,10 @@ public class Data {
         }
     }
 
+    /**
+     *
+     * method to get skill data of a list of tasks from a process
+     */
     public void getSkillData(List<Task> listTask, String processID) {
 
         for (int i = 0; i < listTask.size(); i++) {
@@ -236,6 +279,10 @@ public class Data {
         }
     }
 
+    /**
+     *
+     * method to get Resources' data of a list of task
+     */
     public void getResourceData(List<Task> listTask) {
 
         for (int i = 0; i < listTask.size(); i++) {
@@ -250,7 +297,7 @@ public class Data {
                         String name = rs.getString("Name");
 
                         if (!name.equals("P")) {
-                            if (!nameResource.contains(resourceID)) {
+                            if (!nameResource.contains(resourceID)) { // this condition is to make sure we get only once the resources from database. As each resource is unique
                                 Resource res = new Resource(resourceID, capacity, name);
 
                                 listTask.get(i).getListSkill().get(j).addResource(res);
@@ -274,52 +321,10 @@ public class Data {
 
     }
 
-//    public void getResourceData(List<Task> listTask, List<Resource> allResources) {
-//
-//        try {
-//            for (int i = 0; i < listTask.size(); i++) {
-//                String query = "SELECT ResourceID, Capacity, Name FROM Resource NATURAL JOIN ResourceSkill JOIN Task ON Task.ID = ResourceSkill.IDcouple WHERE TaskID = '" + listTask.get(i).getTaskID() + "' AND SkillID ='" + listTask.get(i).getSkill().getSkillID() + "'";
-//                rs = st.executeQuery(query);
-//                while (rs.next()) {
-//                    String resourceID = rs.getString("ResourceID");
-//                    int k = 0;
-//                    boolean found = false;
-//                    while (k < allResources.size() && !found) {
-//
-//                        if (resourceID.equals(allResources.get(k).getResourceID())) {
-//                            found = true;
-//                            listTask.get(i).getSkill().getListResource().add(allResources.get(k));
-//
-//                        }
-//                        k++;
-//
-//                    }
-//                }
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//
-//        }
-//    }
-//
-//    public List<Resource> dataAllResources(String processID) {
-//        List<Resource> allResources = new ArrayList<Resource>();
-//        try {
-//            String query = "SELECT DISTINCT ResourceID, Name, Capacity FROM Resource NATURAL JOIN ResourceSkill JOIN Task ON Task.ID = ResourceSkill.IDcouple WHERE Task.ProcessID ='" + processID + "'";
-//            rs = st.executeQuery(query);
-//            while (rs.next()) {
-//                String resourceID = rs.getString("ResourceID");
-//                int capacity = rs.getInt("Capacity");
-//                String name = rs.getString("Name");
-//                Resource res = new Resource(resourceID, capacity, name);
-//                allResources.add(res);
-//            }
-//        } catch (Exception ex) {
-//            System.out.println(ex);
-//        }
-//        return allResources;
-//    }
-//
+    /**
+     *
+     * method to get previous tasks' data of a list of task
+     */
     public void getPrevTask(List<Task> listTask, String processID) {
 
         try {
@@ -337,11 +342,14 @@ public class Data {
             }
 
         } catch (Exception ex) {
-            System.out.println("Hey 4");
             System.out.println(ex);
         }
     }
 
+    /**
+     *
+     * method to get next tasks' data of a list of task
+     */
     public void getNextTask(List<Task> listTask, String processID) {
         try {
             String query = "SELECT TaskID, NextTaskID FROM NextTask JOIN Task ON Task.ID = NextTask.IDcouple WHERE Task.ProcessID ='" + processID + "'" + "ORDER BY NextTask.`IDchar` ASC";
@@ -363,16 +371,8 @@ public class Data {
             }
 
         } catch (Exception ex) {
-            System.out.println("Hey 5");
             System.out.println(ex);
         }
     }
 
-//    public Statement getStatement() {
-//        return st;
-//    }
-//
-//    public ResultSet getResultSet() {
-//        return rs;
-//    }
 }
