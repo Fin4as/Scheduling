@@ -305,6 +305,7 @@ public class Test {
 
                 //In case task different from first one : to ensure end of task is at least different of 1 minute to the next task's starting
                 //prevTask is to ensure the first in first served discipline is respected
+                
                 if (k != 0) {
                     time++;
                 } else if (prevStart > time) {
@@ -313,21 +314,26 @@ public class Test {
 
                 //**********************************************************
                 // CASE FOR TASK WAITING OPERATION MODE AND NO PARALLEL TASK 
+                
+                
                 if (tasksToSchedule.size() == 0) {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
-                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // to get resources to use
+                        // to obtain resources to use
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); 
                         start = updateStart;
                         if (!resourcesToUse.contains(null)) {
 
                             //*****************************************************************
                             // CASE NO PARALLEL TASK
+                            
+                            
                             if (t.getParallelTask() == null) {
-                                // String to display in output the several resources used for a task
+                                // String to display in output the resources used for a task
                                 String displayResTask = "";
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
                                     for (int p = 0; p < resourcesToUse.size(); p++) {
-                                        //update a Resource'slist of time
+                                        //update a Resource's list of time
                                         resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
                                         displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
                                     }
@@ -401,6 +407,7 @@ public class Test {
 
                                 //*****************************************************************
                                 // CASE PARALLEL TASK
+                                
                             } else {
 
                                 Task pT = t.getParallelTask();
@@ -532,6 +539,7 @@ public class Test {
 
                     //**********************************************************
                     // CASE FOR NON WAITING TASK
+                    
                     tasksToSchedule.add(0, t);
                     int avTimeTotal = 0;
                     int start = time;
