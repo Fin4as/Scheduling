@@ -18,7 +18,7 @@ public class Patient {
     private ArrayList<String[]> parallelSchedules; // in case there a parallel task
     private String schedule[]; // List that respresents the time for a patient
     private String processID; // variable to identify the process assigned to a patient
-    private int ageInformation; 
+    private int ageInformation;
     private double cancellationLikelihood;
     private ArrayList<ArrayList<Integer>> diagramValues; // this list stores durations of tasks and waiting times. It is used by excel writer to create a diagram
     private ArrayList<Integer> diagram;
@@ -107,6 +107,10 @@ public class Patient {
 
     }
 
+    /**
+     *
+     * add parallel list of time
+     */
     public void addParallelSchedule(String[] s) {
         parallelSchedules.add(s);
     }
@@ -115,6 +119,10 @@ public class Patient {
         return ageInformation;
     }
 
+    /**
+     *
+     * add values (task duration and waiting times) in list diagramValues
+     */
     public void addArrayDiagram(int i) {
         diagramValues.add(new ArrayList<>());
     }
@@ -126,6 +134,10 @@ public class Patient {
         return patientID;
     }
 
+    /**
+     *
+     * add values (task duration and waiting times) in list diagramValues
+     */
     public ArrayList<String[]> getParallelSchedules() {
         return parallelSchedules;
     }
@@ -137,6 +149,11 @@ public class Patient {
         return schedule;
     }
 
+    /**
+     *
+     * method to update the list of time of the patient. Updated by adding the
+     * taskID of the current task
+     */
     public void setSchedule(int s, int start, int avTime, String taskID) {
         String[] currentSchedule = parallelSchedules.get(s);
         for (int i = start; i < start + avTime; i++) {
@@ -144,6 +161,11 @@ public class Patient {
         }
     }
 
+    /**
+     *
+     * method to know when the last task ends , to be able to add the next task.
+     * Returns the time
+     */
     public int getNextAvailableTime() {
         int time = 1;
         if (!isEmptyStringArray(parallelSchedules.get(0))) {
@@ -161,6 +183,10 @@ public class Patient {
         return time;
     }
 
+    /**
+     *
+     * returns a boolean to check if the table of time is empty or not
+     */
     public boolean isEmptyStringArray(String[] array) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
@@ -170,10 +196,20 @@ public class Patient {
         return true;
     }
 
+    /**
+     *
+     * returns processID
+     */
     public String getProcessID() {
         return processID;
     }
 
+    /**
+     *
+     * set the table of time(called schedule) to null. Method needed in AddTask
+     * method in class test. As everyTime a new sequence of patients is
+     * generated; time table must be cleared
+     */
     public void setZeroSchedule() {
         parallelSchedules = new ArrayList<>();
         parallelSchedules.add(new String[800]);
@@ -184,10 +220,18 @@ public class Patient {
         return cancellationLikelihood;
     }
 
+    /**
+     *
+     * method to add task durations and waiting times in list Diagram Values
+     */
     public void addDiagramValues(int i, int value) {
         diagramValues.get(i).add(value);
     }
 
+    /**
+     *
+     * returns diagram values list
+     */
     public ArrayList<ArrayList<Integer>> getDiagramValues() {
         return diagramValues;
     }
