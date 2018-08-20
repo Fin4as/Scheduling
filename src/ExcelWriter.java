@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -16,15 +17,23 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+/**
+ *
+ * @author Hayat This class aims create 2 excel writer files to display Resource
+ * allocation and patient appointments
+ */
 public class ExcelWriter {
 
     private static String[] columns = {"Process", "Patient", "WaitingTime", "Duration"};
     private static ArrayList<String> fullColumns = new ArrayList<>(Arrays.asList(columns));
 
+    /**
+     *
+     * Method to create the excelwriter diagramm of patient appointments
+     */
     public void write(List<Patient> lp) {
 
         // Create a Workbook
-        // new HSSFWorkbook() for generating `.xls` file
         try {
 
             Workbook workbook = new XSSFWorkbook();
@@ -34,9 +43,9 @@ public class ExcelWriter {
 
             int nbr = getMaxNumberOfTasks(lp);
             for (int i = 4; i <= nbr; i += 2) {
-                fullColumns.add(i , "WaitingTime");
+                fullColumns.add(i, "WaitingTime");
                 fullColumns.add(i + 1, "Duration");
-                
+
             }
             // Create a Row
             Row headerRow = sheet.createRow(0);
@@ -85,6 +94,10 @@ public class ExcelWriter {
         }
     }
 
+    /**
+     *
+     * Method to create the excelwriter diagramm of resource allocation
+     */
     public void update(List<Resource> lr) {
 
         ArrayList<String> columns = new ArrayList<>();
@@ -98,12 +111,10 @@ public class ExcelWriter {
 
             int nbr = getMaxNumberOfTasksForResources(lr);
             for (int i = 1; i <= nbr; i += 2) {
-                columns.add(i , "WaitingTime");
-                columns.add(i+ 1, "Duration");
+                columns.add(i, "WaitingTime");
+                columns.add(i + 1, "Duration");
             }
 
-            // Get Row at index 1
-            //Row row = sheet.getRow(1);
             Row headerRow = sheet.createRow(0);
 
             for (int i = 0; i < columns.size(); i++) {

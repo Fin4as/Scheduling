@@ -18,8 +18,8 @@ public class Main {
      */
     public static void main(String[] args) {
 
-        Data s = new Data();
-        List<Patient> arrivalSequence = s.getListPatients();
+        Data s = new Data(); // get Data from Data Base
+        List<Patient> arrivalSequence = s.getListPatients(); 
         Functions f = new Functions(s);
 
         long t_0A = System.nanoTime();
