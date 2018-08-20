@@ -213,8 +213,8 @@ public class Test {
             System.out.print("Patient ID");
             System.out.print("\t");
             System.out.print("Task ID");
-            System.out.print("\t");
-            System.out.print("Duration");
+//            System.out.print("\t");
+//            System.out.print("Duration");
             System.out.print("\t");
             System.out.print("Presence patient");
             System.out.print("\t");
@@ -308,8 +308,8 @@ public class Test {
                                     System.out.print("\t\t");
                                     System.out.print(t.getTaskID());
                                     System.out.print("\t\t");
-                                    System.out.print((t.getAvTime() + start )-start+ "");
-                                    System.out.print("\t\t");
+//                                    System.out.print((t.getAvTime() + start) - start + "");
+//                                    System.out.print("\t\t");
                                     System.out.print(t.getPatientPresence());
                                     System.out.print("\t\t");
                                     System.out.print(start + "");
@@ -392,8 +392,8 @@ public class Test {
                                         System.out.print(pat.getPatientID());
                                         System.out.print("\t\t");
                                         System.out.print(t.getTaskID());
-                                        System.out.print("\t\t");
-                                        System.out.print((t.getAvTime() + start)-start+ "");
+//                                        System.out.print("\t\t");
+//                                        System.out.print((t.getAvTime() + start) - start + "");
                                         System.out.print("\t\t");
                                         System.out.print(t.getPatientPresence());
                                         System.out.print("\t\t");
@@ -411,8 +411,8 @@ public class Test {
                                         System.out.print(pat.getPatientID());
                                         System.out.print("\t\t");
                                         System.out.print(pT.getTaskID());
-                                        System.out.print("\t\t");
-                                        System.out.print((pT.getAvTime() + start)-start + "");
+//                                        System.out.print("\t\t");
+//                                        System.out.print((pT.getAvTime() + start) - start + "");
                                         System.out.print("\t\t");
                                         System.out.print(pT.getPatientPresence());
                                         System.out.print("\t\t");
@@ -542,8 +542,8 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(taskID);
                                         System.out.print("\t\t");
-                                        System.out.print((currentStart + currentAvTime)-currentStart+ "" );
-                                        System.out.print("\t\t");
+//                                        System.out.print((currentStart + currentAvTime) - currentStart + "");
+//                                        System.out.print("\t\t");
                                         System.out.print(tasksToSchedule.get(x).getPatientPresence());
                                         System.out.print("\t\t");
                                         System.out.print(currentStart + "");

@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author Hayat
+ * @author Hayat This class aims to get Dat afrom Data Base
  */
 public class Data {
 
@@ -24,13 +24,13 @@ public class Data {
     private List<Process> listProcess;
     private List<Resource> allResources;
     private List<String> nameResource;
-    private List<Patient> listPatients; //patientData
+    private List<Patient> listPatients;
     private List<Integer> numberPatientsPerSurgery;
     int stochasticDuration;
     int presenceP;
 
     public Data() {
-        listPatients = new ArrayList(); //PatientData
+        listPatients = new ArrayList();
         allResources = new ArrayList();
         nameResource = new ArrayList();
         getConnectDB(); // connect to DataBase
@@ -38,7 +38,7 @@ public class Data {
         this.getNumberPatientsPerSurgery();
         this.getPatientData();
 
-        List<String> listP = this.getProcess(listPatients); //PatientData
+        List<String> listP = this.getProcess(listPatients);
         listProcess = new ArrayList();
 
         for (int i = 0; i < listP.size(); i++) {
@@ -56,18 +56,25 @@ public class Data {
         }
     }
 
-    public List<String> getProcess(List<Patient> listPatient) { //PatientData
+    /**
+     *
+     * method to get ID process that are assigned to patients
+     */
+    public List<String> getProcess(List<Patient> listPatient) {
         List<String> idProcess = new ArrayList();
 
         for (Patient e : listPatient) {
-//            if (!idProcess.contains(e.getProcessID())) {
+
             idProcess.add(e.getProcessID());
-//            }
         }
         return idProcess;
     }
 
-    public void getPatientData() { //PatientData
+    /**
+     *
+     * method to get patient Data
+     */
+    public void getPatientData() {
 
         try {
             String query = "SELECT * FROM Patient";
@@ -88,8 +95,12 @@ public class Data {
             System.out.println(ex);
         }
 
-    } //PatientData
+    }
 
+    /**
+     *
+     * method to get ID process that are assigned to patients
+     */
     public void getNumberPatientsPerSurgery() {
 
         try {
@@ -116,7 +127,7 @@ public class Data {
         return listProcess;
     }
 
-    public List<Patient> getListPatients() { //PatientData
+    public List<Patient> getListPatients() { 
         return listPatients;
     }
 
