@@ -5,18 +5,25 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
  *
- * @author Hayat
+ * @author Hayat class that describes a Resource
  */
 public class Resource {
 
-    private String resourceID;
-    private int capacity;
-    private String name;
-    private String time[];
-    private ArrayList<Integer> diagramValues;
+    private String resourceID;// variable to indetify a resource
+    private int capacity; // variable that indicates the capacity of a resource, variable not used in the code
+    private String name; // name of a resource, not used in the code
+    private String time[]; // table that represents the time of for a resource
+    private ArrayList<Integer> diagramValues; // List used by excelWriter to display a diagram
 
+    /**
+     * 
+     * @param resourceID
+     * @param capacity
+     * @param name 
+     */
     public Resource(String resourceID, int capacity, String name) {
         this.capacity = capacity;
         this.resourceID = resourceID;
@@ -25,10 +32,20 @@ public class Resource {
         diagramValues = new ArrayList<>();
     }
 
+    /**
+     * 
+     * @return 
+     */
     public ArrayList<Integer> getDiagramValues() {
         return diagramValues;
     }
 
+    /**
+     * 
+     * @param startTime
+     * @param avTime
+     * @return 
+     */
     public int getNextAvailableTime(int startTime, int avTime) {
         int available = -1;
         boolean found = false;

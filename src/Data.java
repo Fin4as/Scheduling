@@ -33,6 +33,7 @@ public class Data {
     /**
      *Constructor of class Data
      * Initializes variables 
+     * Ensure a single connection
      * @see #getConnectDB() 
      * @see #getAllResources() 
      * @see #getListPatients() 
@@ -95,6 +96,7 @@ public class Data {
 
     /**
      * method to get Patient Data from DB
+     * 
      */
     public void getPatientData() {
 

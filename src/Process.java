@@ -8,8 +8,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class aims to describe a Process
  *
- * @author Hayat This class aims to describe a Process
+ * @author Hayat
  */
 public class Process {
 
@@ -18,6 +19,10 @@ public class Process {
     String ProcessName;  // variable for process name, not used in code
     private List<Task> listTask; // list of Task objects of the process
 
+    /**
+     * Constructor initilizes variables. Method called by Data Class
+     * @param processID 
+     */
     public Process(String processID) {
         this.processID = processID;
         this.listTask = new ArrayList();
@@ -38,8 +43,8 @@ public class Process {
     }
 
     /**
-     * adds a task in list task, used in class Data when getting Tasks'
-     * information
+     * Method used in class Data when getting Tasks' information
+     * @param t is as Task to add in list Task
      */
     public void addListTask(Task t) {
         listTask.add(t);
