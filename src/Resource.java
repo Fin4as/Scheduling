@@ -1,3 +1,4 @@
+
 import java.util.ArrayList;
 
 /*
@@ -5,7 +6,6 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 /**
  *
  * @author Hayat class that describes a Resource
@@ -19,32 +19,34 @@ public class Resource {
     private ArrayList<Integer> diagramValues; // List used by excelWriter to display a diagram
 
     /**
-     * 
+     * Constructor initializes variables
+     *
      * @param resourceID
      * @param capacity
-     * @param name 
+     * @param name
      */
     public Resource(String resourceID, int capacity, String name) {
         this.capacity = capacity;
         this.resourceID = resourceID;
         this.name = name;
+        // list of time represnts more than 8 hours --> 800 minutes, allows to calculate lateness in class Test
         time = new String[800];
         diagramValues = new ArrayList<>();
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return diagramValues
      */
     public ArrayList<Integer> getDiagramValues() {
         return diagramValues;
     }
 
     /**
-     * 
+     *Method that returns  the time the resource is available, return an integer
      * @param startTime
      * @param avTime
-     * @return 
+     * @return available 
      */
     public int getNextAvailableTime(int startTime, int avTime) {
         int available = -1;
@@ -70,6 +72,13 @@ public class Resource {
         return available;
     }
 
+    /**
+     *
+     * @param startTime it's the time when the task starts
+     * @param avTime it's the duration of the task
+     * @return available it is a boolean that indicates if a resource is
+     * available
+     */
     public boolean isAvailable(int startTime, int avTime) {
         boolean available = false;
         boolean free = true;
@@ -88,6 +97,11 @@ public class Resource {
         return available;
     }
 
+    /**
+     *
+     * @param array it is the list of time of a Resource
+     * @return a bolean is the array is empty or not
+     */
     public boolean isEmptyStringArray(String[] array) {
         for (int i = 0; i < array.length; i++) {
             if (array[i] != null) {
@@ -126,7 +140,10 @@ public class Resource {
     }
 
     /**
-     * @param time the time to set
+     * Method to update a resource's list of time
+     * @param start is the time when a task starts
+     * @param avTime is the duration  of a task
+     * @param taskID  is the ID of a task
      */
     public void setTime(int start, int avTime, String taskID) {
         for (int i = start; i < start + avTime; i++) {
@@ -134,10 +151,16 @@ public class Resource {
         }
     }
 
+    /**
+     * method to put a resource's list of time to zero, method called at the begining of addTask method in class Test
+     */
     public void setZero() {
         this.time = new String[800];
     }
 
+    /**
+     * Method to fill diagramValues list from the list of time, which is used in excelWriter class
+     */
     public void timeToDiagramValues() {
         String previousCell = time[0];
         int waiting = 0;
