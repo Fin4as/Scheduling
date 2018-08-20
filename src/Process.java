@@ -4,37 +4,28 @@
  * and open the template in the editor.
  */
 
-
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Hayat
+ * @author Hayat This class aims to describe a Process
  */
 public class Process {
 
-//    Connection conn;
-//    Statement st;
-//    ResultSet rs;
-//    String driver = "com.mysql.jdbc.Driver";
+    String processID; // variable to identity a process
+    String processType; // variable for type of a process, not used in code
+    String ProcessName;  // variable for process name, not used in code
+    private List<Task> listTask; // list of Task objects of the process
 
-    String processID;
-    String processType;
-    String ProcessName;
-    private List<Task> listTask;
- 
     public Process(String processID) {
         this.processID = processID;
         this.listTask = new ArrayList();
-//        st = s;
-//        this.listTask = listTask;
-//        this.allResources = allResources;
-//        getConnectDB();
-
     }
 
+    /**
+     * @return the processID
+     */
     public String getID() {
         return processID;
     }
@@ -45,18 +36,12 @@ public class Process {
     public List<Task> getListTask() {
         return listTask;
     }
-    
-    public void addListTask(Task t){
+
+    /**
+     * adds a task in list task, used in class Data when getting Tasks'
+     * information
+     */
+    public void addListTask(Task t) {
         listTask.add(t);
     }
-    
-//    public List<Resource> getListResource() {
-//        return allResources;
-//    }
-//
-//
-//    public List<Resource> getAllResources() {
-//        return allResources;
-//    }
-  
 }
