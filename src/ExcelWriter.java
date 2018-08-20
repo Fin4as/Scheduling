@@ -96,7 +96,7 @@ public class ExcelWriter {
 
     /**
      *
-     * Method to create the excelwriter diagramm of resource allocation
+     * Method to create the excelwriter diagram of resource allocation
      */
     public void update(List<Resource> lr) {
 
@@ -158,7 +158,7 @@ public class ExcelWriter {
 
     /**
      *
-     * Method for Patient diagram :retunrs the maximum number of tasks from a process, to fix the number of columns in excel file
+     * Method for Patient diagram :returns the maximum number of tasks from a process, to fix the number of columns in excel file
      */
     public int getMaxNumberOfTasks(List<Patient> lp) {
         int nbr = lp.get(0).getDiagramValues().get(0).size();
