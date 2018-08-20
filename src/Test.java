@@ -209,7 +209,7 @@ public class Test {
     //**************************************************************************************************************************************
     //**************************************************************************************************************************************
     /**
-     * 
+     *
      * Method that scheduldes patient appoitment and allocate resources
      *
      * @param giveDetails is a boolean used in case it is wished or not to
@@ -313,8 +313,6 @@ public class Test {
 
                 //**********************************************************
                 // CASE FOR TASK WAITING OPERATION MODE AND NO PARALLEL TASK 
-                
-                
                 if (tasksToSchedule.size() == 0) {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
@@ -324,47 +322,60 @@ public class Test {
 
                             //*****************************************************************
                             // CASE NO PARALLEL TASK
-                            
-                            
                             if (t.getParallelTask() == null) {
-                                String displayResTask = ""; // String to display in output the several resources used for a task
+                                // String to display in output the several resources used for a task
+                                String displayResTask = "";
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
                                     for (int p = 0; p < resourcesToUse.size(); p++) {
-                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID()); //update a Resource'slist of time
+                                        //update a Resource'slist of time
+                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
                                         displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
                                     }
-
-                                    pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // update of table a patient's list of time
-                                    if (t.getPatientPresence() == 1) { // case patient involved    
+                                    // update of table a patient's list of time
+                                    pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
+                                    // case patient involved  
+                                    if (t.getPatientPresence() == 1) {
 
                                         if (start != 0) {
-                                            pat.addDiagramValues(0, (start - endLastTask) - 1); // add the waiting time first in the diagram
-                                            pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
+                                            // add the waiting time first in the diagram
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1);
+                                            //  then add the duration
+                                            pat.addDiagramValues(0, t.getAvTime());
 
-                                        } else { // value zero added for waiting time, in case the patient starts at time =0
+                                            // value zero added for waiting time, in case the patient starts at time =0
                                             // Because In Excel writer first column is "Waiting" and then "Duration"
+                                        } else {
 
-                                            pat.addDiagramValues(0, 0); // add the waiting time first
-                                            pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
+                                            // add the waiting time first
+                                            pat.addDiagramValues(0, 0);
+                                            //  then add the duration
+                                            pat.addDiagramValues(0, t.getAvTime());
                                         }
-                                    } else { //case patient NOT involved
+                                        //case patient NOT involved
+                                    } else {
                                         if (start != 0) {
-                                            pat.addDiagramValues(0, (start - endLastTask) - 1 + t.getAvTime()); // add the waiting time first
-                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                            // add the waiting time first
+                                            pat.addDiagramValues(0, (start - endLastTask) - 1 + t.getAvTime());
+                                            //  then add the duration
+                                            pat.addDiagramValues(0, 0);
 
-                                        } else { // value zero added for waiting time, in case the patient starts at time =0
+                                            // value zero added for waiting time, in case the patient starts at time =0
                                             // Because In Excel writer first column is "Waiting" and then "Duration"
+                                        } else {
 
-                                            pat.addDiagramValues(0, t.getAvTime()); // add the waiting time first
-                                            pat.addDiagramValues(0, 0); //  then add the duration
+                                            // add the waiting time first
+                                            pat.addDiagramValues(0, t.getAvTime());
+                                            //  then add the duration
+                                            pat.addDiagramValues(0, 0);
                                         }
                                     }
                                 }
 
-                                if (k != 0) { // before the first time, it's not waiting time, exculded in totalwaitingTime sum
+                                // before the first time, it's not waiting time, exculded in totalwaitingTime sum
+                                if (k != 0) {
                                     totalWaitingTime += (start - endLastTask);
                                 }
-                                
+
                                 //displays values of a task :duration,  starting end endings times, waiting time. Patient ID, process ID and resources used
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
@@ -385,12 +396,12 @@ public class Test {
                                     System.out.print("\t\t");
                                     System.out.println(displayResTask);
                                 }
-                                
-                                endLastTask = start + t.getAvTime();// calculates ends of the current task
-                                
+                                // calculates ends of the current task
+                                endLastTask = start + t.getAvTime();
 
-                            } else {  //*****************************************************************
-                                      // CASE PARALLEL TASK
+                                //*****************************************************************
+                                // CASE PARALLEL TASK
+                            } else {
 
                                 Task pT = t.getParallelTask();
                                 for (int m = 0; m < pT.getListSkill().size(); m++) {
@@ -400,10 +411,12 @@ public class Test {
                                         Resource res = s.getListResource().get(re);
                                         resourcesToUse.add(res);
                                     } else {
-                                        resourcesToUse.add(null); // if there is null in list ResourceToUse, not possible to scedule a task
+                                        // if there is null in list ResourceToUse, not possible to scedule a task
+                                        resourcesToUse.add(null);
                                     }
                                 }
-                                if (!resourcesToUse.contains(null)) { //case there resources needed to schedule a task.
+                                //case there resources needed to schedule a task
+                                if (!resourcesToUse.contains(null)) {
                                     String displayResTask = "";
                                     String displayResParaTask = "";
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
@@ -417,32 +430,44 @@ public class Test {
                                                 displayResParaTask += resourcesToUse.get(p).getResourceID() + ", ";
                                             }
                                         }
-                                        pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // 0 = index of first table schedule in parallelSchedules
+                                        // 0 = index of first table schedule in parallelSchedules
+                                        pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
 
-                                        if (t.getPatientPresence() == 1) { // patient presence test
+                                        // patient presence test
+                                        if (t.getPatientPresence() == 1) {
+                                            //add the waiting time first
+                                            pat.addDiagramValues(0, start - endLastTask);
+                                            // then add the duration
+                                            pat.addDiagramValues(0, t.getAvTime());
 
-                                            pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
-                                            pat.addDiagramValues(0, t.getAvTime()); // then add the duration
-                                            
-                                        } else { //patient not present
-                                            pat.addDiagramValues(0, start - endLastTask + t.getAvTime()); //add the waiting time first
-                                            pat.addDiagramValues(0, 0); // then add the duration
+                                            //patient not present
+                                        } else {
+                                            //add the waiting time first
+                                            pat.addDiagramValues(0, start - endLastTask + t.getAvTime());
+                                            // then add the duration
+                                            pat.addDiagramValues(0, 0);
                                         }
-                                        
+
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
-                                        pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = index of 2e tableau schedule in parallelSchedules
+                                        // 1 = index of 2e tableau schedule in parallelSchedules
+                                        pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());
 
-                                        if (pT.getPatientPresence() == 1) { // patient presence test
+                                        // patient presence test
+                                        if (pT.getPatientPresence() == 1) {
 
                                             pat.addArrayDiagram(1);
-                                            pat.addDiagramValues(1, start); //add the waiting time first
-                                            pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
-                                            
+                                            //add the waiting time first
+                                            pat.addDiagramValues(1, start);
+                                            // then add the duration
+                                            pat.addDiagramValues(1, pT.getAvTime());
+
                                         } else { //patient not present
                                             pat.addArrayDiagram(1);
-                                            pat.addDiagramValues(1, start + pT.getAvTime()); //add the waiting time first
-                                            pat.addDiagramValues(1, 0); // then add the duration
+                                            //add the waiting time first
+                                            pat.addDiagramValues(1, start + pT.getAvTime());
+                                            // then add the duration
+                                            pat.addDiagramValues(1, 0);
                                         }
                                         k++;
                                     }
@@ -490,7 +515,8 @@ public class Test {
                                         System.out.println(displayResParaTask);
                                     }
                                     int avTime = Math.max(t.getAvTime(), pT.getAvTime());
-                                    endLastTask = start + avTime;// calculates ends of the current task
+                                    // calculates ends of the current task
+                                    endLastTask = start + avTime;
 
                                 } else {
                                     throw new IllegalArgumentException("Not enough ressources to create a full schedule");
@@ -506,7 +532,6 @@ public class Test {
 
                     //**********************************************************
                     // CASE FOR NON WAITING TASK
-                    
                     tasksToSchedule.add(0, t);
                     int avTimeTotal = 0;
                     int start = time;
@@ -514,14 +539,14 @@ public class Test {
                         avTimeTotal += tasksToSchedule.get(iv).getAvTime();
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
-                        ArrayList<Resource> resourcesToUse = researchResources(time, t); 
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t);
                         start = updateStart;
                         ArrayList<String> tasksResourceToUse = new ArrayList();
                         ArrayList<Integer> durationResourceToUse = new ArrayList();
 
                         if (!resourcesToUse.contains(null)) {
 
-                            for (int v = 0; v < resourcesToUse.size(); v++) { 
+                            for (int v = 0; v < resourcesToUse.size(); v++) {
                                 tasksResourceToUse.add(t.getTaskID());
                                 durationResourceToUse.add(t.getAvTime());
                             }
@@ -581,7 +606,7 @@ public class Test {
                                     int currentAvTime = tasksToSchedule.get(x).getAvTime();
 
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    if (tasksToSchedule.get(x).getPatientPresence() == 1) {  
+                                    if (tasksToSchedule.get(x).getPatientPresence() == 1) {
 
                                         if (x == 0) {
                                             pat.addDiagramValues(0, currentStart - endLastTask);
@@ -590,8 +615,7 @@ public class Test {
                                             pat.addDiagramValues(0, 0); // NON WAITING
                                             pat.addDiagramValues(0, currentAvTime);
                                         }
-                                    } else 
-                                    {
+                                    } else {
                                         if (x == 0) {
                                             pat.addDiagramValues(0, (currentStart - endLastTask) + currentAvTime);
                                             pat.addDiagramValues(0, 0);
@@ -620,7 +644,7 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.println(displayRes.get(x));
                                     }
-                                    
+
                                     currentEnd = currentStart + currentAvTime;
                                     currentStart += currentAvTime + 1;
                                 }
@@ -640,16 +664,13 @@ public class Test {
                         } else {
                             throw new IllegalArgumentException("Not enough ressources to create a full schedule");
                         }
-
                     }
-
                 }
-                if (k == 0) { //case when it's first task, ensure first in first served discipline. A patient can't an appointment before the previous patient  
+                //case when it's first task, ensure first in first served discipline. A patient can't an appointment before the previous patient  
+                if (k == 0) {
                     prevStart = updateStart;
                 }
-
             }
-
         }
         // from table of time of resources, generation of DiagramValues for excel writer
         for (int q = 0; q < listResource.size(); q++) {
