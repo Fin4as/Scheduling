@@ -156,6 +156,10 @@ public class ExcelWriter {
         }
     }
 
+    /**
+     *
+     * Method for Patient diagram :retunrs the maximum number of tasks from a process, to fix the number of columns in excel file
+     */
     public int getMaxNumberOfTasks(List<Patient> lp) {
         int nbr = lp.get(0).getDiagramValues().get(0).size();
         for (int i = 1; i < lp.size(); i++) {
@@ -167,6 +171,10 @@ public class ExcelWriter {
         return nbr;
     }
 
+    /**
+     *
+     * Method For Resource diagram : returns the maximum number of tasks, to fix the number of columns in excel file
+     */
     public int getMaxNumberOfTasksForResources(List<Resource> lr) {
         int nbr = lr.get(0).getDiagramValues().size();
         for (int i = 1; i < lr.size(); i++) {

@@ -6,20 +6,21 @@ import java.util.List;
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
+
  */
 /**
  *
- * @author Hayat
+ * @author Hayat This calss describes a Patient
  */
 public class Patient {
 
-    private String patientID;
-    private ArrayList<String[]> parallelSchedules;
-    private String schedule[];
-    private String processID;
-    private int ageInformation;
+    private String patientID; // variable to identify a patient
+    private ArrayList<String[]> parallelSchedules; // in case there a parallel task
+    private String schedule[]; // List that respresents the time for a patient
+    private String processID; // variable to identify the process assigned to a patient
+    private int ageInformation; 
     private double cancellationLikelihood;
-    private ArrayList<ArrayList<Integer>> diagramValues;
+    private ArrayList<ArrayList<Integer>> diagramValues; // this list stores durations of tasks and waiting times. It is used by excel writer to create a diagram
     private ArrayList<Integer> diagram;
 
     public Patient(String id, String processID, int ageInformation, String typeSurgery, List<Integer> numberPatientsPerSurgery) {
