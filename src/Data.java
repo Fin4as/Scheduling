@@ -177,7 +177,6 @@ public class Data {
             while (rs.next()) {
                 String process_id = rs.getString("ProcessID");
                 String task_id = rs.getString("TaskID");
-//                int patient = rs.getInt("patient");
                 int opMode = rs.getInt("OpMode");
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
