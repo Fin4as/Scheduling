@@ -8,56 +8,72 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class calculates values : makespan, lateness and total waiting times
+ * According to calculations realized by AddTask method
  *
  * @author Hayat
  */
 public class Test {
 
-    /**
-     * @param args the command line arguments
-     */
     List<Patient> listPatient;
     List<Process> listProcess;
     List<Resource> listResource;
     int totalWaitingTime;
     int lateness;
 
+    /**
+     * Constructor initializes variables
+     *
+     * @param sequence is a list of Patients
+     * @param s is the data of process needed, obtained from Database
+     */
     public Test(List<Patient> sequence, Data s) {
         listPatient = sequence;
         listResource = s.getAllResources();
         totalWaitingTime = 0;
         lateness = 0;
-
         listProcess = s.getListProcess();
-//        for(int l=0; l<listProcess.size();l++){
-//            Process pl = s.getListProcess().get(l);
-//            for (int length= 0 ; length<pl.getListResource().size();length++){
-//                if (!this.listResource.contains(pl.getListResource().get(length))){
-//                this.listResource.add(pl.getListResource().get(length));
-//                }
-//            }
-//            
-//        }
-
     }
 
+    /**
+     *
+     * @return lateness value
+     */
     public int getLateness() {
         lateness = this.lateness();
         return lateness;
     }
 
+    /**
+     *
+     * @return total waiting time value
+     */
     public int getTotalWaitingTime() {
         return totalWaitingTime;
     }
 
+    /**
+     *
+     * @return list of Resource
+     */
     public List<Resource> getListResource() {
         return listResource;
     }
 
+    /**
+     *
+     * @return list of process
+     */
     public List<Process> getListProcess() {
         return listProcess;
     }
 
+    /**
+     * Method to get a Process, used in addTask method
+     *
+     * @param processID
+     * @return p a Process
+     */
     public Process getProcess(String processID) {
 
         Process p = null;
@@ -72,17 +88,15 @@ public class Test {
 
             }
         }
-//        for (int i = 0; i < listProcess.size(); i++) {
-//            if (!listProcess.get(i).getID().equals(processID)) {
-//                i++;
-//            } else {
-//                p = listProcess.get(i);
-//            }
-//        }
 
         return p;
     }
 
+    /**
+     * Method to calculate lateness
+     *
+     * @return lateness
+     */
     public int lateness() {
 
         int maxLateness = 0;
@@ -99,23 +113,15 @@ public class Test {
                 }
             }
         }
-//        for (int j = 0; j < listResource.size(); j++) {
-//            int end = 799;
-//            while (end >= 0) {
-//                if (listResource.get(j).getTime()[end] == null) {
-//                    end--;
-//                } else {
-//                    if (maxLateness < end) {
-//                        maxLateness = end;
-//                    }
-//                    break;
-//                }
-//            }
-//        }
-
+        //Soutraction by 480 minutes is realized as it corresponds to 8 hours
         return maxLateness - 480;
     }
 
+    /**
+     * Method to calculate Makespan
+     *
+     * @return mskp , coresponds to makespan
+     */
     public int calculateMakespan() {
         int max = 0;
         int min = 0;
@@ -147,9 +153,18 @@ public class Test {
         mksp = max - min;
         return mksp;
     }
-    int updateStart;
 
-    public ArrayList<Resource> researchResources(int time, Task t) { // BETTER RESOURCE MANAGEMENT
+    int updateStart; // variable used to changed parameter value in researchResources
+
+    /**
+     * Method to get Resources needed for a task, called by AddTask method
+     *
+     * @param time is the time of vailability of a resource
+     * @param t is Task currently processed
+     * @return resourcesToUse is a list of Resources needed to perform a task
+     *
+     */
+    public ArrayList<Resource> researchResources(int time, Task t) {
         int start = time;
         updateStart = time;
         ArrayList<Resource> resourcesToUse = new ArrayList();
@@ -188,6 +203,33 @@ public class Test {
         return resourcesToUse;
     }
 
+    //**************************************************************************************************************************************
+    //**************************************************************************************************************************************
+    //                              ALGORITHM FOR PATIENT APPOINTMENT AND RESOURCE ALLOCATION
+    //**************************************************************************************************************************************
+    //**************************************************************************************************************************************
+    /**
+     * 
+     * Method that scheduldes patient appoitment and allocate resources
+     *
+     * @param giveDetails is a boolean used in case it is wished or not to
+     * display results in output (they are processID, PatientID, taskID,
+     * Durations, starting and ending times, waiting times and resources used)
+     *
+     * @see #researchResources(int, Task)
+     * @see #getProcess(java.lang.String)
+     * @see #setZeroSchedule()
+     * @see #getDiagramValues()
+     * @see #addArrayDiagram(int i)
+     * @see #setZero()
+     * @see #getNextAvailableTime()
+     * @see #setTime(int start, int avTime, String taskID)
+     * @see #addParallelSchedule(String[] s)
+     * @see #getStrictestAvailable(int startTime, int avTime)
+     * @see #addDiagramValues(int i, int value)
+     * @see #timeToDiagramValues()
+     *
+     */
     public void addTask(boolean giveDetails) {
 
         //Empty the table of time of each patient 
@@ -204,7 +246,7 @@ public class Test {
             listResource.get(r).setZero();
             listResource.get(r).getDiagramValues().clear();
         }
-
+        // display for each task : the processID, the patientID, TaskID, Duration, presence of patient, starting and ending times, resources used
         if (giveDetails == true) {
             System.out.println("");
             System.out.print("Process ID");
@@ -227,13 +269,22 @@ public class Test {
         }
 
         totalWaitingTime = 0;
+
+        // variable used to ensure the First In First served discipline
         int prevStart = 0;
 
+        // Algorithm starts taking a list of patient and process patient per patient
         for (int j = 0; j < listPatient.size(); j++) {
             Patient pat = listPatient.get(j);
+
+            //variable endLast to calculate the end of a task
             int endLastTask = 0;
+
+            //get Process of the patient
             Process process = this.getProcess(pat.getProcessID());
 
+            //for a given task, check its operation mode, if equals to 0 --> non waiting, 1 --> waiting.
+            //If 0 : tasks to schedulde together are added in TasksToSchedule list, to ensure there is no waiting times beteween tasks involved
             for (int k = 0; k < process.getListTask().size(); k++) {
 
                 boolean waiting = false;
@@ -252,50 +303,69 @@ public class Test {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
 
+                //In case task different from first one : to ensure end of task is at least different of 1 minute to the next task's starting
+                //prevTask is to ensure the first in first served discipline is respected
                 if (k != 0) {
                     time++;
                 } else if (prevStart > time) {
                     time = prevStart;
                 }
+
+                //**********************************************************
+                // CASE FOR TASK WAITING OPERATION MODE AND NO PARALLEL TASK 
+                
+                
                 if (tasksToSchedule.size() == 0) {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
                         int start = time;
-                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // to get resources to use
                         start = updateStart;
                         if (!resourcesToUse.contains(null)) {
+
+                            //*****************************************************************
+                            // CASE NO PARALLEL TASK
+                            
+                            
                             if (t.getParallelTask() == null) {
-                                String displayResTask = "";
+                                String displayResTask = ""; // String to display in output the several resources used for a task
                                 if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
                                     for (int p = 0; p < resourcesToUse.size(); p++) {
-                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
+                                        resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID()); //update a Resource'slist of time
                                         displayResTask += resourcesToUse.get(p).getResourceID() + ", ";
                                     }
 
-                                    pat.setSchedule(0, start, t.getAvTime(), t.getTaskID());
-                                    if (t.getPatientPresence() == 1) { // PATIENT PRESENCE TEST            
+                                    pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // update of table a patient's list of time
+                                    if (t.getPatientPresence() == 1) { // case patient involved    
+
                                         if (start != 0) {
                                             pat.addDiagramValues(0, (start - endLastTask) - 1); // add the waiting time first in the diagram
                                             pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
-                                        } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
+
+                                        } else { // value zero added for waiting time, in case the patient starts at time =0
+                                            // Because In Excel writer first column is "Waiting" and then "Duration"
+
                                             pat.addDiagramValues(0, 0); // add the waiting time first
                                             pat.addDiagramValues(0, t.getAvTime()); //  then add the duration
                                         }
-                                    } else //PATIENT NOT PRESENT
-                                    {
+                                    } else { //case patient NOT involved
                                         if (start != 0) {
                                             pat.addDiagramValues(0, (start - endLastTask) - 1 + t.getAvTime()); // add the waiting time first
                                             pat.addDiagramValues(0, 0); //  then add the duration
-                                        } else { //THE ZERO IN THE WAITING TIME WHEN A TASK STARTS AT THE TIME 0
+
+                                        } else { // value zero added for waiting time, in case the patient starts at time =0
+                                            // Because In Excel writer first column is "Waiting" and then "Duration"
+
                                             pat.addDiagramValues(0, t.getAvTime()); // add the waiting time first
                                             pat.addDiagramValues(0, 0); //  then add the duration
                                         }
                                     }
                                 }
 
-                                if (k != 0) {
+                                if (k != 0) { // before the first time, it's not waiting time, exculded in totalwaitingTime sum
                                     totalWaitingTime += (start - endLastTask);
                                 }
-
+                                
+                                //displays values of a task :duration,  starting end endings times, waiting time. Patient ID, process ID and resources used
                                 if (giveDetails == true) {
                                     System.out.print(process.getID());
                                     System.out.print("\t\t");
@@ -315,9 +385,12 @@ public class Test {
                                     System.out.print("\t\t");
                                     System.out.println(displayResTask);
                                 }
-                                endLastTask = start + t.getAvTime();
+                                
+                                endLastTask = start + t.getAvTime();// calculates ends of the current task
+                                
 
-                            } else { //parallelism ****** start *********
+                            } else {  //*****************************************************************
+                                      // CASE PARALLEL TASK
 
                                 Task pT = t.getParallelTask();
                                 for (int m = 0; m < pT.getListSkill().size(); m++) {
@@ -327,10 +400,10 @@ public class Test {
                                         Resource res = s.getListResource().get(re);
                                         resourcesToUse.add(res);
                                     } else {
-                                        resourcesToUse.add(null);
+                                        resourcesToUse.add(null); // if there is null in list ResourceToUse, not possible to scedule a task
                                     }
                                 }
-                                if (!resourcesToUse.contains(null)) {
+                                if (!resourcesToUse.contains(null)) { //case there resources needed to schedule a task.
                                     String displayResTask = "";
                                     String displayResParaTask = "";
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
@@ -344,26 +417,29 @@ public class Test {
                                                 displayResParaTask += resourcesToUse.get(p).getResourceID() + ", ";
                                             }
                                         }
-                                        pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // 0 = indice du 1er tableau schedule dans parallelSchedules
+                                        pat.setSchedule(0, start, t.getAvTime(), t.getTaskID()); // 0 = index of first table schedule in parallelSchedules
 
-                                        if (t.getPatientPresence() == 1) { // PATIENT PRESENCE TEST
+                                        if (t.getPatientPresence() == 1) { // patient presence test
 
                                             pat.addDiagramValues(0, start - endLastTask); //add the waiting time first
                                             pat.addDiagramValues(0, t.getAvTime()); // then add the duration
-                                        } else { //PATIENT NOT PRESENT
+                                            
+                                        } else { //patient not present
                                             pat.addDiagramValues(0, start - endLastTask + t.getAvTime()); //add the waiting time first
                                             pat.addDiagramValues(0, 0); // then add the duration
                                         }
+                                        
                                         String[] schedule = new String[800];
                                         pat.addParallelSchedule(schedule);
-                                        pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = indice du 2e tableau schedule dans parallelSchedules
+                                        pat.setSchedule(1, start, pT.getAvTime(), pT.getTaskID());// 1 = index of 2e tableau schedule in parallelSchedules
 
-                                        if (pT.getPatientPresence() == 1) { // PATIENT PRESENCE TEST
+                                        if (pT.getPatientPresence() == 1) { // patient presence test
 
                                             pat.addArrayDiagram(1);
                                             pat.addDiagramValues(1, start); //add the waiting time first
                                             pat.addDiagramValues(1, pT.getAvTime()); // then add the duration
-                                        } else { //PATIENT NOT PRESENT
+                                            
+                                        } else { //patient not present
                                             pat.addArrayDiagram(1);
                                             pat.addDiagramValues(1, start + pT.getAvTime()); //add the waiting time first
                                             pat.addDiagramValues(1, 0); // then add the duration
@@ -414,7 +490,7 @@ public class Test {
                                         System.out.println(displayResParaTask);
                                     }
                                     int avTime = Math.max(t.getAvTime(), pT.getAvTime());
-                                    endLastTask = start + avTime;
+                                    endLastTask = start + avTime;// calculates ends of the current task
 
                                 } else {
                                     throw new IllegalArgumentException("Not enough ressources to create a full schedule");
@@ -428,6 +504,9 @@ public class Test {
                     }
                 } else {
 
+                    //**********************************************************
+                    // CASE FOR NON WAITING TASK
+                    
                     tasksToSchedule.add(0, t);
                     int avTimeTotal = 0;
                     int start = time;
@@ -435,17 +514,17 @@ public class Test {
                         avTimeTotal += tasksToSchedule.get(iv).getAvTime();
                     }
                     if (time != -1 && time + avTimeTotal < pat.getSchedule().length) {
-                        ArrayList<Resource> resourcesToUse = researchResources(time, t); // BETTER RESOURCE MANAGEMENT
+                        ArrayList<Resource> resourcesToUse = researchResources(time, t); 
                         start = updateStart;
                         ArrayList<String> tasksResourceToUse = new ArrayList();
                         ArrayList<Integer> durationResourceToUse = new ArrayList();
 
                         if (!resourcesToUse.contains(null)) {
 
-                            for (int v = 0; v < resourcesToUse.size(); v++) { // BETTER RESOURCE MANAGEMENT
+                            for (int v = 0; v < resourcesToUse.size(); v++) { 
                                 tasksResourceToUse.add(t.getTaskID());
                                 durationResourceToUse.add(t.getAvTime());
-                            }// BETTER RESOURCE MANAGEMENT
+                            }
 
                             int currentStart = start + t.getAvTime() + 1;
                             for (int iz = 1; iz < tasksToSchedule.size(); iz++) {
@@ -502,7 +581,7 @@ public class Test {
                                     int currentAvTime = tasksToSchedule.get(x).getAvTime();
 
                                     pat.setSchedule(0, currentStart, currentAvTime, taskID);
-                                    if (tasksToSchedule.get(x).getPatientPresence() == 1) {  // PATIENT PRESENCE TEST
+                                    if (tasksToSchedule.get(x).getPatientPresence() == 1) {  
 
                                         if (x == 0) {
                                             pat.addDiagramValues(0, currentStart - endLastTask);
@@ -511,7 +590,7 @@ public class Test {
                                             pat.addDiagramValues(0, 0); // NON WAITING
                                             pat.addDiagramValues(0, currentAvTime);
                                         }
-                                    } else //PATIENT NOT PRESENT
+                                    } else 
                                     {
                                         if (x == 0) {
                                             pat.addDiagramValues(0, (currentStart - endLastTask) + currentAvTime);
@@ -541,7 +620,7 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.println(displayRes.get(x));
                                     }
-                                    //order is important
+                                    
                                     currentEnd = currentStart + currentAvTime;
                                     currentStart += currentAvTime + 1;
                                 }
@@ -565,13 +644,14 @@ public class Test {
                     }
 
                 }
-                if (k == 0) { // FIRST IN FIRST SERVED   
+                if (k == 0) { //case when it's first task, ensure first in first served discipline. A patient can't an appointment before the previous patient  
                     prevStart = updateStart;
                 }
 
             }
 
         }
+        // from table of time of resources, generation of DiagramValues for excel writer
         for (int q = 0; q < listResource.size(); q++) {
             listResource.get(q).timeToDiagramValues();
         }

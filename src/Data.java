@@ -28,7 +28,7 @@ public class Data {
     private List<Patient> listPatients; // list of Patients
     private List<Integer> numberPatientsPerSurgery; // list of nulber of patients per surgery in data base
     int stochasticDuration; // variable to generate stochastic values of tasks and surgery task
-    int presenceP; // value indicating if a patient is involved in a task or not 
+    int presenceP; // value indicating if a patient is involved in a task or not . 1 = involved, 0 = not involved
 
     /**
      *Constructor of class Data
