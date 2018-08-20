@@ -14,12 +14,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 /**
+ * Class used to define the objective function and write the different
+ * metaheuristic algorithms
  *
  * @author robin
  */
@@ -29,11 +26,27 @@ public class Functions {
     private int totaliterBest;
     Data s;
 
+    /**
+     * Constructor of the class Initialize the data Functions will be using
+     *
+     * @param s the Copy of the data base
+     */
     public Functions(Data s) {
         this.s = s;
     }
 
+    /**
+     * Function allowing to round double values by choosing how many number of
+     * decimals kept
+     *
+     * @param value the double valut to round
+     * @param places number of decimals to keep
+     * @return rounded number
+     * @see BigDecimal#setScale(int, java.math.RoundingMode)
+     * @see BigDecimal#doubleValue()
+     */
     public static double round(double value, int places) {
+        // if there number behind the comma is negative then throw an exception
         if (places < 0) {
             throw new IllegalArgumentException();
         }
@@ -43,7 +56,14 @@ public class Functions {
         return bd.doubleValue();
     }
 
+    /**
+     * Calculus of the waiting penalization
+     *
+     * @param w waiting time
+     * @return waiting penalization
+     */
     public double waiting(int w) {
+        // see the documentation for further explanation
         double result;
         if (w < 60) {
             result = (1 / 15) * w;
@@ -53,20 +73,53 @@ public class Functions {
         return result;
     }
 
+    /**
+     * Calculus of the lateness penalization
+     *
+     * @param l lateness
+     * @return lateness penalization
+     * @see #round(double, int)
+     */
     public double late(int l) {
+        // see the documentation for further explanation
         double result = 0.0;
         result = round(Math.exp(l / (100 / Math.log(30))), 4);
         return result;
     }
 
+    /**
+     * Calculus of the value of the objective function of a Schedule according
+     * to a certain sequence of patients
+     *
+     * @param sequence Sequence of patients to be scheduled in that order
+     * @param giveDetails Boolean which determining if the schedule is sent to
+     * the Excel document
+     * @return the value of the objective function
+     * 
+     * @see Test#Test(java.util.List, Data)
+     * @see Patient
+     * @see Test#addTask(boolean)
+     * @see Test#calculateMakespan()
+     * @see Test#getTotalWaitingTime()
+     * @see Test#getLateness()
+     * @see Test#getListResource()
+     * @see #waiting(int)
+     * @see #late(int)
+     * @see ExcelWriter#write(java.util.List)
+     */
     public double fO(List<Patient> sequence, boolean giveDetails) {
 
         try {
+            //Initialize the Test to schedule the sequence entered as a parameter and the infrmation of the Data Base           
             Test t = new Test(sequence, s);
+            // Create the schedule
             t.addTask(giveDetails);
-
+//Calculus of the value of the objective function
+            //Add the value of makespan from the Test t
             double result = t.calculateMakespan();
+            //Add the value of waiting penalization according to the value of waiting from the Test t
             result += waiting(t.getTotalWaitingTime());
+            //Add the value of lateness penalization according to the value of lateness from the Test t
             result += late(t.getLateness());
 
             if (giveDetails == true) {
@@ -96,11 +149,31 @@ public class Functions {
         }
     }
 
-    public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> sold) {
+    /**
+     * Simulated Annealing algorithm used to find the minimum of the objective
+     * function
+     *
+     * @param temperature Degree of acceptance of worst result for the value of
+     * objective function will reduce during the run of the algorithm
+     * @param tempmin Symbolize the end of the algorithm
+     * @param itermax Number of iteration by temperature
+     * @param scur Initial sequence of Patients
+     * @return Best Sequence found with the minimum value of the objective
+     * function
+     * @see Patient
+     * @see #fO(java.util.List, boolean)
+     * @see Math#random()
+     * @see BufferedWriter#write(java.lang.String)
+     * @see Sequence#deterministicSwap(java.util.List, int, int)
+     * @see System#nanoTime()
+     */
+    public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> scur) {
         double startRuntime = System.nanoTime();
         double currentRuntime = System.nanoTime();
         double totalRuntime;
-        List<Patient> scur = new ArrayList();
+        //Initilization of the list of patients that will be studied and modified throughout the run of the algorithm
+        List<Patient> sStudied = new ArrayList();
+        //factor that will determine how fast the temperature will decrease
         double coolingRate = 0.70;
         int numtemp = 0;
         int numiter = 1;
@@ -108,12 +181,13 @@ public class Functions {
         double dif;
         double rd;
         List<Patient> minb = new ArrayList();
-//        List<Patient> restrictedSold = Sequence.weightedInitialSequence(sold);
-//        sold = new ArrayList();
+//        List<Patient> restrictedSold = Sequence.weightedInitialSequence(scur);
+//        scur = new ArrayList();
 //        for (Patient p : restrictedSold) {
-//            sold.add(p);
+//            scur.add(p);
 //        }
-        for (Patient p : sold) {
+        //Definition of the initial sequence as the best sequence for scheduling
+        for (Patient p : scur) {
             minb.add(p);
         }
 
@@ -125,37 +199,47 @@ public class Functions {
                         new FileOutputStream("improvementAnnealingStatSequence.txt", true)));
                 Writer writerAnnealingStatValue = new BufferedWriter(new OutputStreamWriter(
                         new FileOutputStream("improvementAnnealingStatValue.txt", true)))) {
-            if (fO(sold, false) == Double.MAX_VALUE) {
+            if (fO(scur, false) == Double.MAX_VALUE) {
                 writerAnnealing.write("Initial value : The initial sequence is not schedulable" + System.getProperty("line.separator"));
                 writerAnnealing.write(System.getProperty("line.separator"));
                 writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
                 writerAnnealing.write(System.getProperty("line.separator"));
             } else {
-                writerAnnealing.write("Initial value : " + fO(sold, false) + System.getProperty("line.separator"));
+                writerAnnealing.write("Initial value : " + fO(scur, false) + System.getProperty("line.separator"));
                 writerAnnealing.write(System.getProperty("line.separator"));
                 writerAnnealing.write("Temperature : " + temperature + System.getProperty("line.separator"));
                 writerAnnealing.write(System.getProperty("line.separator"));
             }
 
+            // while the temperature has not reached the limit continue to search
             while (temperature >= tempmin) {
-
+                // if the number of iteration has not reached the limit 
                 if (numiter <= itermax) {
-                    scur = new ArrayList();
-                    for (Patient i : sold) {
-                        scur.add(i);
+                    //Empty the list current 
+                    sStudied = new ArrayList();
+                    for (Patient i : scur) {
+                        // Fill the list studied with the content of the current sequence
+                        sStudied.add(i);
                     }
-                    Sequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
-                    dif = fO(scur, false) - fO(sold, false);
+                    //Neighboorhoud search
+                    Sequence.deterministicSwap(sStudied, (numiter - 1) % (sStudied.size()), numiter % (sStudied.size()));
+                    //Compare the values of the objective function for the two sequence
+                    dif = fO(sStudied, false) - fO(scur, false); 
 
+                    // if the value of the studied sequence is smaller than the current sequence
                     if (dif <= 0) {
-                        sold = new ArrayList();
-                        for (Patient p : scur) {
-                            sold.add(p);
+                        //the studied sequence replace the current sequence
+                        scur = new ArrayList();
+                        for (Patient p : sStudied) {
+                            scur.add(p);
                         }
-                        double dif2 = fO(sold, false) - fO(minb, false);
+                        //Compare the value of the best sequence and the current sequence
+                        double dif2 = fO(scur, false) - fO(minb, false);
+                        //if the value of the current sequence is smaller than the best sequence
                         if (dif2 < 0) {
+                            //the current sequence replace the best sequence
                             minb = new ArrayList();
-                            for (Patient d : sold) {
+                            for (Patient d : scur) {
                                 minb.add(d);
                             }
                             numiterBest = itermax * numtemp + numiter;
@@ -163,20 +247,27 @@ public class Functions {
                             writerAnnealing.write("Improved optimum found in the neighbourhood: " + fO(minb, false) + " Current total of generated sequences to get this optimum: " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                         }
 
+                    //else if the schedule of the studied sequence is feasible but its value is bigger than the current sequence
                     } else if (dif < pow(10, 9)) {
+                        // a random number is selected between 0 and 1 
                         rd = Math.random();
+                        // The Boltzman equation determine a value according to the temperature
                         double choice = exp(-dif / temperature);
+                        //if the random value is smaller than the value of the Boltzman equation 
                         if (rd < choice) {
-                            sold = new ArrayList();
-                            for (Patient p : scur) {
-                                sold.add(p);
+                            //the studied sequence replace the current sequence
+                            scur = new ArrayList();
+                            for (Patient p : sStudied) {
+                                scur.add(p);
                             }
-//                            writerAnnealing.write("Accepted value: " + fO(sold, false) + " " + numiter + "choice :" + choice + "random :" + rd + System.getProperty("line.separator"));
+//                            writerAnnealing.write("Accepted value: " + fO(scur, false) + " " + numiter + "choice :" + choice + "random :" + rd + System.getProperty("line.separator"));
                         }
                     }
 
                 } else {
+                    // the temperature decrease according to the value of the cooling rate
                     temperature = coolingRate * temperature;
+                    //the number of iteration is set back to zero
                     numiter = 0;
                     numtemp++;
                     if (temperature > tempmin) {
@@ -186,6 +277,7 @@ public class Functions {
                         writerAnnealing.write(System.getProperty("line.separator"));
                     }
                 }
+                // the number of iteration increase
                 numiter++;
             }
             totalRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
@@ -213,12 +305,37 @@ public class Functions {
         return minb;
     }
 
+    /**
+     * GRASP algorithm used to find the minimum of the objective function
+     * without the use of a Restricted Choice List
+     *
+     * @param nbIteration Number of generation of a new sequence
+     * @param maxNonImprov Number of swap without improvement before the local
+     * search stops
+     * @param scur Initial Sequence of patients
+     * @return Best Sequence found with the minimum value of the objective function
+     * 
+     * @see Patient
+     * @see System#natoTime
+     * @see System#getProperty(java.lang.String)  
+     * @see Sequence#weightedInitialSequence(java.util.List)
+     * @see #fO(java.util.List, boolean) 
+     * @see #randomizedConstruction(java.util.List) 
+     * @see #localSearch(java.util.List, int, double, java.io.Writer) 
+     * @see BufferedWriter#BufferedWriter(java.io.Writer)
+     * @see Writer#Writer(java.lang.Object)
+     * @see OutputStreamWriter#OutputStreamWriter(java.io.OutputStream)
+     * @see FileOutputStream#FileOutputStream(java.lang.String, boolean) 
+     * @see BufferedWriter#write(java.lang.String) 
+     * @see BufferedWriter#close() 
+     */
     public List<Patient> grasp(int nbIteration, int maxNonImprov, List<Patient> scur) {
         double startRuntime = System.nanoTime();
         double currentRuntime1 = System.nanoTime();
         double currentRuntime2 = System.nanoTime();
         double totalRuntime;
         int totaliterBestGrasp = 0;
+        //
         List<Patient> bestPosition = new ArrayList();
         List<Patient> backUp = new ArrayList();
         List<Patient> restrictedScur = Sequence.weightedInitialSequence(scur);
@@ -226,6 +343,7 @@ public class Functions {
         for (Patient p : restrictedScur) {
             scur.add(p);
         }
+        //Set initial sequence as best sequence
         for (Patient p : scur) {
             bestPosition.add(p);
         }
@@ -247,7 +365,9 @@ public class Functions {
                 writerGrasp.write(System.getProperty("line.separator"));
             }
 
+            //while i as not reached the number of iteration
             while (i < nbIteration) {
+//Creation of a random new sequence          
                 backUp = new ArrayList();
                 for (Patient p : scur) {
                     backUp.add(p);
@@ -256,6 +376,9 @@ public class Functions {
                 for (Patient p : randomizedConstruction(backUp)) {
                     scur.add(p);
                 }
+//
+
+//Find the best sequence in the neighborhood of this sequence
                 backUp = new ArrayList();
                 for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGrasp)) {
                     backUp.add(p);
@@ -264,13 +387,16 @@ public class Functions {
                 for (Patient p : backUp) {
                     scur.add(p);
                 }
-
+//
+                //if the value of this sequence is smaller than the best sequence 
                 if (fO(scur, false) < fO(bestPosition, false)) {
 
+//this sequence is set as best sequence
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
+//
                     currentRuntime1 = (System.nanoTime() - startRuntime) / pow(10, 9);
                     totaliterBestGrasp = totaliterBest;
                     writerGrasp.write(System.getProperty("line.separator"));
@@ -312,7 +438,27 @@ public class Functions {
         return bestPosition;
     }
 
+    /**
+     * Local search of the random sequence generated find if there is a schedule with smaller value of objective function
+     * @param scur Initial sequence 
+     * @param maxNonImprov Number of swap without improvement before the local
+     * search stops
+     * @param startRuntime 
+     * @param writer
+     * @return the best sequence of the local Search
+     * 
+     * @see Sequence#deterministicSwap(java.util.List, int, int) 
+     * @see #fO(java.util.List, boolean) 
+     * @see Math#random()
+     * @see BufferedWriter#BufferedWriter(java.io.Writer)
+     * @see Writer#Writer(java.lang.Object)
+     * @see OutputStreamWriter#OutputStreamWriter(java.io.OutputStream)
+     * @see FileOutputStream#FileOutputStream(java.lang.String, boolean) 
+     * @see BufferedWriter#write(java.lang.String) 
+     * @see BufferedWriter#close() 
+     */
     public List<Patient> localSearch(List<Patient> scur, int maxNonImprov, double startRuntime, Writer writer) {
+        //Initialization of the initial sequence as the best sequence
         List<Patient> bestPosition = new ArrayList();
         for (Patient p : scur) {
             bestPosition.add(p);
@@ -334,13 +480,19 @@ public class Functions {
                 writer.write("--> Search for improvement in the neighbourhood" + System.getProperty("line.separator"));
                 writer.write(System.getProperty("line.separator"));
             }
+            // while the number of iteration without improvement has not reached the maximum
             while (numiter <= maxNonImprov) {
+                
                 scur = Sequence.deterministicSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
+                //if the value of the new sequence is smaller than the value of the best sequence
                 if (fO(scur, false) < fO(bestPosition, false)) {
                     totaliterGrasp++;
+                    
                     numiterBest += numiter;
+                    //set number of iteration to one
                     numiter = 1;
 
+                    //Set the new sequence as best sequence
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
@@ -349,6 +501,7 @@ public class Functions {
                     double currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
                     writer.write("Improved value found in the neighbourhood : " + fO(bestPosition, false) + " Current total of generated sequences in this try : " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                 } else {
+                    //value of number of iteration without improvement increase
                     totaliterGrasp++;
                     numiter++;
                 }
@@ -360,32 +513,59 @@ public class Functions {
         return bestPosition;
     }
 
+    /**
+     * Function generating a sequence Randomly
+     * @param list List of patient to put in the generated sequence
+     * @return Random sequence
+     * 
+     * @see Patient
+     * @see Random
+     */
     public List<Patient> randomizedConstruction(List<Patient> list) {
         List<Patient> sequence = new ArrayList();
+//Create a list of possibilities
         List<Patient> patientList = new ArrayList();
         for (Patient p : list) {
             patientList.add(p);
         }
+//
         Random rand = new Random();
         Patient randomElement;
 
-        while (sequence.size() < list.size()) {
+       //Fill the random sequence
+        while (sequence.size() < list.size()) { 
+            //Select a random patient in the list of possibilities
             randomElement = patientList.get(rand.nextInt(patientList.size()));
+            //Add it to the sequence
             sequence.add(randomElement);
+            //Remove it frome the list of possibilities
             patientList.remove(randomElement);
         }
         return sequence;
     }
 
-    /**
-     *
-     * @param greedyness
-     * @param nbIteration
-     * @param scur
-     * @return
-     */
-    public List<Patient> graspRCL(double greedyness, int nbIteration, int maxNonImprov, List<Patient> scur) {
-        //defined by a random function        
+   /**
+    * GRASP algorithm used to find the minimum of the objective function
+     * with the use of a Restricted Choice List with the Cancellation likelihood
+    * @param greedyness Tolerance of cost depending on the Cancellation likelihood
+    * @param nbIteration Number of pseudo randomly generated sequence
+    * @param maxNonImprov Number of swap without improvement before the local search stops
+    * @param scur Initial Sequence
+    * @return The best Sequence in term of value of the objective function
+    * 
+    * @see System#nanoTime() 
+    * @see Patient
+    * @see #localSearch(java.util.List, int, double, java.io.Writer) 
+    * @see #greedyRandomizedConstruction(double, java.util.List) 
+    * @see Sequence#weightedInitialSequence(java.util.List) 
+    * @see BufferedWriter#BufferedWriter(java.io.Writer)
+     * @see Writer#Writer(java.lang.Object)
+     * @see OutputStreamWriter#OutputStreamWriter(java.io.OutputStream)
+     * @see FileOutputStream#FileOutputStream(java.lang.String, boolean) 
+     * @see BufferedWriter#write(java.lang.String) 
+     * @see BufferedWriter#close() 
+    */
+    public List<Patient> graspRCL(double greedyness, int nbIteration, int maxNonImprov, List<Patient> scur) {        
         double startRuntime = System.nanoTime();
         double currentRuntime1 = System.nanoTime();
         double currentRuntime2 = System.nanoTime();
@@ -418,8 +598,9 @@ public class Functions {
                 writerGraspRCL.write("Value of the initial sequence: " + fO(bestPosition, false) + System.getProperty("line.separator"));
                 writerGraspRCL.write(System.getProperty("line.separator"));
             }
-
+            // while the number of sequence generated has not reached the maximum number
             while (i < nbIteration) {
+//Create a gready random sequence
                 backUp = new ArrayList();
                 for (Patient p : scur) {
                     backUp.add(p);
@@ -428,6 +609,9 @@ public class Functions {
                 for (Patient p : greedyRandomizedConstruction(greedyness, backUp)) {
                     scur.add(p);
                 }
+//
+
+//Search in the neighborhood the best sequence
                 backUp = new ArrayList();
                 for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGraspRCL)) {
                     backUp.add(p);
@@ -436,12 +620,16 @@ public class Functions {
                 for (Patient p : backUp) {
                     scur.add(p);
                 }
+//
 
+                //if the sequence found has a smaller value than the best sequence 
                 if (fO(scur, false) < fO(bestPosition, false)) {
+//Replace the best sequence by this sequence
                     bestPosition = new ArrayList();
                     for (Patient p : scur) {
                         bestPosition.add(p);
                     }
+//
                     currentRuntime1 = (System.nanoTime() - startRuntime) / pow(10, 9);
                     totaliterBestGrasp = totaliterBest;
                     writerGraspRCL.write(System.getProperty("line.separator"));
@@ -483,47 +671,75 @@ public class Functions {
     }
 
     /**
-     *
-     * @param greedyness
-     * @param list
-     * @return
+     * Construction of new sequence according to the greediness decided
+     * @param greediness Tolerance of difference between the Cancelation likelihood of the last added patient ant the potiential others 
+     * @param list List of patient to be put inside the sequence generated
+     * @return Greedy Randomly generated Sequence
+     * 
+     * @see Sequence#sortByCancellationLikelihood(java.util.List) 
+     * @see Random#Random() 
+     * @see Collections#max(java.util.Collection) 
+     * @see Collections#min(java.util.Collection) 
+     * 
      */
-    public List<Patient> greedyRandomizedConstruction(double greedyness, List<Patient> list) {
+    public List<Patient> greedyRandomizedConstruction(double greediness, List<Patient> list) {
         List<Patient> sequence = new ArrayList();
         List<List> sortedCancellationLikelihoods = Sequence.sortByCancellationLikelihood(list);
+//Put the patients with a low cancellation likelihood in a list
         List<Patient> possibilitiesL = sortedCancellationLikelihoods.get(0);
         List<Patient> possibilitiesLbackup = new ArrayList();
         for (Patient p : possibilitiesL) {
             possibilitiesLbackup.add(p);
         }
+//
+ 
+//Put the patients with a high cancellation likelihood in a list 
         List<Patient> possibilitiesH = sortedCancellationLikelihoods.get(1);
         List<Patient> possibilitiesHbackup = new ArrayList();
         for (Patient p : possibilitiesH) {
             possibilitiesHbackup.add(p);
         }
-        Patient randomElement;
+//
 
+
+        Patient randomElement;
         Random rand = new Random();
+        
+//Select the first patient in the low cancellation likelihood list
         int firstpo = rand.nextInt(possibilitiesL.size());
         sequence.add(possibilitiesL.get(firstpo));
         possibilitiesL.remove(firstpo);
+//
 
+//While the sequence is not complete
         while (sequence.size() < list.size()) {
             List<Patient> rcl = new ArrayList();
             List<Double> cost = new ArrayList();
+            
+            //if the last patient of the sequence has a high cancellation likelihood
             if (possibilitiesHbackup.contains(sequence.get(sequence.size() - 1))) {
+                //Compare the difference of cancellation likelihood with the last patient and all the remaining patients with a low cancellation likehood to create a list of cost
                 for (int h = 0; h < possibilitiesL.size(); h++) {
                     cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesL.get(h).getCancellationLikelihood()));
 
                 }
+                
+                //Find the maximal difference
                 double maxcost = Collections.max(cost);
+                //Find the minimal difference
                 double mincost = Collections.min(cost);
 
+//Compare all the cost according to the greediness
                 for (int k = 0; k < possibilitiesL.size(); k++) {
-                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                    //if the greediness allows it 
+                    if (cost.get(k) <= (mincost + greediness * (maxcost - mincost))) {
+                        //the patient is added to the Restricted Choice list
                         rcl.add(possibilitiesL.get(k));
                     }
                 }
+//
+
+//Pick a random patient in the Restricted Choice list
                 int limit = rcl.size() - 1;
                 if (limit == 0) {
                     sequence.add(rcl.get(limit));
@@ -532,21 +748,35 @@ public class Functions {
                     randomElement = rcl.get(rand.nextInt(limit));
                     sequence.add(randomElement);
                 }
-                possibilitiesL.remove(possibilitiesL.indexOf(randomElement));
+//
 
+                //Remove this patient from the list of possible patients with low cancellation likelihood
+                possibilitiesL.remove(possibilitiesL.indexOf(randomElement));
+                
+                //if the last patient of the sequence has a low cancellation likelihood
             } else if ((possibilitiesLbackup.contains(sequence.get(sequence.size() - 1)))) {
+                
+                //Compare the difference of cancellation likelihood with the last patient and all the remaining patients with a hight cancellation likehood to create a list
                 for (int h = 0; h < possibilitiesH.size(); h++) {
                     cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesH.get(h).getCancellationLikelihood()));
                 }
-
+                
+                //Find the maximal difference
                 double maxcost = Collections.max(cost);
+                //Find the minimal difference
                 double mincost = Collections.min(cost);
 
+//Compare all the cost according to the greediness
                 for (int k = 0; k < possibilitiesH.size(); k++) {
-                    if (cost.get(k) <= (mincost + greedyness * (maxcost - mincost))) {
+                    //if the greediness allows it
+                    if (cost.get(k) <= (mincost + greediness * (maxcost - mincost))) {
+                        //the patient is added to the Restricted Choice list
                         rcl.add(possibilitiesH.get(k));
                     }
                 }
+//
+
+//Pick a random patient in the Restricted Choice list
                 int limit = rcl.size() - 1;
                 if (limit == 0) {
                     sequence.add(rcl.get(limit));
@@ -555,7 +785,9 @@ public class Functions {
                     randomElement = rcl.get(rand.nextInt(limit));
                     sequence.add(randomElement);
                 }
+//
 
+ //Remove this patient from the list of possible patients with high cancellation likelihood
                 possibilitiesH.remove(possibilitiesH.indexOf(randomElement));
 
             }
@@ -569,7 +801,15 @@ public class Functions {
      * @param sizePopulation size of the population studied
      * @param nbrGeneration number of generation done before finding the best
      * sequence
+     * @param scur Initial sequence 
+     * @param startPercentage
+     * @param endPercentage
+     * @param reverse
      * @return the sequence with the best fitness
+     * 
+     * @see Patient
+     * @see System#nanoTime()
+     * @see Sequence#makeACrossingOver(java.util.List, java.util.List, int, int, boolean) 
      */
     public List<Patient> genetic(int sizePopulation, int nbrGeneration, List<Patient> scur, int startPercentage, int endPercentage, boolean reverse) {
         double startRuntime = System.nanoTime();
@@ -580,10 +820,10 @@ public class Functions {
         List<List<Patient>> population = new ArrayList();
         // Declaration of the initial sequence 
         List<Patient> bestPositionImprovement = new ArrayList();
-//        List<Patient> restrictedScur = Sequence.weightedInitialSequence(scur);
-//        scur = new ArrayList();
+//        List<Patient> restrictedScur = Sequence.weightedInitialSequence(sStudied);
+//        sStudied = new ArrayList();
 //        for (Patient p : restrictedScur) {
-//            scur.add(p);
+//            sStudied.add(p);
 //        }
         for (Patient p : scur) {
             bestPositionImprovement.add(p);
