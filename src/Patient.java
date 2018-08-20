@@ -147,7 +147,7 @@ public class Patient {
     }
 
     public int getNextAvailableTime() {
-        int time = 1;
+        int time = 0;
         if (!isEmptyStringArray(parallelSchedules.get(0))) {
             int i = parallelSchedules.get(0).length - 1;
             boolean found = false;

@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -213,6 +214,8 @@ public class Test {
             System.out.print("\t");
             System.out.print("Task ID");
             System.out.print("\t");
+            System.out.print("Duration");
+            System.out.print("\t");
             System.out.print("Presence patient");
             System.out.print("\t");
             System.out.print("Starting Time");
@@ -225,6 +228,7 @@ public class Test {
         }
 
         totalWaitingTime = 0;
+        int prevStart = 0;
 
         for (int j = 0; j < listPatient.size(); j++) {
             Patient pat = listPatient.get(j);
@@ -249,10 +253,12 @@ public class Test {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
 
-                if (k == 0) {
-                    time = time - 1;
+                if (k != 0) {
+                    time++;
                 } else {
-                    time = time + 1;
+                    if (prevStart > time) {
+                        time = prevStart;
+                    }
                 }
                 if (tasksToSchedule.size() == 0) {
                     if (time != -1 && time + t.getAvTime() < pat.getSchedule().length) {
@@ -301,6 +307,8 @@ public class Test {
                                     System.out.print(pat.getPatientID());
                                     System.out.print("\t\t");
                                     System.out.print(t.getTaskID());
+                                    System.out.print("\t\t");
+                                    System.out.print((t.getAvTime() + start )-start+ "");
                                     System.out.print("\t\t");
                                     System.out.print(t.getPatientPresence());
                                     System.out.print("\t\t");
@@ -385,6 +393,8 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(t.getTaskID());
                                         System.out.print("\t\t");
+                                        System.out.print((t.getAvTime() + start)-start+ "");
+                                        System.out.print("\t\t");
                                         System.out.print(t.getPatientPresence());
                                         System.out.print("\t\t");
                                         System.out.print(start + "");
@@ -401,6 +411,8 @@ public class Test {
                                         System.out.print(pat.getPatientID());
                                         System.out.print("\t\t");
                                         System.out.print(pT.getTaskID());
+                                        System.out.print("\t\t");
+                                        System.out.print((pT.getAvTime() + start)-start + "");
                                         System.out.print("\t\t");
                                         System.out.print(pT.getPatientPresence());
                                         System.out.print("\t\t");
@@ -530,6 +542,8 @@ public class Test {
                                         System.out.print("\t\t");
                                         System.out.print(taskID);
                                         System.out.print("\t\t");
+                                        System.out.print((currentStart + currentAvTime)-currentStart+ "" );
+                                        System.out.print("\t\t");
                                         System.out.print(tasksToSchedule.get(x).getPatientPresence());
                                         System.out.print("\t\t");
                                         System.out.print(currentStart + "");
@@ -564,12 +578,15 @@ public class Test {
                     }
 
                 }
+                if (k == 0) { // FIRST IN FIRST SERVED  
+                    prevStart = updateStart;
+                }
+            } // task loop
 
-            }
-
-        }
+        } //patient loop
         for (int q = 0; q < listResource.size(); q++) {
             listResource.get(q).timeToDiagramValues();
         }
+
     }
 }

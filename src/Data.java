@@ -152,6 +152,13 @@ public class Data {
                 int maxWait = rs.getInt("MaxWait");
 
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+                boolean zero = false;
+//                while (!zero && stochasticDuration == 0) {
+//                    stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
+//                    if (stochasticDuration != 0) {
+//                        zero = true;
+//                    }
+//                }
                 if (stochasticDuration < 0) {
                     stochasticDuration = Math.abs(stochasticDuration);
                 }
@@ -177,7 +184,16 @@ public class Data {
                         int stdDev = rs.getInt("stdDev");
                         int avTime = rs.getInt("AvTime");
                         listTask.get(i).setStdDev(stdDev);
+
                         stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
+                        boolean zero = false;
+                        while (!zero && stochasticDuration == 0) {
+                            stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
+                            if (stochasticDuration != 0) {
+                                zero = true;
+                            }
+                        }
+
                         if (stochasticDuration < 0) {
                             stochasticDuration = Math.abs(stochasticDuration);
                         }

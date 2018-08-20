@@ -81,18 +81,18 @@ public class Functions {
 //            System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
 //        }
             if (giveDetails == true) {
-                for (int i = 0; i < sequence.size(); i++) {
-                    System.out.print(sequence.get(i).getPatientID());
-                    for (String[] e : sequence.get(i).getParallelSchedules()) {
-                        System.out.println(Arrays.toString(e));
-                    }
-                }
-                System.out.println("");
-
-                for (int j = 0; j < t.getListResource().size(); j++) {
-                    System.out.print(t.getListResource().get(j).getResourceID());
-                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
-                }
+//                for (int i = 0; i < sequence.size(); i++) {
+//                    System.out.print(sequence.get(i).getPatientID());
+//                    for (String[] e : sequence.get(i).getParallelSchedules()) {
+//                        System.out.println(Arrays.toString(e));
+//                    }
+//                }
+//                System.out.println("");
+//
+//                for (int j = 0; j < t.getListResource().size(); j++) {
+//                    System.out.print(t.getListResource().get(j).getResourceID());
+//                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
+//                }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
                 for (int h = 0; h < t.getListResource().size(); h++) {

@@ -1,4 +1,6 @@
 
+
+
 import java.util.ArrayList;
 
 /*
@@ -32,6 +34,18 @@ public class Resource {
 
     public int getNextAvailableTime(int startTime, int avTime) {
         int available = -1;
+        
+//        boolean found = false;
+//        int i = time.length;
+//        while (!found && i >=0){
+//            if(time[i]== null){
+//                i --;
+//            }
+//            else{
+//                available = i;
+//                found = true;
+//            }
+//        }
         boolean found = false;
         int i = startTime;
         while (!found && i + avTime < time.length) {
