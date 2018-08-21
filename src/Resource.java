@@ -22,7 +22,7 @@ public class Resource {
      * Constructor initializes variables
      *
      * @param resourceID
-     * @param capacity
+     * @param capacity 
      * @param name
      */
     public Resource(String resourceID, int capacity, String name) {
@@ -43,7 +43,7 @@ public class Resource {
     }
 
     /**
-     *Method that returns  the time the resource is available, return an integer
+     *Method that returns  the time when the resource is available, return an integer corresponding to an index
      * @param startTime
      * @param avTime
      * @return available 
@@ -73,11 +73,11 @@ public class Resource {
     }
 
     /**
-     *
+     *Method that takes two parameters : a start time indcating when the task starts and an avTime which is the duration of this task
      * @param startTime it's the time when the task starts
      * @param avTime it's the duration of the task
      * @return available it is a boolean that indicates if a resource is
-     * available
+     * available or not
      */
     public boolean isAvailable(int startTime, int avTime) {
         boolean available = false;
@@ -98,7 +98,7 @@ public class Resource {
     }
 
     /**
-     *
+     *Method to check if the list of time is empty
      * @param array it is the list of time of a Resource
      * @return a bolean is the array is empty or not
      */
