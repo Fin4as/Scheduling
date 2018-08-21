@@ -84,7 +84,7 @@ public class ExcelWriter {
 
             // Write the output to a file
             File home = FileSystemView.getFileSystemView().getHomeDirectory();
-            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Diagram.xlsx");
+            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Patinet_Diagram.xlsx");
             workbook.write(fileOut);
             fileOut.close();
 
@@ -144,7 +144,7 @@ public class ExcelWriter {
 
             // Write the output to a file
             File home = FileSystemView.getFileSystemView().getHomeDirectory();
-            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Diagram_Resource.xlsx");
+            FileOutputStream fileOut = new FileOutputStream(home.getAbsolutePath() + "\\Scheduling_Resource_Diagram.xlsx");
 
             workbook.write(fileOut);
             fileOut.close();
