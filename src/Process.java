@@ -20,7 +20,7 @@ public class Process {
     private List<Task> listTask; // list of Task objects of the process
 
     /**
-     * Constructor initilizes variables. Method called by Data Class
+     * Constructor initilizes variables. Method called by Data Class. From a process ID in data Base, all information about this process are obtained
      * @param processID 
      */
     public Process(String processID) {
