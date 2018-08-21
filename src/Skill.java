@@ -4,21 +4,29 @@
  * and open the template in the editor.
  */
 
-
 import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This clas describes a skill
  *
  * @author Hayat
  */
 public class Skill {
 
-    private String skillID;
-    private String description;
-    private String prevTaskID;
-    private List<Resource> listResource;
+    private String skillID; // ID to identify a specific skill
+    private String description; // variable that provide a description of the skill, not used in the code
+    private String prevTaskID; // variable not used in the code
+    private List<Resource> listResource; // a skill has a list of object resources
 
+    /**
+     * Constructor whith inistializes variables and create a list of Resources
+     *
+     * @param s is a skill
+     * @param d is the description of this skill
+     * @param p is a previousTask of this skill
+     *
+     */
     public Skill(String s, String d, String p) {
         skillID = s;
         description = d;
@@ -26,30 +34,60 @@ public class Skill {
         listResource = new ArrayList<Resource>();
     }
 
+    /**
+     *
+     * @return skillID
+     */
     public String getSkillID() {
         return this.skillID;
     }
 
+    /**
+     *
+     * @return list of resources of this skill
+     */
     public List<Resource> getListResource() {
         return this.listResource;
     }
 
+    /**
+     * Method that adds a resource in the list of resources
+     *
+     * @param r os a resource
+     */
     public void addResource(Resource r) {
         listResource.add(r);
     }
-    
-       public int getStrictestAvailable(int startTime, int avTime) {
+
+    /**
+     * Method used in case of non waiting tasks, it needs a srtart time and a
+     * duration of the task
+     *
+     * @param startTime
+     * @param avTime
+     * @return resource which represents the index in the list of the resource
+     * available
+     */
+    public int getStrictestAvailable(int startTime, int avTime) {
         int resource = -1;
         for (int j = 0; j < listResource.size(); j++) {
             boolean available = listResource.get(j).isAvailable(startTime, avTime);
-            if(available){
-                resource=j;
+            if (available) {
+                resource = j;
                 break;
             }
         }
         return resource;
     }
 
+    /**
+     * Method to get the resource the fastest available to perfom a task which
+     * starts at startTime and lasts avTime
+     *
+     * @param startTime when the task starts
+     * @param avTime is the duration of the task
+     * @return an index corresponding to the resource (in the list of resource)who is available
+     */
     public int getFastestAvailable(int startTime, int avTime) {
         int resource = -1;
         for (int j = 0; j < listResource.size(); j++) {
@@ -57,12 +95,12 @@ public class Skill {
             if (listResource.size() == 1 && min != -1) {
                 resource = 0;
             } else if (listResource.size() > 1) {
-                 if(min != -1 && resource ==-1){
-                        resource =j;
-                    }
-                for (int i = j+1; i < listResource.size(); i++) { 
+                if (min != -1 && resource == -1) {
+                    resource = j;
+                }
+                for (int i = j + 1; i < listResource.size(); i++) {
                     int currentTime = listResource.get(i).getNextAvailableTime(startTime, avTime);
-                   
+
                     if (min != -1 && currentTime < min) {
                         resource = i;
 
@@ -78,7 +116,8 @@ public class Skill {
                 }
 
             }
-            
-        }return resource;
+
+        }
+        return resource;
     }
 }
