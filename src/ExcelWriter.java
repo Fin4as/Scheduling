@@ -18,19 +18,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
  * and open the template in the editor.
  */
 /**
+ * This class aims create 2 excel writer files to display Resource allocation and
+ * patient appointments diagram ***see documentation 'How to display diagrams? '***
  *
- * @author Hayat This class aims create 2 excel writer files to display Resource
- * allocation and patient appointments
+ * @author Hayat 
  */
 public class ExcelWriter {
 
     private static String[] columns = {"Process", "Patient", "WaitingTime", "Duration"};
     private static ArrayList<String> fullColumns = new ArrayList<>(Arrays.asList(columns));
 
-    /**
-     *
-     * Method to create the excelwriter diagramm of patient appointments
-     */
+   /**
+    * Method to create an excel file to display the diagram  **patient appointment**
+    * @param lp is a list of patient who have diagramValues list
+    */
     public void write(List<Patient> lp) {
 
         // Create a Workbook
@@ -94,10 +95,10 @@ public class ExcelWriter {
         }
     }
 
-    /**
-     *
-     * Method to create the excelwriter diagramm of resource allocation
-     */
+/**
+ * This method is to create a table containing values to display a diagram in a excel file ** resources allocation**
+ * @param lr is a list of resources who have diagramValues list
+ */
     public void update(List<Resource> lr) {
 
         ArrayList<String> columns = new ArrayList<>();
@@ -156,10 +157,12 @@ public class ExcelWriter {
         }
     }
 
-    /**
-     *
-     * Method for Patient diagram :retunrs the maximum number of tasks from a process, to fix the number of columns in excel file
-     */
+   /**
+    * Method for Patient diagram :retunrs the maximum number of tasks from a
+     * process, to fix the number of columns in excel file
+    * @param lp list of patient
+    * @return an int to limit the number of columns in the sheet
+    */
     public int getMaxNumberOfTasks(List<Patient> lp) {
         int nbr = lp.get(0).getDiagramValues().get(0).size();
         for (int i = 1; i < lp.size(); i++) {
@@ -172,8 +175,10 @@ public class ExcelWriter {
     }
 
     /**
-     *
-     * Method For Resource diagram : returns the maximum number of tasks, to fix the number of columns in excel file
+     * Method For Resource diagram : returns the maximum number of tasks, to fix
+     * the number of columns in excel file
+     * @param lr list of resources
+     * @return an int to limit the number of columns in the sheet
      */
     public int getMaxNumberOfTasksForResources(List<Resource> lr) {
         int nbr = lr.get(0).getDiagramValues().size();
