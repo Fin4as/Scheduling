@@ -10,16 +10,17 @@ import java.util.List;
 /**
  * This class calculates values : makespan, lateness and total waiting times
  * According to calculations realized by AddTask method
+ * It contains the main algorithm to scheudle patient appointment and resource allocation
  *
  * @author Hayat
  */
 public class Test {
 
-    List<Patient> listPatient;
-    List<Process> listProcess;
-    List<Resource> listResource;
-    int totalWaitingTime;
-    int lateness;
+    List<Patient> listPatient; // list of patient 
+    List<Process> listProcess; // list of process of the patients
+    List<Resource> listResource; // list of resources needed to schedule the list of process
+    int totalWaitingTime; // variable to calculate the total waiting time of the patients
+    int lateness; // variable to calculate the lateness once the scheduling is done
 
     /**
      * Constructor initializes variables
@@ -159,7 +160,7 @@ public class Test {
     /**
      * Method to get Resources needed for a task, called by AddTask method
      *
-     * @param time is the time of vailability of a resource
+     * @param time is the time of availability of a resource
      * @param t is Task currently processed
      * @return resourcesToUse is a list of Resources needed to perform a task
      *
@@ -620,7 +621,7 @@ public class Test {
                                             pat.addDiagramValues(0, currentStart - endLastTask);
                                             pat.addDiagramValues(0, currentAvTime);
                                         } else {
-                                            pat.addDiagramValues(0, 0); // NON WAITING
+                                            pat.addDiagramValues(0, 0); 
                                             pat.addDiagramValues(0, currentAvTime);
                                         }
                                     } else {
@@ -628,7 +629,7 @@ public class Test {
                                             pat.addDiagramValues(0, (currentStart - endLastTask) + currentAvTime);
                                             pat.addDiagramValues(0, 0);
                                         } else {
-                                            pat.addDiagramValues(0, currentAvTime); // NON WAITING
+                                            pat.addDiagramValues(0, currentAvTime);
                                             pat.addDiagramValues(0, 0);
                                         }
                                     }
