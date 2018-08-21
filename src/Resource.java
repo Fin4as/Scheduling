@@ -6,8 +6,9 @@ import java.util.ArrayList;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
 /**
- *
+ *This calss describes a Resource
  * @author Hayat class that describes a Resource
  */
 public class Resource {
