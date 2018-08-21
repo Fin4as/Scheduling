@@ -11,17 +11,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This class aims to get data from Database : process and patients
+ * This class aims to get data from Database : process and patients. It ensures a single connection and It also generates stochastic values of Tasks
  *
  * @author Hayat
  *
  */
 public class Data {
 
-    ResultSet rs;
-    String driver = "com.mysql.jdbc.Driver";
-    Statement st;
-    Connection conn;
+    ResultSet rs; // variable to get results of a query
+    String driver = "com.mysql.jdbc.Driver"; // driver
+    Statement st; // to execute a query
+    Connection conn; // variable for connection
     private List<Process> listProcess; // list of process assigned to patients
     private List<Resource> allResources; // list of resources needed for all process 
     private List<String> nameResource; // list of Resources' ID
@@ -186,9 +186,8 @@ public class Data {
     }
 
     /**
-     *
-     * @param pro is a specific process method to get tasks' data of this
-     * specific process stochastic durations are generated for each task
+     * method to get tasks' data a specific process, stochastic durations are generated for each task
+     * @param pro is a specific process 
      */
     public void getTaskData(Process pro) {
 
@@ -203,16 +202,11 @@ public class Data {
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
+                
+                // stcohastic values for tasks duration
+                stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); 
 
-                stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
-//                the comment below had to make sure the stochastic value generated is different from zero
-//                boolean zero = false;
-//                while (!zero && stochasticDuration == 0) {
-//                    stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
-//                    if (stochasticDuration != 0) {
-//                        zero = true;
-//                    }
-//                }
+                // condition  to exclude negative values
                 if (stochasticDuration < 0) {
                     stochasticDuration = Math.abs(stochasticDuration);
                 }
@@ -246,17 +240,11 @@ public class Data {
                         int stdDev = rs.getInt("stdDev");
                         int avTime = rs.getInt("AvTime");
                         listTask.get(i).setStdDev(stdDev);
+                        
+                        // stcohastic values for tasks duration
+                        stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); 
 
-                        stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
-//                        the comment below had to make sure the stochastic value generated is different from zero 
-//                        boolean zero = false;
-//                        while (!zero && stochasticDuration == 0) {
-//                            stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
-//                            if (stochasticDuration != 0) {
-//                                zero = true;
-//                            }
-//                        }
-
+                        // condition to exclude negative values
                         if (stochasticDuration < 0) {
                             stochasticDuration = Math.abs(stochasticDuration);
                         }
@@ -348,7 +336,7 @@ public class Data {
     }
 
    /**
-    * Method add list of Previous Tasks for a specific task. Based on a list of tasks and a processID
+    * Method that adds list of Previous Tasks for a specific task. Based on a list of tasks and a processID
     * @param listTask 
     * @param processID 
     */
@@ -374,7 +362,7 @@ public class Data {
     }
 
     /**
-     * Method add list of Next Tasks for a specific task. Based on a list of tasks and a processID
+     * Method that adds list of Next Tasks for a specific task. Based on a list of tasks and a processID
      * @param listTask 
      * @param processID 
      */
@@ -389,10 +377,13 @@ public class Data {
                     if (listTask.get(i).getTaskID().equals(taskID)) {
                         listTask.get(i).addNextTask(nextTask);
                     }
-                    if (listTask.get(i).getNextTaskIDList().size() > 1) {
+                    
+                    // the way next tasks are described in DB, indicates if a task has a parallel task or not
+                    if (listTask.get(i).getNextTaskIDList().size() > 1) { 
                         listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
                         listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
-                        listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime());
+                        // set avTime to ensure 2 parallel tasks have the same duration
+                        listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime()); 
 
                     }
                 }
