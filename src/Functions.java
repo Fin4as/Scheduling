@@ -9,7 +9,6 @@ import static java.lang.Math.pow;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -70,18 +69,6 @@ public class Functions {
             result += late(t.getLateness());
 
             if (giveDetails == true) {
-//                for (int i = 0; i < sequence.size(); i++) {
-//                    System.out.print(sequence.get(i).getPatientID());
-//                    for (String[] e : sequence.get(i).getParallelSchedules()) {
-//                        System.out.println(Arrays.toString(e));
-//                    }
-////                }
-//                System.out.println("");
-
-//                for (int j = 0; j < t.getListResource().size(); j++) {
-//                    System.out.print(t.getListResource().get(j).getResourceID());
-//                    System.out.println(Arrays.toString(t.getListResource().get(j).getTime()));
-//                }
                 ExcelWriter excelWriter = new ExcelWriter();
                 excelWriter.write(t.listPatient);
                 for (int h = 0; h < t.getListResource().size(); h++) {
