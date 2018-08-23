@@ -49,9 +49,11 @@ public class Functions {
         if (places < 0) {
             throw new IllegalArgumentException();
         }
-
+        //Creation of a type of variable that can be rounded
         BigDecimal bd = new BigDecimal(value);
+        //The value is rounded the half-up according to the number of places chosen
         bd = bd.setScale(places, RoundingMode.HALF_UP);
+        //Conversion to double
         return bd.doubleValue();
     }
 
@@ -63,9 +65,13 @@ public class Functions {
      */
     public double waiting(int w) {
         // see the documentation for further explanation about the coefficients
+        
+        //creation of the variable that will take the value of the wainting penalization
         double result;
+        //If the value of waiting is inferior to 60
         if (w < 60) {
             result = (1 / 15) * w;
+        //If the value of waiting is superior to 60
         } else {
             result = (-40 + w) / 5;
         }
@@ -81,7 +87,9 @@ public class Functions {
      */
     public double late(int l) {
         // see the documentation for further explanation 
-        double result = 0.0;
+        
+        //creation of the variable that will take the value of the lateness penalization
+        double result;
         result = round(Math.exp(l / (100 / Math.log(30))), 4);
         return result;
     }
@@ -166,14 +174,18 @@ public class Functions {
         int numtemp = 0;
         int numiter = 1;
         int numiterBest = 1;
+        //This variable is used to compare the value of sequence according to the objective function
         double dif;
+        //This variable is used to pick a random number for the Boltzmann equation
         double rd;
         List<String> sequenceDisplay = new ArrayList();
         for (Patient p : scur) {
             sequenceDisplay.add(p.getPatientID());
         }
+        //this variable is used to keep the sequence with the smallest value of the objective function 
         List<Patient> minb = new ArrayList();
-        //Definition of the initial sequence as the best sequence for scheduling 
+        /*Definition of the initial sequence as the best sequence for scheduling 
+        Each patient is added one by one*/
         for (Patient p : scur) {
             minb.add(p);
         }
@@ -215,55 +227,62 @@ public class Functions {
 
                 // if the number of iteration has not reached the limit
                 if (numiter <= itermax) {
-                    //Empty the list current  
+                    //Empty the list studied  
                     sStudied = new ArrayList();
+                    // Fill the list studied with the content of the current sequence 
                     for (Patient i : scur) {
-                        // Fill the list studied with the content of the current sequence 
+                        //Each patient is added one by one
                         sStudied.add(i);
                     }
-                    //Neighbourhood search 
+                    // Modification of the studied sequence to perform a Neighbourhood search according several types of swaps 
                     switch (swap) {
                         case 1:
-                            Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
+                            Sequence.simpleSwap(sStudied, (numiter - 1) % (sStudied.size()), numiter % (sStudied.size()));
                             break;
                         case 2:
-                            Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), (numiter + 1) % (scur.size()));
+                            Sequence.simpleSwap(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 1) % (sStudied.size()));
                             break;
                         case 3:
-                            Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), (numiter + 3) % (scur.size()));
+                            Sequence.simpleSwap(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 3) % (sStudied.size()));
                             break;
                         case 4:
-                            Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), (numiter + 5) % (scur.size()));
+                            Sequence.simpleSwap(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 5) % (sStudied.size()));
                             break;
                         case 5:
-                            Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), (numiter + 7) % (scur.size()));
+                            Sequence.simpleSwap(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 7) % (sStudied.size()));
                             break;
                         case 6:
-                            Sequence.reverseSubsequence(scur, (numiter - 1) % (scur.size()), (numiter + 3) % (scur.size()));
+                            Sequence.reverseSubsequence(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 3) % (sStudied.size()));
                             break;
                         case 7:
-                            Sequence.reverseSubsequence(scur, (numiter - 1) % (scur.size()), (numiter + 5) % (scur.size()));
+                            Sequence.reverseSubsequence(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 5) % (sStudied.size()));
                             break;
                         case 8:
-                            Sequence.reverseSubsequence(scur, (numiter - 1) % (scur.size()), (numiter + 7) % (scur.size()));
+                            Sequence.reverseSubsequence(sStudied, (numiter - 1) % (sStudied.size()), (numiter + 7) % (sStudied.size()));
                             break;
                     }
                     //Compare the values of the objective function for the two sequences
                     dif = fO(sStudied, false) - fO(scur, false);
-
+                    // if the value of the studied sequence is smaller than the current sequence
                     if (dif <= 0) {
                         //the studied sequence replace the current sequence 
+                        //Empty the current sequence
                         scur = new ArrayList();
+                        //The patients of the sequence studied are copied into the current sequence
                         for (Patient p : sStudied) {
+                            //Each patient is added one by one
                             scur.add(p);
                         }
                         //Compare the value of the best sequence and the current sequence 
                         double dif2 = fO(scur, false) - fO(minb, false);
                         //if the value of the current sequence is smaller than the best sequence
                         if (dif2 < 0) {
-                            //the current sequence replace the best sequence
+                            //The current sequence replace the best sequence
+                            //Empty the best sequence
                             minb = new ArrayList();
+                            //The patients of the sequence studied are copied into the best sequence
                             for (Patient d : scur) {
+                                //Each patient is added one by one
                                 minb.add(d);
                             }
                             numiterBest = itermax * numtemp + numiter;
@@ -275,13 +294,16 @@ public class Functions {
                     } else if (dif < pow(10, 9)) {
                         // a random number is selected between 0 and 1  
                         rd = Math.random();
-                        // The Boltzman equation determine a value according to the temperature 
+                        // The Boltzman equation determine a value according to the temperature with a Boltzman constant of 1 
                         double choice = exp(-dif / temperature);
                         //if the random value is smaller than the value of the Boltzman equation  
                         if (rd < choice) {
                             //the studied sequence replace the current sequence 
+                            //Empty the current sequence
                             scur = new ArrayList();
+                             //The patients of the sequence studied are copied into the current sequence
                             for (Patient p : sStudied) {
+                                //Each patient is added one by one
                                 scur.add(p);
                             }
                         }
@@ -363,10 +385,13 @@ public class Functions {
         for (Patient p : scur) {
             sequenceDisplay.add(p.getPatientID());
         }
+        //This variable is used to keep the sequence with the smallest value of the objective function 
         List<Patient> bestPosition = new ArrayList();
+        //This variable is used to keep the content of the current sequence when needed
         List<Patient> backUp = new ArrayList();
         //Set initial sequence as best sequence 
         for (Patient p : scur) { 
+            //Each patient is added one by one
             bestPosition.add(p); 
         } 
         int i = 0;
@@ -401,33 +426,48 @@ public class Functions {
 
             //while i as not reached the number of iteration 
             while (i < nbIteration) { 
-//Creation of a random new sequence           
+//Creation of a random new sequence  
+                //The back up list is emptied
                 backUp = new ArrayList();
+                //The content of the current sequence is put into the back up list
                 for (Patient p : scur) {
+                    //Each patient is added one by one
                     backUp.add(p);
                 }
+                //The current sequence is emptied
                 scur = new ArrayList();
+                //The back up list is used to generate a randomized constructed sequence which is put inside the current list
                 for (Patient p : randomizedConstruction(backUp)) {
+                    //Each patient is added one by one
                     scur.add(p);
                 }
 // 
  
 //Find the best sequence in the neighborhood of this sequence 
+                //The back up list is emptied
                 backUp = new ArrayList();
+                //The current is used to find the best sequence in its neighborhood which is than put inside the current list
                 for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGrasp, swap)) {
+                    //Each patient is added one by one
                     backUp.add(p);
                 }
+                //The current sequence is emptied
                 scur = new ArrayList();
+                //The best sequence is in the back up list is put in the current sequence
                 for (Patient p : backUp) {
+                    //Each patient is added one by one
                     scur.add(p);
                 }
 // 
-                //if the value of this sequence is smaller than the best sequence 
+                //if the value of the current sequence is smaller than the best sequence 
                 if (fO(scur, false) < fO(bestPosition, false)) {
                     
 //This sequence is set as best sequence
+                    //The best sequence is emptied
                     bestPosition = new ArrayList();
+                    //The content of the current sequence is put in the best sequence
                     for (Patient p : scur) {
+                        //Each patient is added one by one
                         bestPosition.add(p);
                     }
 // 
@@ -493,11 +533,15 @@ public class Functions {
      * @see BufferedWriter#close()  
      */ 
     public List<Patient> localSearch(List<Patient> scur, int maxNonImprov, double startRuntime, Writer writer, int swap) {
-        //Initialization of the initial sequence as the best sequence 
+//Initialization of the initial sequence as the best sequence 
+        //This variable is used to keep the sequence with the smallest value of the objective function 
         List<Patient> bestPosition = new ArrayList();
+        //The initial sequence is considered as the best sequence
         for (Patient p : scur) {
+            //Each patient of the initial sequence is added one by one in the best sequence
             bestPosition.add(p);
         }
+//
         int numiter = 1;
         int numiterBest = 0;
         totaliterBest = totaliterGrasp;
@@ -516,7 +560,7 @@ public class Functions {
                 writer.write(System.getProperty("line.separator"));
             }
             // while the number of iteration without improvement has not reached the maximum
-            while (numiter <= maxNonImprov) {
+            while (numiter <= maxNonImprov) {               
                 switch (swap) {
                     case 1:
                         Sequence.simpleSwap(scur, (numiter - 1) % (scur.size()), numiter % (scur.size()));
@@ -550,12 +594,15 @@ public class Functions {
                     //set number of iteration to one
                     numiter = 1;
 
-                    //Set the new sequence as best sequence
+//Set the new sequence as best sequence
+                    //The best sequence is emptied
                     bestPosition = new ArrayList();
+                    //The content of the current sequence is put in the best sequence
                     for (Patient p : scur) {
+                        //Each patient is added one by one
                         bestPosition.add(p);
                     }
-
+//
                     double currentRuntime = (System.nanoTime() - startRuntime) / pow(10, 9);
                     writer.write("Improved value found in the neighbourhood : " + fO(bestPosition, false) + " Current total of generated sequences in this try : " + numiterBest + " Current runtime : " + currentRuntime + " s." + System.getProperty("line.separator"));
                 } else {
@@ -580,14 +627,20 @@ public class Functions {
      * @see Random 
      */ 
     public List<Patient> randomizedConstruction(List<Patient> list) {
+        //this variable is the sequence that will returned at the end of the function
         List<Patient> sequence = new ArrayList();
 //Create a list of possibilities 
+        //this variable will be used to serve as way to pick patients during the generation of the sequence
         List<Patient> patientList = new ArrayList();
+        //The content of the initial list is put inside the list of possibilities
         for (Patient p : list) {
+            //Each patient is added one by one
             patientList.add(p);
         }
 //
+        //This variable will be used for the randomness of the process
         Random rand = new Random();
+        //This variable will be used to have the attributes of the patient which was picked
         Patient randomElement; 
  
        //Fill the random sequence 
@@ -633,9 +686,14 @@ public class Functions {
         for (Patient p : scur) {
             sequenceDisplay.add(p.getPatientID());
         }
+        //This variable is used to keep the sequence with the smallest value of the objective function 
         List<Patient> bestPosition = new ArrayList();
+        //This variable will be used to keep values in case of swaps or random generation
         List<Patient> backUp = new ArrayList();
+        
+        //The initial sequence is considered as the best sequence
         for (Patient p : scur) {
+            //Each patient is added one by one in best sequence
             bestPosition.add(p);
         }
         int i = 0;
@@ -671,32 +729,47 @@ public class Functions {
             // while the number of sequence generated has not reached the maximum number 
             while (i < nbIteration) {
 //Create a gready random sequence 
+                //The back up list is emptied
                 backUp = new ArrayList();
+                //The content of the current sequence is put into the back up list
                 for (Patient p : scur) {
+                    //Each patient is added one by one
                     backUp.add(p);
                 }
+                //The current sequence is emptied
                 scur = new ArrayList();
+                //The back up list is used to generate a new sequence by greedy randomize construction, the contest is put in the current sequence
                 for (Patient p : greedyRandomizedConstruction(greediness, backUp)) {
+                    //Each patient is added one by one
                     scur.add(p);
                 }
 // 
  
 //Search in the neighbourhood the best sequence 
+                //The back up list is emptied
                 backUp = new ArrayList();
+                //The current sequence is used to find the best sequence in its neighborhood which is than put inside the current list
                 for (Patient p : localSearch(scur, maxNonImprov, startRuntime, writerGraspRCL, swap)) {
+                    //Each patient is added one by one
                     backUp.add(p);
                 }
+                //The current sequence is emptied
                 scur = new ArrayList();
+                //The best sequence in the back up list is put in the current sequence
                 for (Patient p : backUp) {
+                    //Each patient is added one by one
                     scur.add(p);
                 }
 // 
  
-                //if the sequence found has a smaller value than the best sequence
+                //if the value of the current sequence is smaller than the best sequence
                 if (fO(scur, false) < fO(bestPosition, false)) {
 //Replace the best sequence by this sequence 
-                    bestPosition = new ArrayList(); 
+                    //The best sequence is emptied
+                    bestPosition = new ArrayList();
+                    //The content of the current sequence is put in the best sequence
                     for (Patient p : scur) { 
+                        //Each patient is added one by one
                         bestPosition.add(p); 
                     } 
 // 
@@ -754,42 +827,59 @@ public class Functions {
      *  
      */ 
     public List<Patient> greedyRandomizedConstruction(double greediness, List<Patient> list) {
+        //This variable is the sequence that will be filled    
         List<Patient> sequence = new ArrayList();
+        //This variable is a list of the patient sorted by cancellation likelihood
         List<List> sortedCancellationLikelihoods = Sequence.sortByCancellationLikelihood(list);
 //Put the patients with a low cancellation likelihood in a list 
+        //this variable will contain the list of patient with a low cancellation likelihood it will be emptied as the sequence will be filled
         List<Patient> possibilitiesL = sortedCancellationLikelihoods.get(0);
+        //this variable will contain the list of patient with a low cancellation likelihood it will remain as a back up
         List<Patient> possibilitiesLbackup = new ArrayList();
+        //The back up list is filled with the content of the low cancellation likelihood patients
         for (Patient p : possibilitiesL) {
+            //Each patient is added one by one
             possibilitiesLbackup.add(p);
         }
 // 
   
 //Put the patients with a high cancellation likelihood in a list  
+        //this variable will contain the list of patient with a high cancellation likelihood it will be emptied as the sequence will be filled
         List<Patient> possibilitiesH = sortedCancellationLikelihoods.get(1);
+        //this variable will contain the list of patient with a high cancellation likelihood it will remain as a back up
         List<Patient> possibilitiesHbackup = new ArrayList();
+        //The back up list is filled with the content of the low cancellation likelihood patients
         for (Patient p : possibilitiesH) {
+            //Each patient is added one by one
             possibilitiesHbackup.add(p);
         }
 //
+        //This variable will be to pick up randomly a patient
         Patient randomElement;
-
+        //this variable will be used for the randomness of the action
         Random rand = new Random();
         
 //Select the first patient in the low cancellation likelihood list 
+        //Select randomly a position in the list of the low cancellation likelihood patients
         int firstpo = rand.nextInt(possibilitiesL.size());
+        //the patient at this position is added to the sequence
         sequence.add(possibilitiesL.get(firstpo));
+        //the patient at this position is removed from list of the low cancellation likelihood patients
         possibilitiesL.remove(firstpo);
 // 
 
 //While the sequence is not complete 
         while (sequence.size() < list.size()) {
+            //this variable will be used a Restricted Choice List
             List<Patient> rcl = new ArrayList();
+            //this variable will be used to calculate the cost for the algorithm for each patient
             List<Double> cost = new ArrayList();
              
             //if the last patient of the sequence has a high cancellation likelihood 
             if (possibilitiesHbackup.contains(sequence.get(sequence.size() - 1))) {
                 //Compare the difference of cancellation likelihood with the last patient and all the remaining patients with a low cancellation likehood to create a list of cost 
                 for (int h = 0; h < possibilitiesL.size(); h++) {
+                    //The cost of each patient is added in the list of cost
                     cost.add(Math.abs(sequence.get(sequence.size() - 1).getCancellationLikelihood() - possibilitiesL.get(h).getCancellationLikelihood()));
 
                 }
@@ -799,7 +889,7 @@ public class Functions {
                 //Find the minimal difference 
                 double mincost = Collections.min(cost);
 
-//Compare all the cost according to the greediness                 
+//Compare all the costs according to the greediness                 
                 for (int k = 0; k < possibilitiesL.size(); k++) { 
                     //if the greediness allows it  
                     if (cost.get(k) <= (mincost + greediness * (maxcost - mincost))) { 
@@ -810,12 +900,19 @@ public class Functions {
 // 
  
 //Pick a random patient in the Restricted Choice list 
+                //this variable is used to pick one of the element of the restricted choice list
                 int limit = rcl.size() - 1;
+                //if the size of the restricted choice list is of one 
                 if (limit == 0) {
-                    sequence.add(rcl.get(limit));
-                    randomElement = rcl.get(limit);
+                   //select this patient
+                   randomElement = rcl.get(limit);
+                    //imediatly add this patient to the sequence
+                    sequence.add(randomElement);
+                    
                 } else {
+                    //select randomly a patient from all the element of the restricted choice list
                     randomElement = rcl.get(rand.nextInt(limit));
+                    //add this patient to the sequence
                     sequence.add(randomElement);
                 }
 // 
@@ -846,17 +943,23 @@ public class Functions {
 // 
  
 //Pick a random patient in the Restricted Choice list 
+                //this variable is used to pick one of the element of the restricted choice list
                 int limit = rcl.size() - 1;
+                //if the size of the restricted choice list is of one 
                 if (limit == 0) {
+                    //select this patient
                     sequence.add(rcl.get(limit));
+                    //imediatly add this patient to the sequence
                     randomElement = rcl.get(limit);
                 } else {
+                    //select randomly a patient from all the element of the restricted choice list
                     randomElement = rcl.get(rand.nextInt(limit));
+                    //add this patient to the sequence
                     sequence.add(randomElement);
                 }
 // 
  
- //Remove this patient from the list of possible patients with high cancellation likelihood 
+                //Remove this patient from the list of possible patients with high cancellation likelihood 
                 possibilitiesH.remove(possibilitiesH.indexOf(randomElement));
 
             }
@@ -902,7 +1005,9 @@ public class Functions {
             bestPositionImprovement.add(p);
         }
         //Initialization of the two lists used for the parents
+        //the best population 1 is the mother
         List<Patient> bestPopulation1;
+        //the best population 2 is the father
         List<Patient> bestPopulation2;
 
         //Filling of the population by random sequences
@@ -951,22 +1056,31 @@ public class Functions {
             int n = 0;
             while (n < nbrGeneration) {
 
-                //Comparison of fitness of the two first sequences of the population to set -the first two parents
+                //Comparison of fitness of the two first sequences of the population to set the first two parents
+                //if the first sequence of the population has a smaller value of objective function than the second
                 if (fO(population.get(0), false) < fO(population.get(1), false)) {
+                    //the mother is initialized
                     bestPopulation1 = new ArrayList();
+                    //the first sequence is considered as the mother
                     for (Patient p : population.get(0)) {
                         bestPopulation1.add(p);
                     }
+                    //the father is initialized
                     bestPopulation2 = new ArrayList();
+                    //the second sequence is considered as the father
                     for (Patient p : population.get(1)) {
                         bestPopulation2.add(p);
                     }
                 } else {
+                    //the mother is initialized
                     bestPopulation1 = new ArrayList();
+                    //the second sequence is considered as the mother
                     for (Patient p : population.get(1)) {
                         bestPopulation1.add(p);
                     }
+                    //the father is initialized
                     bestPopulation2 = new ArrayList();
+                    //the first sequence is considered as the mother
                     for (Patient p : population.get(0)) {
                         bestPopulation2.add(p);
                     }
@@ -974,22 +1088,34 @@ public class Functions {
 
                 //Examination of the population to find the two fittest sequences
                 for (int j = 0; j < sizePopulation; j++) {
+                    //This variable is  going to select each sequence of the population to study them
                     List<Patient> read = new ArrayList();
+                    //the variable takes the value of the sequence placed at the position j
                     for (Patient p : population.get(j)) {
                         read.add(p);
                     }
+                    //if the value of the objective function of the variable read is smaller than the value of the father
                     if (fO(read, false) < fO(bestPopulation2, false)) {
+                        //if the value of the objective function of the variable read is smaller than the value of the mother
                         if (fO(read, false) < fO(bestPopulation1, false)) {
+                            //the father is emptied
                             bestPopulation2 = new ArrayList();
+                            //the sequence "father" is replaced by the sequence "mother"
                             for (Patient p : bestPopulation1) {
+                                //Each patient one by one
                                 bestPopulation2.add(p);
                             }
+                            //the mother is emptied
                             bestPopulation1 = new ArrayList();
+                            //the sequence "mother" is replace by the sequence "read"
                             for (Patient p : read) {
                                 bestPopulation1.add(p);
                             }
+                        //else if the value of the objective function of the variable read is different from the value of the mother
                         } else if (fO(read, false) != fO(bestPopulation1, false)) {
+                            //the father is emptied
                             bestPopulation2 = new ArrayList();
+                            //the sequence "father" is replaced by the sequence "mother"
                             for (Patient p : read) {
                                 bestPopulation2.add(p);
                             }
@@ -1010,13 +1136,15 @@ public class Functions {
                 }
 
                 //Realisation of the crossing over to create an offspring supposedly better than its two parents
+                //Empty the list "child"
                 List<Patient> child = new ArrayList();
+                //Fill the child with the crossing over of the best population 1 and 2
                 for (Patient p : Sequence.makeACrossingOver(bestPopulation1, bestPopulation2, startPercentage, endPercentage, reverse)) {
                     child.add(p);
                 }
                 //This offspring is added in the population 
                 population.add(child);
-                //The list fit parent in taken out of the population 
+                //The "father" in taken out of the population 
                 population.remove(population.indexOf(bestPopulation2));
 
                 //A Generation pass
