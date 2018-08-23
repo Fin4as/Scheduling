@@ -80,6 +80,7 @@ public class Test {
         Process p = null;
         boolean found = false;
         int i = 0;
+        //this loop aims to return process objects corresponding to process ID patients have
         while ((i < listProcess.size()) && (!found)) {
             if (listProcess.get(i).getID().equals(processID)) {
                 p = listProcess.get(i);
@@ -102,13 +103,18 @@ public class Test {
 
         int maxLateness = 0;
         for (int j = 0; j < listPatient.size(); j++) {
+            //variable end indicates the list of time of a patient
             int end = 799;
+            //this loop browses list of times of patients and return the one ending the latest (whichis maxLateness)
             while (end >= 0) {
+                
                 if (listPatient.get(j).getParallelSchedules().get(0)[end] == null) {
+                   //the list is browsed from the end that why it is end--
                     end--;
                 } else {
                     if (maxLateness < end) {
-                        maxLateness = end + 1;
+                        // +1 is needed because index different from time
+                        maxLateness = end + 1; 
                     }
                     break;
                 }
@@ -119,18 +125,23 @@ public class Test {
     }
 
     /**
-     * Method to calculate Makespan
+     * Method to calculate Makespan, the longest process of the scheduling
      *
-     * @return mskp , coresponds to makespan
+     * @return mskp  coresponds to makespan
      */
     public int calculateMakespan() {
         int max = 0;
         int min = 0;
         int mksp;
+        //the first list of time is browsed to calculate makespan, the starting and the endinf times of the first patient's process is store
+        //to be then compared to th other patients, with the goal to pick the patient who has the difference end-start the longest
         String[] schedule = listPatient.get(0).getParallelSchedules().get(0);
+        //start indicates we start counting from 0 for every patient' time list (called schedule) to have the start of the process
         int start = 0;
+        //end indicated we cound from the end to have the end of patient's list of time
         int end = 799;
-        while (start < schedule.length) {
+        while (start < schedule.length) { 
+            //in case a value is null, that means there is no process, we increment
             if (schedule[start] == null) {
                 start++;
             } else {
@@ -138,6 +149,7 @@ public class Test {
                 break;
             }
         }
+        //this loop compares patients' total process time to each other in order to get the longest one, which is the value returned
         for (int j = 0; j < listPatient.size(); j++) {
             end = 799;
             while (end > min) {
@@ -145,6 +157,7 @@ public class Test {
                     end--;
                 } else {
                     if (max < end) {
+                        //+1 as index end =799
                         max = end + 1;
                     }
                     break;
@@ -154,33 +167,48 @@ public class Test {
         mksp = max - min;
         return mksp;
     }
-
-    int updateStart; // variable used to changed parameter value in researchResources
+    
+    // variable used to changed parameter value in researchResources
+    int updateStart; 
 
     /**
      * Method to get Resources needed for a task, called by AddTask method
      *
-     * @param time is the time of availability of a resource
+     * @param time is the time from which the task is supposed to start, in case resources are not available at this time, there is waiting time
      * @param t is Task currently processed
-     * @return resourcesToUse is a list of Resources needed to perform a task
+     * @return resourcesToUse is a list of Resources needed to perform a task which lasts the value "time"
      *
+     * @see public int getFastestAvailable(int startTime, int avTime)
+     * @see public int getNextAvailableTime(int startTime, int avTime)
      */
     public ArrayList<Resource> researchResources(int time, Task t) {
         int start = time;
         updateStart = time;
         ArrayList<Resource> resourcesToUse = new ArrayList();
+        
+        
+        // processing skill by skill and look for the resources available 
+        //This loop is only for the first skill needed for a task
         for (int f = 0; f < t.getListSkill().size(); f++) {
             if (f == 0) {
                 Skill s = t.getListSkill().get(f);
+                // call of getFastestAvailable method to pick the resource the fastest available
                 int r = s.getFastestAvailable(time, t.getAvTime());
+                //if r!= -1 that means there is a resource available
                 if (r != -1) {
                     Resource res = s.getListResource().get(r);
+                    //method to know when a resource is available for the start "tim" and the duration "t.getAvTime"
                     start = res.getNextAvailableTime(time, t.getAvTime());
                     updateStart = start;
                     resourcesToUse.add(res);
+                //case there is no resource available, value "null" is add is the list "ResourceToUse" 
                 } else {
                     resourcesToUse.add(null);
                 }
+                
+            //this loop is for the next skills, it does exactyl the samme as before. But as it is needed to have all the skills 
+            //available to perform the task, in case a resource is not found for a given skill, the first parameter of this current method
+            //is updated, that adds waiting time, and look again for resources available. It is a recursive method.
             } else {
                 Skill s = t.getListSkill().get(f);
                 int r = s.getStrictestAvailable(start, t.getAvTime());
@@ -192,7 +220,8 @@ public class Test {
                     if (r != -1) {
                         Resource res = s.getListResource().get(r);
                         int newStart = res.getNextAvailableTime(start, t.getAvTime());
-                        resourcesToUse = researchResources(newStart, t); // recursive call
+                        // recursive call of this current method
+                        resourcesToUse = researchResources(newStart, t); 
                         updateStart = newStart;
                         return resourcesToUse;
                     } else {

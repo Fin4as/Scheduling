@@ -1,10 +1,10 @@
-Value of the initial sequence: 495.7363
+Value of the initial sequence: 539.4213
 
-==> New update of the optimum : 471.154
-Minimum number of generated sequences to get this optimum : 25 sequences (25 sequences from the initial pool + 0 children) Current runtime : 0.033698444 s.
+==> New update of the optimum : 510.4051
+Minimum number of generated sequences to get this optimum : 25 sequences (25 sequences from the initial pool + 0 children) Current runtime : 0.066140375 s.
 
-Best solution proposed by the algorithm : [P1, P16, P12, P3, P7, P14, P0, P13, P15, P19, P9, P6, P5, P8, P2, P4, P11, P18, P10, P17]
-Objective function value associed : 471.154
-Found in 0.033698444 s. on a total runtime of 3.00378824 s.
+Best solution proposed by the algorithm : [P5, P14, P16, P4, P8, P19, P9, P3, P6, P11, P12, P2, P7, P10, P13, P0, P18, P1, P17, P15]
+Objective function value associed : 510.4051
+Found in 0.066140375 s. on a total runtime of 3.018806078 s.
 This solution was reached by generating 25 sequences (25 sequences from the initial pool + 0 children),
 on a total of 125 generated sequences (25 sequences from the initial pool + 100 children).
