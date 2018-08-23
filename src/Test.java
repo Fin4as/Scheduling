@@ -258,6 +258,7 @@ public class Test {
      * @see #getStrictestAvailable(int startTime, int avTime)
      * @see #addDiagramValues(int i, int value)
      * @see #timeToDiagramValues()
+     *  
      *
      */
     public void addTask(boolean giveDetails) {
@@ -318,12 +319,16 @@ public class Test {
             for (int k = 0; k < process.getListTask().size(); k++) {
 
                 boolean waiting = false;
+                //"TasksToSchedule" is a list containg tasks to schedule at the same time to avoid waiting time between the tasK. List used in case of non waiting operation mode
                 ArrayList<Task> tasksToSchedule = new ArrayList();
+                //ind is the index of the next tasks (of the current task) which are non waiting operation mode
                 int ind = k + 1;
                 while (!waiting && ind < process.getListTask().size()) {
                     int opMode = process.getListTask().get(ind).getOpMode();
+                    //case operation mode equals zero --> add task in tasksToSchedule
                     if (opMode == 0) {
                         tasksToSchedule.add(process.getListTask().get(ind));
+                    //case operation mode quals 1 --> no task to add in tasksToSchedule
                     } else if (opMode == 1) {
                         waiting = true;
                     }
@@ -333,8 +338,8 @@ public class Test {
                 Task t = process.getListTask().get(k);
                 int time = pat.getNextAvailableTime();
 
-                //In case task different from first one : to ensure end of task is at least different of 1 minute to the next task's starting
-                //prevTask is to ensure the first in first served discipline is respected
+                //In case the cureent task is different from first one : to ensure end of task is at least different of 1 minute to the next task's starting
+                //'prevTask' is to ensure the first in first served discipline is respected
                 
                 if (k != 0) {
                     time++;
