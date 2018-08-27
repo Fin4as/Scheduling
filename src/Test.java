@@ -192,7 +192,7 @@ public class Test {
         for (int f = 0; f < t.getListSkill().size(); f++) {
             if (f == 0) {
                 Skill s = t.getListSkill().get(f);
-                // call of getFastestAvailable method to pick the resource the fastest available
+                // call of getFastestAvailable method to pick the fastest available resource 
                 int r = s.getFastestAvailable(time, t.getAvTime());
                 //if r!= -1 that means there is a resource available
                 if (r != -1) {
