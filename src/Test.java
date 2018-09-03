@@ -459,10 +459,11 @@ public class Test {
                                 }
                                 //case there resources needed to schedule a task
                                 if (!resourcesToUse.contains(null)) {
+                                    //this string is to display resources used in the output
                                     String displayResTask = "";
                                     String displayResParaTask = "";
                                     if (start != -1 && start + t.getAvTime() < pat.getSchedule().length) {
-
+                                        //loop to allocate resources from resourceToUse list
                                         for (int p = 0; p < resourcesToUse.size(); p++) {
                                             if (p <= t.getListSkill().size() - 1) {
                                                 resourcesToUse.get(p).setTime(start, t.getAvTime(), t.getTaskID());
