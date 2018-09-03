@@ -204,6 +204,7 @@ public class Data {
                 int maxWait = rs.getInt("MaxWait");
                 
                 // stcohastic values for tasks duration
+                //the way the stochasticDuration is generated is not right, The 3 sigma formula must be used. I tried but without sucess
                 stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); 
 
                 // condition  to exclude negative values
