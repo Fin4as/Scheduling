@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 NEW RUN
@@ -209,15 +210,31 @@ Neighbourhood search method used: Type 7. Refer to the documentation to know the
 Temperature : 100.0
 
 Improved optimum found in the neighbourhood: 544.4022 Current total of generated sequences to get this optimum: 3 Current runtime : 0.004431277 s.
+=======
+Initial value : 539.4213
+
+Temperature : 100.0
+
+Improved optimum found in the neighbourhood: 520.8154 Current total of generated sequences to get this optimum: 1 Current runtime : 0.1077525 s.
+Improved optimum found in the neighbourhood: 510.504 Current total of generated sequences to get this optimum: 24 Current runtime : 0.271279593 s.
+>>>>>>> HayatComment
 
 
 Temperature : 70.0
 
+<<<<<<< HEAD
 Improved optimum found in the neighbourhood: 526.0704 Current total of generated sequences to get this optimum: 143 Current runtime : 0.235290696 s.
+=======
+Improved optimum found in the neighbourhood: 507.5803 Current total of generated sequences to get this optimum: 158 Current runtime : 0.849871092 s.
+Improved optimum found in the neighbourhood: 501.3127 Current total of generated sequences to get this optimum: 189 Current runtime : 0.966132051 s.
+Improved optimum found in the neighbourhood: 491.0 Current total of generated sequences to get this optimum: 190 Current runtime : 0.970236983 s.
+>>>>>>> HayatComment
 
 
 Temperature : 49.0
 
+Improved optimum found in the neighbourhood: 484.4896 Current total of generated sequences to get this optimum: 214 Current runtime : 1.036785136 s.
+Improved optimum found in the neighbourhood: 475.4273 Current total of generated sequences to get this optimum: 258 Current runtime : 1.18495538 s.
 
 
 Temperature : 34.3
@@ -227,6 +244,7 @@ Temperature : 34.3
 Temperature : 24.009999999999998
 
 
+<<<<<<< HEAD
 Best solution proposed by the algorithm : [P14, P13, P11, P12, P16, P1, P0, P10, P15, P19, P17, P2, P18, P3, P4, P5, P6, P8, P7, P9]
 Objective function value associed : 526.0704
 Found in 0.235290696 s. on a total runtime of 0.955457528 s.
@@ -267,3 +285,9 @@ Objective function value associed : 485.7117
 Found in 0.246442931 s. on a total runtime of 0.873485988 s.
 This solution was reached by generating 132 sequences on a fixed total of 500 generated sequences.
 
+=======
+Best solution proposed by the algorithm : [P11, P19, P18, P2, P4, P17, P12, P16, P5, P1, P15, P8, P14, P7, P13, P6, P0, P10, P9, P3]
+Objective function value associed : 475.4273
+Found in 1.18495538 s. on a total runtime of 1.717902208 s.
+This solution was reached by generating 258 sequences on a fixed total of 500 generated sequences.
+>>>>>>> HayatComment

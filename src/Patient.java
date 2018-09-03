@@ -221,7 +221,7 @@ public class Patient {
     }
 
     /**
-     *
+     *Method called by AddTask in Class Test
      * method to add task durations and waiting times in list Diagram Values
      */
     public void addDiagramValues(int i, int value) {
@@ -229,7 +229,7 @@ public class Patient {
     }
 
     /**
-     *
+     * List used by excel Writer
      * returns diagram values list
      */
     public ArrayList<ArrayList<Integer>> getDiagramValues() {

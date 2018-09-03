@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 Initial solution S0 : [P15, P10, P0, P1, P16, P12, P11, P13, P14, P19, P17, P2, P18, P3, P4, P5, P6, P8, P7, P9]
 Objective function value of the initial solution : 559.7172
 
@@ -8,4 +9,15 @@ Best solution proposed by the algorithm : [P2, P10, P1, P18, P8, P4, P9, P5, P14
 Objective function value associed : 502.5561
 Found in 0.037530722 s. on a total runtime of 2.9120142 s.
 This solution was reached by generating 25 sequences (25 sequences from the initial pool + 0 children),
+=======
+Value of the initial sequence: 539.4213
+
+==> New update of the optimum : 510.4051
+Minimum number of generated sequences to get this optimum : 25 sequences (25 sequences from the initial pool + 0 children) Current runtime : 0.066140375 s.
+
+Best solution proposed by the algorithm : [P5, P14, P16, P4, P8, P19, P9, P3, P6, P11, P12, P2, P7, P10, P13, P0, P18, P1, P17, P15]
+Objective function value associed : 510.4051
+Found in 0.066140375 s. on a total runtime of 3.018806078 s.
+This solution was reached by generating 25 sequences (25 sequences from the initial pool + 0 children),
+>>>>>>> HayatComment
 on a total of 125 generated sequences (25 sequences from the initial pool + 100 children).

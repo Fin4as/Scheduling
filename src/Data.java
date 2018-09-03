@@ -11,24 +11,45 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ * This class aims to get data from Database : process and patients. It ensures a single connection and It also generates stochastic values of Tasks
  *
- * @author Hayat This class aims to get data from Database : process and
- * patients
+ * @author Hayat
+ *
  */
 public class Data {
 
-    ResultSet rs;
-    String driver = "com.mysql.jdbc.Driver";
-    Statement st;
-    Connection conn;
+    ResultSet rs; // variable to get results of a query
+    String driver = "com.mysql.jdbc.Driver"; // driver
+    Statement st; // to execute a query
+    Connection conn; // variable for connection
     private List<Process> listProcess; // list of process assigned to patients
     private List<Resource> allResources; // list of resources needed for all process 
     private List<String> nameResource; // list of Resources' ID
     private List<Patient> listPatients; // list of Patients
     private List<Integer> numberPatientsPerSurgery; // list of nulber of patients per surgery in data base
     int stochasticDuration; // variable to generate stochastic values of tasks and surgery task
-    int presenceP; // value indicating if a patient is involved in a task or not 
+    int presenceP; // value indicating if a patient is involved in a task or not . 1 = involved, 0 = not involved
 
+    /**
+     *Constructor of class Data
+     * Initializes variables 
+     * Ensure a single connection
+     * @see #getConnectDB() 
+     * @see #getAllResources() 
+     * @see #getListPatients() 
+     * @see #getNextTask(java.util.List, java.lang.String) 
+     * @see #getNumberPatientsPerSurgery() 
+     * @see #getPatientData() 
+     * @see #getListProcess() 
+     * @see #getPrevTask(java.util.List, java.lang.String) 
+     * @see #getProcess(java.util.List) 
+     * @see #getResourceData(java.util.List) 
+     * @see #getTaskData(Process) 
+     * @see #getSurgeryDuration(java.util.List, Patient) 
+     * @see #getSkillData(java.util.List, java.lang.String) 
+     * 
+     * 
+     */
     public Data() {
         listPatients = new ArrayList();
         allResources = new ArrayList();
@@ -58,7 +79,10 @@ public class Data {
 
     /**
      *
-     * method to get Process ID that patients have
+     * @param listPatient list of patient btained from data base
+     * @return a list of String called idProcess. It corresponds to Patients'
+     * processID
+     *
      */
     public List<String> getProcess(List<Patient> listPatient) {
         List<String> idProcess = new ArrayList();
@@ -71,8 +95,8 @@ public class Data {
     }
 
     /**
-     *
-     * method to get patient data
+     * method to get Patient Data from DB
+     * 
      */
     public void getPatientData() {
 
@@ -98,8 +122,7 @@ public class Data {
     }
 
     /**
-     *
-     * method to get number of patients per surgery
+     * method to get number of patients per surgery type and fills list
      */
     public void getNumberPatientsPerSurgery() {
 
@@ -121,7 +144,7 @@ public class Data {
 
     /**
      *
-     * method to list of resources
+     * @return list of resources
      */
     public List<Resource> getAllResources() {
         return allResources;
@@ -129,7 +152,7 @@ public class Data {
 
     /**
      *
-     * method to get list of process
+     * @return list of Process
      */
     public List<Process> getListProcess() {
         return listProcess;
@@ -137,15 +160,14 @@ public class Data {
 
     /**
      *
-     * method to get list of patients
+     * @return list of patients
      */
     public List<Patient> getListPatients() {
         return listPatients;
     }
 
     /**
-     *
-     * method to connect to data base
+     * method to connect to data base (only once)
      */
     public void getConnectDB() {
         try {
@@ -164,8 +186,8 @@ public class Data {
     }
 
     /**
-     *
-     * method to get tasks's data of a specific process
+     * method to get tasks' data a specific process, stochastic durations are generated for each task
+     * @param pro is a specific process 
      */
     public void getTaskData(Process pro) {
 
@@ -180,16 +202,12 @@ public class Data {
                 int avTime = rs.getInt("AvTime");
                 int stdDev = rs.getInt("StdDev");
                 int maxWait = rs.getInt("MaxWait");
+                
+                // stcohastic values for tasks duration
+                //the way the stochasticDuration is generated is not right, The 3 sigma formula must be used. I tried but without sucess
+                stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); 
 
-                stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
-//                the comment below had to make sure the stochastic value generated is different from zero 
-//                boolean zero = false;
-//                while (!zero && stochasticDuration == 0) {
-//                    stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
-//                    if (stochasticDuration != 0) {
-//                        zero = true;
-//                    }
-//                }
+                // condition  to exclude negative values
                 if (stochasticDuration < 0) {
                     stochasticDuration = Math.abs(stochasticDuration);
                 }
@@ -205,9 +223,12 @@ public class Data {
     }
 
     /**
+     * this method generates stochastic values of surgery task's duration for a given
+     * petient
      *
-     * method to generate stochastic values of surgeries according to surgery
-     * type and standard deviation
+     * @param listTask of a specific process
+     * @param p is a patient who has a specific type of surgery
+     *
      */
     public void getSurgeryDuration(List<Task> listTask, Patient p) {
         for (int i = 0; i < listTask.size(); i++) {
@@ -220,17 +241,11 @@ public class Data {
                         int stdDev = rs.getInt("stdDev");
                         int avTime = rs.getInt("AvTime");
                         listTask.get(i).setStdDev(stdDev);
+                        
+                        // stcohastic values for tasks duration
+                        stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); 
 
-                        stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1)); // stcohastic values for tasks duration
-//                        the comment below had to make sure the stochastic value generated is different from zero 
-//                        boolean zero = false;
-//                        while (!zero && stochasticDuration == 0) {
-//                            stochasticDuration = (avTime - stdDev) + (int) (Math.random() * ((avTime - stdDev) + 1));
-//                            if (stochasticDuration != 0) {
-//                                zero = true;
-//                            }
-//                        }
-
+                        // condition to exclude negative values
                         if (stochasticDuration < 0) {
                             stochasticDuration = Math.abs(stochasticDuration);
                         }
@@ -247,8 +262,9 @@ public class Data {
     }
 
     /**
-     *
-     * method to get skill data of a list of tasks from a process
+     * Method to get Skill Data that a list of Tasks has
+     * @param listTask
+     * @param processID needed to spcify in sql query with process is involved
      */
     public void getSkillData(List<Task> listTask, String processID) {
 
@@ -278,8 +294,9 @@ public class Data {
     }
 
     /**
-     *
-     * method to get Resources' data of a list of task
+     * Method to get Resources' data of list of tasks
+     * 
+     * @param listTask 
      */
     public void getResourceData(List<Task> listTask) {
 
@@ -319,10 +336,11 @@ public class Data {
 
     }
 
-    /**
-     *
-     * method to get previous tasks' data of a list of task
-     */
+   /**
+    * Method that adds list of Previous Tasks for a specific task. Based on a list of tasks and a processID
+    * @param listTask 
+    * @param processID 
+    */
     public void getPrevTask(List<Task> listTask, String processID) {
 
         try {
@@ -345,8 +363,9 @@ public class Data {
     }
 
     /**
-     *
-     * method to get next tasks' data of a list of task
+     * Method that adds list of Next Tasks for a specific task. Based on a list of tasks and a processID
+     * @param listTask 
+     * @param processID 
      */
     public void getNextTask(List<Task> listTask, String processID) {
         try {
@@ -359,10 +378,13 @@ public class Data {
                     if (listTask.get(i).getTaskID().equals(taskID)) {
                         listTask.get(i).addNextTask(nextTask);
                     }
-                    if (listTask.get(i).getNextTaskIDList().size() > 1) {
+                    
+                    // the way next tasks are described in DB, indicates if a task has a parallel task or not
+                    if (listTask.get(i).getNextTaskIDList().size() > 1) { 
                         listTask.get(i + 1).setParallelTask(listTask.get(i + 2));
                         listTask.get(i + 2).setParallelTask(listTask.get(i + 1));
-                        listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime());
+                        // set avTime to ensure 2 parallel tasks have the same duration
+                        listTask.get(i + 2).setAvTime(listTask.get(i + 1).getAvTime()); 
 
                     }
                 }
