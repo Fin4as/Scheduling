@@ -21,7 +21,7 @@ public class Process {
 
     /**
      * Constructor initilizes variables. Method called by Data Class. From a process ID in data Base, all information about this process are obtained
-     * @param processID 
+     * @param processID variable to identity a process
      */
     public Process(String processID) {
         this.processID = processID;
@@ -29,6 +29,7 @@ public class Process {
     }
 
     /**
+     * This methode returns the processID
      * @return the processID
      */
     public String getID() {
@@ -36,6 +37,7 @@ public class Process {
     }
 
     /**
+     * This methode returns the list of task of a process
      * @return the listTask
      */
     public List<Task> getListTask() {

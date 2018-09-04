@@ -57,24 +57,25 @@ public class Task {
     }
 
     /**
-     *
-     * @return bject parallelTask
+     *  This method returns object parallelTask
+     * @return object parallelTask
      */
     public Task getParallelTask() {
         return parallelTask;
     }
 
     /**
-     *
+     * This method returns the value of presence patient (0 = non involved in the task, 1 =
+     * involved)
      * @return value of presence patient (0 = non involved in the task, 1 =
-     * invloved)
+     * involved)
      */
     public int getPatientPresence() {
         return this.patientPresence;
     }
 
     /**
-     *
+     * This method sets the patient presence
      * @param p is 0 or 1 (0 = non involved in the task, 1 = invloved)
      */
     public void setPatientPresence(int p) {
@@ -82,7 +83,7 @@ public class Task {
     }
 
     /**
-     *
+     * This method sets the duration of the task
      * @param avT is duration of the task
      */
     public void setAvTime(int avT) {
@@ -91,7 +92,7 @@ public class Task {
 
     /**
      *
-     *
+     * This method sets a parallel Task
      * @param pt is parallel Task
      */
     public void setParallelTask(Task pt) {
@@ -99,7 +100,7 @@ public class Task {
     }
 
     /**
-     *
+     * This method returns processID of the task
      * @return processID of the task
      */
     public String getProcessID() {
@@ -107,7 +108,7 @@ public class Task {
     }
 
     /**
-     *
+     * This method returns a list of skill of the task
      * @return list of skill of the task
      */
     public ArrayList<Skill> getListSkill() {
@@ -124,9 +125,9 @@ public class Task {
     }
 
     /**
-     * Method to ass a skill in list of skill
+     * Method to add a skill in list of skill
      *
-     * @param skill
+     * @param skill a skill
      */
     public void setListSkill(Skill skill) {
         this.listSkill.add(skill);
@@ -135,7 +136,7 @@ public class Task {
     /**
      * Method to add a Next Task (which is a task ID) of the Task
      *
-     * @param nextTask
+     * @param nextTask next task 
      */
     public void addNextTask(String nextTask) {
         nextTaskID.add(nextTask);
@@ -143,13 +144,14 @@ public class Task {
 
     /**
      *Method to add a Previous Task (which is a task ID) of the Task
-     * @param previousTask
+     * @param previousTask previous task
      */
     public void addPrevTask(String previousTask) {
         prevTaskID.add(previousTask);
     }
 
     /**
+     * This method returns the prevTaskID list
      * @return the prevTaskID list
      */
     public List<String> getPrevTaskIDList() {
@@ -157,6 +159,7 @@ public class Task {
     }
 
     /**
+     * This method returns the nextTaskID  list
      * @return the nextTaskID list
      */
     public List<String> getNextTaskIDList() {
@@ -164,7 +167,7 @@ public class Task {
     }
 
     /**Method to set the set the list of previous task of the current task
-     * @param prevTaskID 
+     * @param prevTaskID  the previous task id
      */
     public void setPrevTaskID(List<String> prevTaskID) {
         this.prevTaskID = prevTaskID;
@@ -172,13 +175,14 @@ public class Task {
 
     /**
      * Method to set the list of next task of the current task
-     * @param nextTaskID 
+     * @param nextTaskID the next task id
      */
     public void setNextTaskID(List<String> nextTaskID) {
         this.nextTaskID = nextTaskID;
     }
 
     /**
+     * This method returns the task id
      * @return the taskID
      */
     public String getTaskID() {
@@ -186,13 +190,15 @@ public class Task {
     }
 
     /**
-     * @return the opMode (0= non waiting, 1 = waiting)
+     * This method returns the opMode (0= non waiting, 1 = waiting)
+     * @return the opMode 
      */
     public int getOpMode() {
         return opMode;
     }
 
     /**
+     * This method returns the avTime which is the duration 
      * @return the avTime which is the duration 
      */
     public int getAvTime() {
@@ -200,7 +206,8 @@ public class Task {
     }
 
     /**
-     * @return the stdDev which is the standard vediation
+     * This method returns the standard deviation
+     * @return the standard deviation
      */
     public int getStdDev() {
         return stdDev;

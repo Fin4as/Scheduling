@@ -156,13 +156,14 @@ public class Functions {
      * @param tempmin Symbolize the end of the algorithm
      * @param itermax Number of iteration by temperature
      * @param scur Initial sequence of Patients
+     * @param swap The type of swap used
      * @return Best Sequence found with the minimum value of the objective
      * function
      * @see Patient
      * @see #fO(java.util.List, boolean)
      * @see Math#random()
      * @see BufferedWriter#write(java.lang.String)
-     * @see Sequence#deterministicSwap(java.util.List, int, int)
+     * @see Sequence#simpleSwap(java.util.List, int, int)
      * @see System#nanoTime()
      */
     public List<Patient> annealingMin(double temperature, double tempmin, int itermax, List<Patient> scur, int swap) {
@@ -384,16 +385,17 @@ public class Functions {
      * @param maxNonImprov Number of swap without improvement before the local
      * search stops
      * @param scur Initial Sequence of patients
+     * @param swap The type of swap used
      * @return Best Sequence found with the minimum value of the objective
      * function
      *
      * @see Patient
-     * @see System#natoTime
+     * @see System#nanoTime
      * @see System#getProperty(java.lang.String)
      * @see Sequence#weightedInitialSequence(java.util.List)
      * @see #fO(java.util.List, boolean)
      * @see #randomizedConstruction(java.util.List)
-     * @see #localSearch(java.util.List, int, double, java.io.Writer)
+     * @see #localSearch(java.util.List, int, double, java.io.Writer, int) 
      * @see BufferedWriter#BufferedWriter(java.io.Writer)
      * @see Writer#Writer(java.lang.Object)
      * @see OutputStreamWriter#OutputStreamWriter(java.io.OutputStream)
@@ -564,11 +566,12 @@ public class Functions {
      * @param scur Initial sequence
      * @param maxNonImprov Number of swap without improvement before the local
      * search stops
-     * @param startRuntime
-     * @param writer
+     * @param startRuntime Starting time of the algorithm using this method 
+     * @param writer The writer used by the algorithm using this method 
+     * @param swap The type of swap used
      * @return the best sequence of the local Search
      *
-     * @see Sequence#deterministicSwap(java.util.List, int, int)
+     * @see Sequence#simpleSwap(java.util.List, int, int)
      * @see #fO(java.util.List, boolean)
      * @see Math#random()
      * @see BufferedWriter#BufferedWriter(java.io.Writer)
@@ -721,11 +724,12 @@ public class Functions {
      * @param maxNonImprov Number of swap without improvement before the local
      * search stops
      * @param scur Initial Sequence
+     * @param swap The type of swap
      * @return The best Sequence in term of value of the objective function
      *
      * @see System#nanoTime()
      * @see Patient
-     * @see #localSearch(java.util.List, int, double, java.io.Writer)
+     * @see #localSearch(java.util.List, int, double, java.io.Writer, int) 
      * @see #greedyRandomizedConstruction(double, java.util.List)
      * @see Sequence#weightedInitialSequence(java.util.List)
      * @see BufferedWriter#BufferedWriter(java.io.Writer)
@@ -1053,9 +1057,12 @@ public class Functions {
      * @param nbrGeneration number of generation done before finding the best
      * sequence
      * @param scur Initial sequence
-     * @param startPercentage
-     * @param endPercentage
-     * @param reverse
+     * @param startPercentage The lower percentage bound of the father sequence
+     * kept
+     * @param endPercentage The upper percentage bound of the father sequence
+     * kept
+     * @param reverse True if the sequence created must be reversed at the end,
+     * false otherwise
      * @return the sequence with the best fitness
      *
      * @see Patient

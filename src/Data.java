@@ -78,8 +78,9 @@ public class Data {
     }
 
     /**
-     *
-     * @param listPatient list of patient btained from data base
+     *This function returns a list of String called idProcess. It corresponds to Patients'
+     * processID
+     * @param listPatient list of patient obtained from data base
      * @return a list of String called idProcess. It corresponds to Patients'
      * processID
      *
@@ -94,10 +95,9 @@ public class Data {
         return idProcess;
     }
 
-    /**
-     * method to get Patient Data from DB
-     * 
-     */
+   /**
+    * This method is used to get Patient Data from DB
+    */
     public void getPatientData() {
 
         try {
@@ -122,7 +122,7 @@ public class Data {
     }
 
     /**
-     * method to get number of patients per surgery type and fills list
+     * This method is used to get the number of patients per surgery type and fills list
      */
     public void getNumberPatientsPerSurgery() {
 
@@ -143,7 +143,7 @@ public class Data {
     }
 
     /**
-     *
+     * This method returns list of resources
      * @return list of resources
      */
     public List<Resource> getAllResources() {
@@ -151,7 +151,7 @@ public class Data {
     }
 
     /**
-     *
+     * This method returns list of Process
      * @return list of Process
      */
     public List<Process> getListProcess() {
@@ -159,7 +159,7 @@ public class Data {
     }
 
     /**
-     *
+     * This method returns list of patients
      * @return list of patients
      */
     public List<Patient> getListPatients() {
@@ -167,7 +167,7 @@ public class Data {
     }
 
     /**
-     * method to connect to data base (only once)
+     * This method to connect to data base (only once)
      */
     public void getConnectDB() {
         try {
@@ -186,8 +186,8 @@ public class Data {
     }
 
     /**
-     * method to get tasks' data a specific process, stochastic durations are generated for each task
-     * @param pro is a specific process 
+     * This method is used to get tasks' data a specific process, stochastic durations are generated for each task
+     * @param pro a specific process 
      */
     public void getTaskData(Process pro) {
 
@@ -223,11 +223,11 @@ public class Data {
     }
 
     /**
-     * this method generates stochastic values of surgery task's duration for a given
-     * petient
+     * This method generates stochastic values of surgery task's duration for a given
+     * patient
      *
-     * @param listTask of a specific process
-     * @param p is a patient who has a specific type of surgery
+     * @param listTask The list of tasks of a specific process
+     * @param p Patient with a specific type of surgery
      *
      */
     public void getSurgeryDuration(List<Task> listTask, Patient p) {
@@ -263,8 +263,8 @@ public class Data {
 
     /**
      * Method to get Skill Data that a list of Tasks has
-     * @param listTask
-     * @param processID needed to spcify in sql query with process is involved
+     * @param listTask The list of tasks of a specific process
+     * @param processID The id of a process needed to specify in sql query which process is involved
      */
     public void getSkillData(List<Task> listTask, String processID) {
 
@@ -296,7 +296,7 @@ public class Data {
     /**
      * Method to get Resources' data of list of tasks
      * 
-     * @param listTask 
+     * @param listTask The list of tasks of a specific process
      */
     public void getResourceData(List<Task> listTask) {
 
@@ -338,8 +338,8 @@ public class Data {
 
    /**
     * Method that adds list of Previous Tasks for a specific task. Based on a list of tasks and a processID
-    * @param listTask 
-    * @param processID 
+    * @param listTask The list of tasks of a specific process
+    * @param processID The id of a process needed to specify in sql query which process is involved
     */
     public void getPrevTask(List<Task> listTask, String processID) {
 
@@ -364,8 +364,8 @@ public class Data {
 
     /**
      * Method that adds list of Next Tasks for a specific task. Based on a list of tasks and a processID
-     * @param listTask 
-     * @param processID 
+     * @param listTask The list of tasks of a specific process
+     * @param processID The id of a process needed to specify in sql query which process is involved
      */
     public void getNextTask(List<Task> listTask, String processID) {
         try {

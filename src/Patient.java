@@ -9,8 +9,8 @@ import java.util.List;
 
  */
 /**
- *
- * @author Hayat This calss describes a Patient
+ * Describes a patient
+ * @author Hayat 
  */
 public class Patient {
 
@@ -22,7 +22,14 @@ public class Patient {
     private double cancellationLikelihood;
     private ArrayList<ArrayList<Integer>> diagramValues; // this list stores durations of tasks and waiting times. It is used by excel writer to create a diagram
     private ArrayList<Integer> diagram;
-
+/**
+ * Constructor of the Patient class
+ * @param id id of the patient
+ * @param processID id of the process
+ * @param ageInformation age of the information about the patient
+ * @param typeSurgery type of surgery
+ * @param numberPatientsPerSurgery Number of patients per surgery 
+ */
     public Patient(String id, String processID, int ageInformation, String typeSurgery, List<Integer> numberPatientsPerSurgery) {
         this.patientID = id;
         schedule = new String[800];
@@ -109,25 +116,29 @@ public class Patient {
 
     /**
      *
-     * add parallel list of time
+     * Add parallel list of time
+     * @param s table of time of a schedule 
      */
     public void addParallelSchedule(String[] s) {
         parallelSchedules.add(s);
     }
-
+/**
+ * This method returns the age of the information
+ * @return the age of the information
+ */
     public int getAgeInformation() {
         return ageInformation;
     }
 
     /**
-     *
-     * add values (task duration and waiting times) in list diagramValues
+     *This method add values (task duration and waiting times) in list diagramValues 
      */
-    public void addArrayDiagram(int i) {
+    public void addArrayDiagram() {
         diagramValues.add(new ArrayList<>());
     }
 
     /**
+     * This method returns the patientID
      * @return the patientID
      */
     public String getPatientID() {
@@ -135,14 +146,15 @@ public class Patient {
     }
 
     /**
-     *
-     * add values (task duration and waiting times) in list diagramValues
+     * This is supposedly used for parallel tasks
+     * @return parallel schedules
      */
     public ArrayList<String[]> getParallelSchedules() {
         return parallelSchedules;
     }
 
     /**
+     * This method returns the time
      * @return the time
      */
     public String[] getSchedule() {
@@ -151,8 +163,12 @@ public class Patient {
 
     /**
      *
-     * method to update the list of time of the patient. Updated by adding the
+     * This method is used to update the list of time of the patient. Updated by adding the
      * taskID of the current task
+     * @param s .
+     * @param start .
+     * @param avTime .
+     * @param taskID .
      */
     public void setSchedule(int s, int start, int avTime, String taskID) {
         String[] currentSchedule = parallelSchedules.get(s);
@@ -163,8 +179,8 @@ public class Patient {
 
     /**
      *
-     * method to know when the last task ends , to be able to add the next task.
-     * Returns the time
+     * This method is used to know when the last task ends , to be able to add the next task.
+     * @return the time
      */
     public int getNextAvailableTime() {
         int time = 1;
@@ -186,6 +202,8 @@ public class Patient {
     /**
      *
      * returns a boolean to check if the table of time is empty or not
+     * @param array the table of time
+     * @return the table of time is empty or not
      */
     public boolean isEmptyStringArray(String[] array) {
         for (int i = 0; i < array.length; i++) {
@@ -197,8 +215,8 @@ public class Patient {
     }
 
     /**
-     *
-     * returns processID
+     * This methode returns the processID
+     * @return processID
      */
     public String getProcessID() {
         return processID;
@@ -208,7 +226,7 @@ public class Patient {
      *
      * set the table of time(called schedule) to null. Method needed in AddTask
      * method in class test. As everyTime a new sequence of patients is
-     * generated; time table must be cleared
+     * generated; time table must be cleared 
      */
     public void setZeroSchedule() {
         parallelSchedules = new ArrayList<>();
@@ -216,6 +234,10 @@ public class Patient {
 
     }
 
+    /**
+     * This method returns the cancellation likelihood
+     * @return the cancellation likelihood
+     */
     public double getCancellationLikelihood() {
         return cancellationLikelihood;
     }
@@ -223,6 +245,8 @@ public class Patient {
     /**
      *Method called by AddTask in Class Test
      * method to add task durations and waiting times in list Diagram Values
+     * @param i .
+     * @param value .
      */
     public void addDiagramValues(int i, int value) {
         diagramValues.get(i).add(value);
@@ -230,7 +254,7 @@ public class Patient {
 
     /**
      * List used by excel Writer
-     * returns diagram values list
+     * @return  diagram values list
      */
     public ArrayList<ArrayList<Integer>> getDiagramValues() {
         return diagramValues;

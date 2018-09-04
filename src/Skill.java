@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * This clas describes a skill
+ * This class describes a skill
  *
  * @author Hayat
  */
@@ -35,7 +35,7 @@ public class Skill {
     }
 
     /**
-     *
+     *This method returns the skillID
      * @return skillID
      */
     public String getSkillID() {
@@ -43,7 +43,7 @@ public class Skill {
     }
 
     /**
-     *
+     *This method returns the list of resources of this skill
      * @return list of resources of this skill
      */
     public List<Resource> getListResource() {
@@ -63,8 +63,8 @@ public class Skill {
      * Method used in case of non waiting tasks, it needs a srtart time and a
      * duration of the task
      *
-     * @param startTime
-     * @param avTime
+     * @param startTime the time when a task starts
+     * @param avTime  the duration  of a task
      * @return resource which represents the index in the list of the resource
      * available
      */

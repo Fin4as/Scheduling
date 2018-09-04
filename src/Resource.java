@@ -8,8 +8,8 @@ import java.util.ArrayList;
  */
 
 /**
- *This calss describes a Resource
- * @author Hayat class that describes a Resource
+ *This class describes a Resource
+ * @author Hayat 
  */
 public class Resource {
 
@@ -22,9 +22,9 @@ public class Resource {
     /**
      * Constructor initializes variables
      *
-     * @param resourceID
-     * @param capacity 
-     * @param name
+     * @param resourceID variable to indetify a resource
+     * @param capacity variable that indicates the capacity of a resource, variable not used in the code
+     * @param name name of a resource, not used in the code
      */
     public Resource(String resourceID, int capacity, String name) {
         this.capacity = capacity;
@@ -36,7 +36,7 @@ public class Resource {
     }
 
     /**
-     *
+     * This method returns the table of time in format usable to create an excel file
      * @return diagramValues
      */
     public ArrayList<Integer> getDiagramValues() {
@@ -45,9 +45,9 @@ public class Resource {
 
     /**
      *Method that returns  the time when the resource is available, return an integer corresponding to an index
-     * @param startTime
-     * @param avTime
-     * @return available 
+     * @param startTime  the time when the task starts
+     * @param avTime the duration of the task
+     * @return available the time when the resource is available
      */
     public int getNextAvailableTime(int startTime, int avTime) {
         int available = -1;
@@ -75,9 +75,9 @@ public class Resource {
 
     /**
      *Method that takes two parameters : a start time indcating when the task starts and an avTime which is the duration of this task
-     * @param startTime it's the time when the task starts
-     * @param avTime it's the duration of the task
-     * @return available it is a boolean that indicates if a resource is
+     * @param startTime the time when the task starts
+     * @param avTime  the duration of the task
+     * @return available  a boolean that indicates if a resource is
      * available or not
      */
     public boolean isAvailable(int startTime, int avTime) {
@@ -113,6 +113,7 @@ public class Resource {
     }
 
     /**
+     * This methof returns the resourceID
      * @return the resourceID
      */
     public String getResourceID() {
@@ -120,6 +121,7 @@ public class Resource {
     }
 
     /**
+     * This methof returns the capacity
      * @return the capacity
      */
     public int getCapacity() {
@@ -127,6 +129,7 @@ public class Resource {
     }
 
     /**
+     * This methof returns the name
      * @return the name
      */
     public String getName() {
@@ -134,6 +137,7 @@ public class Resource {
     }
 
     /**
+     * This methof returns the time
      * @return the time
      */
     public String[] getTime() {

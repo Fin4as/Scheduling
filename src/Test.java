@@ -21,6 +21,8 @@ public class Test {
     List<Resource> listResource; // list of resources needed to schedule the list of process
     int totalWaitingTime; // variable to calculate the total waiting time of the patients
     int lateness; // variable to calculate the lateness once the scheduling is done
+    
+    int updateStart;// variable used to changed parameter value in researchResources
 
     /**
      * Constructor initializes variables
@@ -37,7 +39,7 @@ public class Test {
     }
 
     /**
-     *
+     * This method returns the lateness value
      * @return lateness value
      */
     public int getLateness() {
@@ -46,7 +48,7 @@ public class Test {
     }
 
     /**
-     *
+     * This method returns the total waiting time value
      * @return total waiting time value
      */
     public int getTotalWaitingTime() {
@@ -54,7 +56,7 @@ public class Test {
     }
 
     /**
-     *
+     * This method returns the list of Resource
      * @return list of Resource
      */
     public List<Resource> getListResource() {
@@ -62,7 +64,7 @@ public class Test {
     }
 
     /**
-     *
+     * This method returns list of processes
      * @return list of process
      */
     public List<Process> getListProcess() {
@@ -72,7 +74,7 @@ public class Test {
     /**
      * Method to get a Process, used in addTask method
      *
-     * @param processID
+     * @param processID id of the process
      * @return p a Process
      */
     public Process getProcess(String processID) {
@@ -105,7 +107,7 @@ public class Test {
         for (int j = 0; j < listPatient.size(); j++) {
             //variable end indicates the list of time of a patient
             int end = 799;
-            //this loop browses list of times of patients and return the one ending the latest (whichis maxLateness)
+            //this loop browses list of times of patients and return the one ending the latest (which is maxLateness)
             while (end >= 0) {
                 
                 if (listPatient.get(j).getParallelSchedules().get(0)[end] == null) {
@@ -168,8 +170,7 @@ public class Test {
         return mksp;
     }
     
-    // variable used to changed parameter value in researchResources
-    int updateStart; 
+
 
     /**
      * Method to get Resources needed for a task, called by AddTask method
@@ -178,8 +179,8 @@ public class Test {
      * @param t is Task currently processed
      * @return resourcesToUse is a list of Resources needed to perform a task which lasts the value "time"
      *
-     * @see public int getFastestAvailable(int startTime, int avTime)
-     * @see public int getNextAvailableTime(int startTime, int avTime)
+     * @see Skill#getFastestAvailable(int, int) 
+     * @see Resource#getNextAvailableTime(int, int) 
      */
     public ArrayList<Resource> researchResources(int time, Task t) {
         int start = time;
@@ -248,16 +249,16 @@ public class Test {
      *
      * @see #researchResources(int, Task)
      * @see #getProcess(java.lang.String)
-     * @see #setZeroSchedule()
-     * @see #getDiagramValues()
-     * @see #addArrayDiagram(int i)
-     * @see #setZero()
-     * @see #getNextAvailableTime()
-     * @see #setTime(int start, int avTime, String taskID)
-     * @see #addParallelSchedule(String[] s)
-     * @see #getStrictestAvailable(int startTime, int avTime)
-     * @see #addDiagramValues(int i, int value)
-     * @see #timeToDiagramValues()
+     * @see Patient#setZeroSchedule() 
+     * @see Resource#getDiagramValues()
+     * @see Patient#addArrayDiagram() 
+     * @see Resource#setZero()
+     * @see Patient#getNextAvailableTime()
+     * @see Resource#setTime(int start, int avTime, String taskID)
+     * @see Patient#addParallelSchedule(String[] s)
+     * @see Skill#getStrictestAvailable(int startTime, int avTime)
+     * @see Patient#addDiagramValues(int i, int value)
+     * @see Resource#timeToDiagramValues()
      *  
      *
      */
@@ -268,7 +269,7 @@ public class Test {
 
             listPatient.get(p).setZeroSchedule();
             listPatient.get(p).getDiagramValues().clear();
-            listPatient.get(p).addArrayDiagram(0);
+            listPatient.get(p).addArrayDiagram();
 
         }
 
@@ -499,14 +500,14 @@ public class Test {
                                         // patient presence test
                                         if (pT.getPatientPresence() == 1) {
 
-                                            pat.addArrayDiagram(1);
+                                            pat.addArrayDiagram();
                                             //add the waiting time first
                                             pat.addDiagramValues(1, start);
                                             // then add the duration
                                             pat.addDiagramValues(1, pT.getAvTime());
 
                                         } else { //patient not present
-                                            pat.addArrayDiagram(1);
+                                            pat.addArrayDiagram();
                                             //add the waiting time first
                                             pat.addDiagramValues(1, start + pT.getAvTime());
                                             // then add the duration
